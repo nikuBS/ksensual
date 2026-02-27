@@ -24,14 +24,14 @@ type ArtistGridProps = {
 export function ArtistGrid({ previewCount, showFilters = false }: ArtistGridProps) {
   const [selected, setSelected] = useState<Artist | null>(null)
   const [query, setQuery] = useState('')
-  const [categoryFilter, setCategoryFilter] = useState<'DJ' | 'ARTIST'>('ARTIST')
+  const [categoryFilter, setCategoryFilter] = useState<'ALL' | 'DJ' | 'ARTIST'>('ALL')
 
   /** 검색어 + 스타일 필터를 동시에 적용한 결과 */
   const filtered = useMemo(() => {
     const lower = query.toLowerCase().trim()
     return artists.filter((artist) => {
       const queryMatch = !lower || artist.name.toLowerCase().includes(lower)
-      const categoryMatch = getArtistCategory(artist) === categoryFilter
+      const categoryMatch = categoryFilter === 'ALL' || getArtistCategory(artist) === categoryFilter
       return queryMatch && categoryMatch
     })
   }, [query, categoryFilter])
@@ -48,8 +48,9 @@ export function ArtistGrid({ previewCount, showFilters = false }: ArtistGridProp
             aria-label="Filter by category"
             className="w-full rounded-2xl border border-black/15 bg-base/60 px-4 py-3 text-sm sm:w-auto"
             value={categoryFilter}
-            onChange={(e) => setCategoryFilter(e.target.value as 'DJ' | 'ARTIST')}
+            onChange={(e) => setCategoryFilter(e.target.value as 'ALL' | 'DJ' | 'ARTIST')}
           >
+            <option value="ALL">All</option>
             <option value="ARTIST">Artist</option>
             <option value="DJ">Dj</option>
           </select>
