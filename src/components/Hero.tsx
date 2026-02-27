@@ -31,12 +31,15 @@ export function Hero() {
         </div>
 
         <div className="mx-auto w-full max-w-md lg:max-w-none">
-          <img
-            src={eventMeta.heroPoster}
-            alt={eventMeta.heroPosterAlt}
-            className="w-full rounded-2xl border border-black/10 bg-panel shadow-[0_20px_45px_rgba(12,79,95,0.18)]"
-            loading="eager"
-          />
+          <picture>
+            <source media="(max-width: 640px)" srcSet={eventMeta.heroPosterMobile} />
+            <img
+              src={eventMeta.heroPoster}
+              alt={eventMeta.heroPosterAlt}
+              className="w-full rounded-2xl border border-black/10 bg-panel shadow-[0_20px_45px_rgba(12,79,95,0.18)]"
+              loading="eager"
+            />
+          </picture>
         </div>
       </div>
     </section>

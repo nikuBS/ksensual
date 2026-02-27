@@ -14,6 +14,7 @@ export type EventMeta = {
   cityCountry: string
   heroCopy: string
   heroPoster: string
+  heroPosterMobile: string
   heroPosterAlt: string
   ctas: Array<{ label: string; to: string }>
 }
@@ -70,6 +71,7 @@ export const eventMeta: EventMeta = {
   heroCopy:
     'K-SENSUAL 10th Anniversary in the Korean Maldives: ocean breeze stages, summer dance nights, and global artists in Jeju.',
   heroPoster: `${assetBase}placeholders/jeju-main-poster.jpg`,
+  heroPosterMobile: `${assetBase}placeholders/jeju-main-poster-mobile.jpg`,
   heroPosterAlt: 'K-SENSUAL 10th Anniversary poster, July 10-12 2026, Jeju Island Korea',
   ctas: [
     { label: 'Tickets', to: '/tickets' },
