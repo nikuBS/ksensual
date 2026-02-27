@@ -234,7 +234,7 @@ export const gallery = Array.from({ length: 12 }, (_, index) => ({
 
 export const contact = {
   email: 'hello@k-sensual.com',
-  instagramUrl: 'https://instagram.com/k_sensual',
+  instagramUrl: 'https://instagram.com/ksensual_official',
   etc: 'For partner inquiries, include your brand profile and expected attendance.',
   formLabels: {
     name: 'Your Name',

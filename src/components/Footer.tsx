@@ -15,7 +15,6 @@ export function Footer() {
         </div>
         <div className="flex flex-wrap items-center gap-3">
           <a href={contact.instagramUrl} target="_blank" rel="noreferrer" aria-label="Instagram">Instagram</a>
-          <a href={`mailto:${contact.email}`} aria-label="Email" className="break-all">{contact.email}</a>
           <Link to="/faq">FAQ</Link>
         </div>
       </div>
