@@ -78,7 +78,7 @@ export function Modal({ open, onClose, title, children }: ModalProps) {
         className="relative z-10 max-h-[92vh] w-full max-w-2xl overflow-auto rounded-2xl border border-black/15 bg-panel p-3 sm:p-5"
       >
         <div className="mb-4 flex items-center justify-between gap-3">
-          <h3 className="font-heading text-xl sm:text-2xl">{title}</h3>
+          <h3 className="pl-1 font-heading text-xl sm:pl-2 sm:text-2xl">{title}</h3>
           <Button variant="ghost" size="sm" aria-label="Close dialog" onClick={onClose}>
             <X size={18} />
           </Button>

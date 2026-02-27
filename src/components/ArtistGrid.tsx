@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { artists, getArtistCategory, type Artist } from '../data/event'
+import { Instagram } from 'lucide-react'
+import { artists, type Artist } from '../data/event'
 import { ArtistCard } from './ArtistCard'
 import { Section } from './Section'
 import { Modal } from './ui/Modal'
@@ -31,7 +32,9 @@ export function ArtistGrid({ previewCount, showFilters = false }: ArtistGridProp
     const lower = query.toLowerCase().trim()
     return artists.filter((artist) => {
       const queryMatch = !lower || artist.name.toLowerCase().includes(lower)
-      const categoryMatch = categoryFilter === 'ALL' || getArtistCategory(artist) === categoryFilter
+      const categoryMatch =
+        categoryFilter === 'ALL' ||
+        (categoryFilter === 'DJ' ? artist.category === 'DJ' : artist.category === 'ARTIST')
       return queryMatch && categoryMatch
     })
   }, [query, categoryFilter])
@@ -74,13 +77,21 @@ export function ArtistGrid({ previewCount, showFilters = false }: ArtistGridProp
       <Modal open={!!selected} onClose={() => setSelected(null)} title={selected?.name ?? 'Artist detail'}>
         {selected ? (
           <div className="space-y-4">
-            <img src={selected.image} alt={selected.name} className="h-44 w-full rounded-xl object-cover sm:h-56" />
-            <p className="text-sm text-muted">{getArtistCategory(selected) === 'DJ' ? 'Dj' : 'Artist'}</p>
-            <p className="text-sm text-muted">{selected.bio}</p>
-            <div className="flex flex-wrap gap-3 text-sm">
-              {selected.socials.instagram ? <a href={selected.socials.instagram} target="_blank" rel="noreferrer">Instagram</a> : null}
-              {selected.socials.youtube ? <a href={selected.socials.youtube} target="_blank" rel="noreferrer">YouTube</a> : null}
-              {selected.socials.website ? <a href={selected.socials.website} target="_blank" rel="noreferrer">Website</a> : null}
+            <div className="rounded-xl border border-black/10 bg-base/40 p-2">
+              <img src={selected.image} alt={selected.name} className="max-h-[70vh] w-full rounded-lg object-contain" />
+            </div>
+            <div className="flex flex-wrap gap-3 pl-2 sm:pl-3">
+              {selected.socials.instagram ? (
+                <a
+                  href={selected.socials.instagram}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 text-lg font-semibold text-accentSoft transition hover:opacity-80"
+                >
+                  <Instagram size={20} aria-hidden="true" />
+                  Instagram
+                </a>
+              ) : null}
             </div>
           </div>
         ) : null}
