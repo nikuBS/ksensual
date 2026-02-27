@@ -22,7 +22,7 @@ export function Accordion({ items }: AccordionProps) {
       {items.map((item) => {
         const open = openId === item.id
         return (
-          <div key={item.id} className="rounded-2xl border border-white/10 bg-panel/70">
+          <div key={item.id} className="rounded-2xl border border-black/10 bg-panel/70">
             <button
               type="button"
               className="flex w-full items-center justify-between gap-3 px-4 py-4 text-left"

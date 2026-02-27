@@ -5,19 +5,19 @@ export default {
   theme: {
     extend: {
       colors: {
-        base: '#070A12',
-        panel: '#0E1324',
-        accent: '#36E2D5',
-        accentSoft: '#7CF6D4',
-        text: '#F6F8FF',
-        muted: '#A4B0CC',
+        base: '#F2FBFF',
+        panel: '#FFFFFF',
+        accent: '#10B7C6',
+        accentSoft: '#0A8A9A',
+        text: '#0A3446',
+        muted: '#4E6A77',
       },
       fontFamily: {
         heading: ['"Space Grotesk"', 'ui-sans-serif', 'system-ui'],
         body: ['"Manrope"', 'ui-sans-serif', 'system-ui'],
       },
       boxShadow: {
-        glow: '0 0 50px rgba(54, 226, 213, 0.22)',
+        glow: '0 0 40px rgba(16, 183, 198, 0.28)',
       },
       borderRadius: {
         '2xl': '1rem',

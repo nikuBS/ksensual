@@ -21,8 +21,8 @@ export function Button({ className, variant = 'primary', size = 'md', ...props }
       className={cn(
         'inline-flex items-center justify-center rounded-2xl font-semibold transition duration-200 disabled:cursor-not-allowed disabled:opacity-60',
         variant === 'primary' && 'bg-accent px-5 py-3 text-base font-bold text-base shadow-glow hover:bg-accentSoft',
-        variant === 'ghost' && 'bg-transparent px-5 py-3 text-text hover:bg-white/10',
-        variant === 'outline' && 'border border-white/20 bg-transparent px-5 py-3 text-text hover:border-accent/50 hover:bg-white/5',
+        variant === 'ghost' && 'bg-transparent px-5 py-3 text-text hover:bg-black/5',
+        variant === 'outline' && 'border border-black/15 bg-transparent px-5 py-3 text-text hover:border-accent/50 hover:bg-black/5',
         size === 'sm' && 'px-3 py-2 text-sm',
         size === 'lg' && 'px-6 py-3.5 text-base',
         className,

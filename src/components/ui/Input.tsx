@@ -8,7 +8,7 @@ import { cn } from '../../lib/utils'
 export function Input({ className, ...props }: InputHTMLAttributes<HTMLInputElement>) {
   return (
     <input
-      className={cn('w-full rounded-2xl border border-white/20 bg-base/60 px-4 py-3 text-sm text-text placeholder:text-muted', className)}
+      className={cn('w-full rounded-2xl border border-black/15 bg-base/60 px-4 py-3 text-sm text-text placeholder:text-muted', className)}
       {...props}
     />
   )
@@ -21,7 +21,7 @@ export function Input({ className, ...props }: InputHTMLAttributes<HTMLInputElem
 export function Textarea({ className, ...props }: TextareaHTMLAttributes<HTMLTextAreaElement>) {
   return (
     <textarea
-      className={cn('w-full rounded-2xl border border-white/20 bg-base/60 px-4 py-3 text-sm text-text placeholder:text-muted', className)}
+      className={cn('w-full rounded-2xl border border-black/15 bg-base/60 px-4 py-3 text-sm text-text placeholder:text-muted', className)}
       {...props}
     />
   )

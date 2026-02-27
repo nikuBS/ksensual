@@ -53,7 +53,7 @@ export function ArtistGrid({ previewCount, showFilters = false }: ArtistGridProp
           <Input aria-label="Search artists" placeholder="Search by artist, role, style" value={query} onChange={(e) => setQuery(e.target.value)} />
           <select
             aria-label="Filter by style"
-            className="w-full rounded-2xl border border-white/20 bg-base/60 px-4 py-3 text-sm sm:w-auto"
+            className="w-full rounded-2xl border border-black/15 bg-base/60 px-4 py-3 text-sm sm:w-auto"
             value={styleFilter}
             onChange={(e) => setStyleFilter(e.target.value)}
           >

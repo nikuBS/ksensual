@@ -13,6 +13,8 @@ export type EventMeta = {
   venueName: string
   cityCountry: string
   heroCopy: string
+  heroPoster: string
+  heroPosterAlt: string
   ctas: Array<{ label: string; to: string }>
 }
 
@@ -59,14 +61,16 @@ const assetBase = import.meta.env.BASE_URL
 
 export const eventMeta: EventMeta = {
   title: 'K-SENSUAL',
-  subtitle: 'Sonic Rituals for the Senses',
-  dateRangeText: 'October 16-18, 2026',
-  startDateISO: '2026-10-16T16:00:00+09:00',
-  endDateISO: '2026-10-18T23:00:00+09:00',
-  venueName: 'Harbor Pulse Convention Hall',
-  cityCountry: 'Busan, South Korea',
+  subtitle: '10th Anniversary',
+  dateRangeText: 'July 10-12, 2026',
+  startDateISO: '2026-07-10T16:00:00+09:00',
+  endDateISO: '2026-07-12T23:00:00+09:00',
+  venueName: 'Iho Coastal Festival Grounds',
+  cityCountry: 'Jeju Island, Korea',
   heroCopy:
-    'Three nights of immersive electronic music, tactile visuals, and curated culinary moments for a global crowd.',
+    'K-SENSUAL 10th Anniversary in the Korean Maldives: ocean breeze stages, summer dance nights, and global artists in Jeju.',
+  heroPoster: `${assetBase}placeholders/jeju-main-poster.jpg`,
+  heroPosterAlt: 'K-SENSUAL 10th Anniversary poster, July 10-12 2026, Jeju Island Korea',
   ctas: [
     { label: 'Tickets', to: '/tickets' },
     { label: 'Line-up', to: '/artists' },
@@ -158,9 +162,9 @@ function makeDay(dayId: string, label: string, dateISO: string, offset: number):
 }
 
 export const schedule: ScheduleDay[] = [
-  makeDay('day-1', 'Day 1', '2026-10-16', 0),
-  makeDay('day-2', 'Day 2', '2026-10-17', 5),
-  makeDay('day-3', 'Day 3', '2026-10-18', 10),
+  makeDay('day-1', 'Day 1', '2026-07-10', 0),
+  makeDay('day-2', 'Day 2', '2026-07-11', 5),
+  makeDay('day-3', 'Day 3', '2026-07-12', 10),
 ]
 
 export const tickets: TicketTier[] = [
@@ -203,7 +207,7 @@ export const faq = [
   { q: 'What payment methods are accepted?', a: 'Card, NFC mobile payment, and selected local wallets are accepted in all zones.' },
   { q: 'Can I transfer my ticket?', a: 'Ticket transfer is available up to 48 hours before event start through your ticket account.' },
   { q: 'Is outside food allowed?', a: 'Outside food is not permitted except for medically required dietary items.' },
-  { q: 'How do shuttle buses operate?', a: 'Shuttles run every 20 minutes from Busan Station and Seomyeon from 3 PM to 3 AM.' },
+  { q: 'How do shuttle buses operate?', a: 'Shuttles run every 25 minutes from Jeju Airport and Tap-dong from 3 PM to 3 AM.' },
   { q: 'Where can I find lost and found?', a: 'Visit the Contact Desk beside the Prism Main entrance during operating hours.' },
   { q: 'Are photo and video cameras allowed?', a: 'Small personal cameras are allowed. Professional rigs require media approval.' },
   { q: 'Will sessions be recorded?', a: 'Selected talks and showcases are recorded and uploaded within two weeks.' },
@@ -229,11 +233,11 @@ export const contact = {
 }
 
 export const venue = {
-  address: '112 Harbor Bay-ro, Busan 48943',
-  transport: ['Subway Line 2 Harbor Bay Exit 3, 8-minute walk', 'Shuttle: Busan Station / Seomyeon loop'],
-  shuttle: 'Shuttle boarding closes at 02:45 AM each day.',
-  hotels: ['Marina Crest Hotel (8 min)', 'Blue Arc Residence (10 min)', 'Harbor Note Suites (12 min)'],
-  mapUrl: 'https://maps.google.com/?q=Busan+Harbor+Bay+Convention+Hall',
+  address: '33, Hyeonsa-gil, Ihoil-dong, Jeju-si, Jeju-do, Republic of Korea',
+  transport: ['Jeju Int’l Airport → venue taxi approx. 15 min', 'Airport limousine + short walk via Iho coast road'],
+  shuttle: 'Shuttle runs every 25 minutes from Jeju Airport and downtown hubs.',
+  hotels: ['Iho Breeze Hotel (7 min)', 'Aewol Coast Stay (14 min)', 'Jeju Harbor Suites (16 min)'],
+  mapUrl: 'https://maps.google.com/?q=33,+Hyeonsa-gil,+Jeju-si,+Jeju-do',
 }
 
 export const navigation = [

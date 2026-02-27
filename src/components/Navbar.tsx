@@ -22,7 +22,7 @@ function Wordmark() {
  */
 export function Navbar() {
   return (
-    <header className="sticky top-0 z-40 border-b border-white/10 bg-base/80 backdrop-blur">
+    <header className="sticky top-0 z-40 border-b border-black/10 bg-base/80 backdrop-blur">
       <div className="mx-auto flex max-w-6xl flex-col gap-3 px-3 py-3 sm:flex-row sm:items-center sm:justify-between sm:px-6">
         <Link to="/" aria-label="Go to home" className="self-start">
           <Wordmark />
@@ -34,8 +34,8 @@ export function Navbar() {
               to={item.to}
               className={({ isActive }) =>
                 cn(
-                  'shrink-0 whitespace-nowrap rounded-xl px-3 py-2 text-sm text-muted transition hover:bg-white/10 hover:text-text',
-                  isActive && 'bg-white/10 text-text',
+                  'shrink-0 whitespace-nowrap rounded-xl px-3 py-2 text-sm text-muted transition hover:bg-black/5 hover:text-text',
+                  isActive && 'bg-black/5 text-text',
                 )
               }
             >

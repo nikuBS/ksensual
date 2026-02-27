@@ -22,7 +22,7 @@ type TabsProps = {
 export function Tabs({ tabs, value, onChange }: TabsProps) {
   return (
     <div
-      className="inline-flex max-w-full flex-nowrap items-center gap-2 overflow-x-auto rounded-2xl border border-white/15 bg-panel/60 p-2"
+      className="inline-flex max-w-full flex-nowrap items-center gap-2 overflow-x-auto rounded-2xl border border-black/10 bg-panel/60 p-2"
       role="tablist"
       aria-label="Day tabs"
     >
@@ -37,7 +37,7 @@ export function Tabs({ tabs, value, onChange }: TabsProps) {
             onClick={() => onChange(tab.id)}
             className={cn(
               'shrink-0 whitespace-nowrap rounded-xl px-3 py-2 text-sm font-semibold transition sm:px-4',
-              active ? 'bg-accent text-base' : 'bg-transparent text-muted hover:bg-white/5 hover:text-text',
+              active ? 'bg-accent text-base' : 'bg-transparent text-muted hover:bg-black/5 hover:text-text',
             )}
           >
             {tab.label}
