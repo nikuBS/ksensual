@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { artists, type Artist } from '../data/event'
+import { artists, getArtistCategory, type Artist } from '../data/event'
 import { ArtistCard } from './ArtistCard'
 import { Section } from './Section'
 import { Modal } from './ui/Modal'
@@ -24,24 +24,17 @@ type ArtistGridProps = {
 export function ArtistGrid({ previewCount, showFilters = false }: ArtistGridProps) {
   const [selected, setSelected] = useState<Artist | null>(null)
   const [query, setQuery] = useState('')
-  const [styleFilter, setStyleFilter] = useState('All')
-
-  /**
-   * 필터 드롭다운에 사용할 스타일 목록 생성
-   * Set을 사용해 중복 스타일을 제거한다.
-   */
-  const styles = useMemo(() => ['All', ...new Set(artists.flatMap((artist) => artist.styles))], [])
+  const [categoryFilter, setCategoryFilter] = useState<'DJ' | 'ARTIST'>('ARTIST')
 
   /** 검색어 + 스타일 필터를 동시에 적용한 결과 */
   const filtered = useMemo(() => {
     const lower = query.toLowerCase().trim()
     return artists.filter((artist) => {
-      const queryMatch =
-        !lower || artist.name.toLowerCase().includes(lower) || artist.roles.join(' ').toLowerCase().includes(lower) || artist.styles.join(' ').toLowerCase().includes(lower)
-      const styleMatch = styleFilter === 'All' || artist.styles.includes(styleFilter)
-      return queryMatch && styleMatch
+      const queryMatch = !lower || artist.name.toLowerCase().includes(lower)
+      const categoryMatch = getArtistCategory(artist) === categoryFilter
+      return queryMatch && categoryMatch
     })
-  }, [query, styleFilter])
+  }, [query, categoryFilter])
 
   /** previewCount가 있으면 해당 개수만 잘라서 홈 미리보기로 사용 */
   const displayed = previewCount ? filtered.slice(0, previewCount) : filtered
@@ -50,18 +43,15 @@ export function ArtistGrid({ previewCount, showFilters = false }: ArtistGridProp
     <Section title="Line-up" subtitle="Genre-diverse artists across live showcases and late-night sets.">
       {showFilters ? (
         <div className="mb-4 flex flex-col gap-3 sm:flex-row">
-          <Input aria-label="Search artists" placeholder="Search by artist, role, style" value={query} onChange={(e) => setQuery(e.target.value)} />
+          <Input aria-label="Search artists" placeholder="Search artist name" value={query} onChange={(e) => setQuery(e.target.value)} />
           <select
-            aria-label="Filter by style"
+            aria-label="Filter by category"
             className="w-full rounded-2xl border border-black/15 bg-base/60 px-4 py-3 text-sm sm:w-auto"
-            value={styleFilter}
-            onChange={(e) => setStyleFilter(e.target.value)}
+            value={categoryFilter}
+            onChange={(e) => setCategoryFilter(e.target.value as 'DJ' | 'ARTIST')}
           >
-            {styles.map((style) => (
-              <option key={style} value={style}>
-                {style}
-              </option>
-            ))}
+            <option value="ARTIST">Artist</option>
+            <option value="DJ">Dj</option>
           </select>
         </div>
       ) : null}
@@ -84,7 +74,7 @@ export function ArtistGrid({ previewCount, showFilters = false }: ArtistGridProp
         {selected ? (
           <div className="space-y-4">
             <img src={selected.image} alt={selected.name} className="h-44 w-full rounded-xl object-cover sm:h-56" />
-            <p className="text-sm text-muted">{selected.roles.join(' · ')} · {selected.country}</p>
+            <p className="text-sm text-muted">{getArtistCategory(selected) === 'DJ' ? 'Dj' : 'Artist'}</p>
             <p className="text-sm text-muted">{selected.bio}</p>
             <div className="flex flex-wrap gap-3 text-sm">
               {selected.socials.instagram ? <a href={selected.socials.instagram} target="_blank" rel="noreferrer">Instagram</a> : null}

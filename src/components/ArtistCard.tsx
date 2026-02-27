@@ -1,4 +1,4 @@
-import type { Artist } from '../data/event'
+import { getArtistCategory, type Artist } from '../data/event'
 import { Card } from './ui/Card'
 import { Badge } from './ui/Badge'
 
@@ -13,17 +13,16 @@ type ArtistCardProps = {
  * 클릭하면 상위 컴포넌트에서 모달을 열 수 있도록 artist 객체를 전달한다.
  */
 export function ArtistCard({ artist, onClick }: ArtistCardProps) {
+  const category = getArtistCategory(artist)
+
   return (
     <button type="button" className="text-left" onClick={() => onClick(artist)} aria-label={`Open ${artist.name} details`}>
       <Card className="h-full">
         <img src={artist.image} alt={artist.name} className="h-48 w-full rounded-xl object-cover" loading="lazy" />
         <div className="mt-4">
           <h3 className="text-lg font-semibold">{artist.name}</h3>
-          <p className="text-sm text-muted">{artist.roles.join(' · ')}</p>
           <div className="mt-3 flex flex-wrap gap-2">
-            {artist.styles.slice(0, 2).map((style) => (
-              <Badge key={style}>{style}</Badge>
-            ))}
+            <Badge>{category === 'DJ' ? 'Dj' : 'Artist'}</Badge>
           </div>
         </div>
       </Card>

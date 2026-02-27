@@ -28,13 +28,13 @@ export type Highlight = {
 export type Artist = {
   id: string
   name: string
-  roles: string[]
-  styles: string[]
-  country?: string
+  category: ArtistCategory
   image: string
   bio: string
   socials: Socials
 }
+
+export type ArtistCategory = 'DJ' | 'ARTIST' | 'GUEST'
 
 export type ScheduleDay = {
   dayId: string
@@ -88,43 +88,54 @@ export const highlights: Highlight[] = [
   { icon: 'ShieldCheck', title: 'Safe Experience', desc: 'On-site medics, multilingual support, and contact desk.' },
 ]
 
-const artistSeeds: Array<[string, string, string[], string[], string]> = [
-  ['ari-veil', 'Ari Veil', ['DJ', 'Producer'], ['Deep House', 'Organic'], 'KR'],
-  ['nova-ray', 'Nova Ray', ['Vocal Live'], ['Alt-R&B', 'Soultronica'], 'US'],
-  ['lumen-k', 'LUMEN K', ['Live Set'], ['Techno', 'Ambient'], 'DE'],
-  ['shio', 'SHIO', ['DJ'], ['UK Garage', 'Bass'], 'JP'],
-  ['mira-jo', 'Mira Jo', ['DJ'], ['Afro House', 'Tribal'], 'BR'],
-  ['pulse-101', 'Pulse 101', ['Producer'], ['Electro', 'Breaks'], 'KR'],
-  ['zenit', 'Zenit', ['Live Set'], ['Melodic Techno'], 'FR'],
-  ['luna-rio', 'Luna Rio', ['Vocal Live'], ['Downtempo', 'Latin Electronica'], 'MX'],
-  ['delta-min', 'Delta Min', ['DJ'], ['Progressive House'], 'AU'],
-  ['hana-x', 'HANA X', ['DJ', 'Producer'], ['Minimal', 'Acid'], 'KR'],
-  ['ito-sora', 'Ito Sora', ['Live Set'], ['IDM', 'Glitch'], 'JP'],
-  ['calix', 'CALIX', ['DJ'], ['Trance', 'Peak Time'], 'NL'],
-  ['sael', 'SAEL', ['Vocal Live'], ['Neo Soul', 'Electronica'], 'CA'],
-  ['voidline', 'Voidline', ['DJ'], ['Industrial Techno'], 'SE'],
-  ['mellow-jin', 'Mellow Jin', ['DJ'], ['Lo-fi House', 'Chill'], 'KR'],
-  ['rune-park', 'Rune Park', ['Producer'], ['Cinematic Bass'], 'KR'],
-  ['ivy-tone', 'Ivy Tone', ['Vocal Live'], ['Dream Pop', 'Future Beats'], 'GB'],
-  ['kairo', 'KAIRO', ['DJ'], ['House', 'Disco'], 'ES'],
-  ['mono-kid', 'Mono Kid', ['Live Set'], ['Synthwave', 'Nu Disco'], 'US'],
-  ['echo-bin', 'Echo Bin', ['DJ'], ['Afro Tech', 'Percussive'], 'NG'],
+const artistSeeds: Array<[string, string, ArtistCategory]> = [
+  ['cristian-gabriella', 'CRISTIAN & GABRIELLA', 'ARTIST'],
+  ['klau-los', 'KLAU & LOS', 'ARTIST'],
+  ['carlos-paz', 'CARLOS & PAZ', 'ARTIST'],
+  ['evelyn-la-negra', 'EVELYN LA NEGRA', 'ARTIST'],
+  ['dario-sara', 'DARIO & SARA', 'ARTIST'],
+  ['sorish-elise', 'SORISH & ELISE', 'ARTIST'],
+  ['masa-polina', 'MASA & POLINA', 'ARTIST'],
+  ['xi-alina', 'XI & ALINA', 'ARTIST'],
+  ['valentino-umi', 'VALENTINO & UMI', 'ARTIST'],
+  ['juangoong-yoni', 'JUANGOONG & YONI', 'ARTIST'],
+  ['dj-alejandro', 'DJ ALEJANDRO', 'DJ'],
+  ['dj-toxica', 'DJ TOXICA', 'DJ'],
+  ['dj-ashish', 'DJ ASHISH', 'DJ'],
 ]
 
-export const artists: Artist[] = artistSeeds.map(([id, name, roles, styles, country], index) => ({
-  id,
-  name,
-  roles,
-  styles,
-  country,
-  image: `${assetBase}placeholders/artist-${(index % 8) + 1}.svg`,
-  bio: `${name} crafts high-emotion sets with rhythm-focused transitions and cinematic crescendos tailored for large-scale stages.`,
-  socials: {
-    instagram: `https://instagram.com/${id.replace('-', '')}`,
-    youtube: `https://youtube.com/@${id}`,
-    website: `https://www.${id}.music`,
-  },
-}))
+let dancerImageOrder = 0
+let djImageOrder = 0
+
+export const artists: Artist[] = artistSeeds.map(([id, name, category]) => {
+  let image: string
+  if (category === 'ARTIST' && dancerImageOrder < 10) {
+    dancerImageOrder += 1
+    image = `${assetBase}placeholders/at-${dancerImageOrder}.png`
+  } else if (category === 'DJ' && djImageOrder < 3) {
+    djImageOrder += 1
+    image = `${assetBase}placeholders/dj-${djImageOrder}.png`
+  } else {
+    image = `${assetBase}placeholders/artist-1.svg`
+  }
+
+  return {
+    id,
+    name,
+    category,
+    image,
+    bio: `${name} crafts high-emotion sets with rhythm-focused transitions and cinematic crescendos tailored for large-scale stages.`,
+    socials: {
+      instagram: `https://instagram.com/${id.replace('-', '')}`,
+      youtube: `https://youtube.com/@${id}`,
+      website: `https://www.${id}.music`,
+    },
+  }
+})
+
+export function getArtistCategory(artist: Artist): ArtistCategory {
+  return artist.category
+}
 
 const sessionTitles = [
   'Gate Opening Soundscape',
@@ -217,7 +228,7 @@ export const faq = [
 
 export const gallery = Array.from({ length: 12 }, (_, index) => ({
   id: `gallery-${index + 1}`,
-  src: `${assetBase}placeholders/gallery-${(index % 6) + 1}.svg`,
+  src: `${assetBase}placeholders/gallery-1.svg`,
   alt: `K-SENSUAL scene ${index + 1}`,
 }))
 
