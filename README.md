@@ -147,7 +147,9 @@ shadcn/ui 의존 없이 최소 재사용 컴포넌트만 직접 구현.
 - `vite.config.ts`의 `base: '/ksensual/'`
 - `BrowserRouter basename={import.meta.env.BASE_URL}`
 - GitHub Actions 배포 워크플로우: `.github/workflows/deploy-gh-pages.yml`
-- SPA 새로고침 404 대응: 배포 시 `dist/404.html`을 `dist/index.html`로 복사
+- SPA 새로고침 404 대응:
+  - `public/404.html`에서 `/ksensual/<route>` 요청을 `/ksensual/?/<route>`로 리다이렉트
+  - `index.html`의 스크립트가 `?/<route>`를 원래 경로로 복원
 
 최초 1회 설정:
 1. GitHub 저장소 → `Settings` → `Pages`
