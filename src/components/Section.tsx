@@ -22,8 +22,7 @@ export function Section({ id, title, subtitle, children }: SectionProps) {
     <motion.section
       id={id}
       initial={{ opacity: 0, y: 18 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.15 }}
+      animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.45, ease: 'easeOut' }}
       className="mx-auto w-full max-w-6xl px-3 py-10 sm:px-6 sm:py-16"
     >
