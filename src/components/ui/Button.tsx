@@ -1,16 +1,20 @@
 import type { ButtonHTMLAttributes } from 'react'
 import { cn } from '../../lib/utils'
 
-// Button 컴포넌트에서 받을 수 있는 추가 옵션 타입
-// - variant: 버튼 스타일 종류
-// - size: 버튼 크기
+/**
+ * Button 컴포넌트에서 받을 수 있는 추가 옵션 타입
+ * - variant: 버튼 스타일 종류
+ * - size: 버튼 크기
+ */
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   variant?: 'primary' | 'ghost' | 'outline'
   size?: 'sm' | 'md' | 'lg'
 }
 
-// 프로젝트 전역에서 재사용할 기본 버튼 컴포넌트
-// className을 추가로 받아 필요한 화면에서 커스터마이징할 수 있다.
+/**
+ * 프로젝트 전역에서 재사용할 기본 버튼 컴포넌트
+ * className을 추가로 받아 필요한 화면에서 커스터마이징할 수 있다.
+ */
 export function Button({ className, variant = 'primary', size = 'md', ...props }: ButtonProps) {
   return (
     <button

@@ -1,8 +1,10 @@
 import { Link } from 'react-router-dom'
 import { contact, eventMeta } from '../data/event'
 
-// 전역 푸터
-// 행사 요약 정보 + 핵심 연락 링크를 하단에 고정 제공한다.
+/**
+ * 전역 푸터
+ * 행사 요약 정보 + 핵심 연락 링크를 하단에 고정 제공한다.
+ */
 export function Footer() {
   return (
     <footer className="border-t border-white/10 px-4 py-8 sm:px-6">

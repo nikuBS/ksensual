@@ -1,9 +1,11 @@
 import { motion } from 'framer-motion'
 import type { ReactNode } from 'react'
 
-// 모든 섹션이 공통으로 받는 값
-// - id: 앵커 이동이나 식별에 사용
-// - title/subtitle: 섹션 머리글
+/**
+ * 모든 섹션이 공통으로 받는 값
+ * - id: 앵커 이동이나 식별에 사용
+ * - title/subtitle: 섹션 머리글
+ */
 type SectionProps = {
   id?: string
   title: string
@@ -11,8 +13,10 @@ type SectionProps = {
   children: ReactNode
 }
 
-// 페이지 섹션 공통 레이아웃 컴포넌트
-// framer-motion으로 스크롤 진입 시 fade + up 애니메이션을 적용한다.
+/**
+ * 페이지 섹션 공통 레이아웃 컴포넌트
+ * framer-motion으로 스크롤 진입 시 fade + up 애니메이션을 적용한다.
+ */
 export function Section({ id, title, subtitle, children }: SectionProps) {
   return (
     <motion.section

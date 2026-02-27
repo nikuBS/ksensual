@@ -5,13 +5,15 @@ import { Badge } from './ui/Badge'
 import { Button } from './ui/Button'
 import { Card } from './ui/Card'
 
-// 티켓 섹션 옵션
-// fullPage=true면 /tickets 페이지처럼 "Tickets page" 이동 버튼을 숨긴다.
+/**
+ * 티켓 섹션 옵션
+ * fullPage=true면 /tickets 페이지처럼 "Tickets page" 이동 버튼을 숨긴다.
+ */
 type TicketsSectionProps = {
   fullPage?: boolean
 }
 
-// 티켓 티어 카드 리스트 컴포넌트
+/** 티켓 티어 카드 리스트 컴포넌트 */
 export function TicketsSection({ fullPage = false }: TicketsSectionProps) {
   return (
     <Section title="Tickets" subtitle="Choose your access tier. Taxes and processing fees are shown at checkout.">

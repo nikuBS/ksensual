@@ -1,20 +1,24 @@
 import { cn } from '../../lib/utils'
 
-// 탭 버튼 목록의 최소 데이터 구조
+/** 탭 버튼 목록의 최소 데이터 구조 */
 type TabItem = { id: string; label: string }
 
-// Tabs 컴포넌트 입력값
-// - tabs: 표시할 탭 목록
-// - value: 현재 선택된 탭 id
-// - onChange: 탭 클릭 시 상위 상태 변경 콜백
+/**
+ * Tabs 컴포넌트 입력값
+ * - tabs: 표시할 탭 목록
+ * - value: 현재 선택된 탭 id
+ * - onChange: 탭 클릭 시 상위 상태 변경 콜백
+ */
 type TabsProps = {
   tabs: TabItem[]
   value: string
   onChange: (id: string) => void
 }
 
-// 수평 스크롤 가능한 탭 UI
-// 모바일에서 탭이 많아도 줄바꿈 대신 스크롤되도록 구현했다.
+/**
+ * 수평 스크롤 가능한 탭 UI
+ * 모바일에서 탭이 많아도 줄바꿈 대신 스크롤되도록 구현했다.
+ */
 export function Tabs({ tabs, value, onChange }: TabsProps) {
   return (
     <div

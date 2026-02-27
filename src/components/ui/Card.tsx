@@ -1,9 +1,11 @@
 import type { HTMLAttributes } from 'react'
 import { cn } from '../../lib/utils'
 
-// 카드 형태의 공통 래퍼 컴포넌트
-// - 테두리, 배경, 그림자, 라운드를 기본 제공
-// - 어떤 콘텐츠든 children으로 넣어 재사용 가능
+/**
+ * 카드 형태의 공통 래퍼 컴포넌트
+ * - 테두리, 배경, 그림자, 라운드를 기본 제공
+ * - 어떤 콘텐츠든 children으로 넣어 재사용 가능
+ */
 export function Card({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
   return (
     <div

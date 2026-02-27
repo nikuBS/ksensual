@@ -5,8 +5,10 @@ import { IcsDownload } from './IcsDownload'
 import { Card } from './ui/Card'
 import { Tabs } from './ui/Tabs'
 
-// Day 탭으로 스케줄을 전환하는 섹션
-// 선택된 Day만 화면에 보여주고, 같은 Day 기준으로 ICS 다운로드를 제공한다.
+/**
+ * Day 탭으로 스케줄을 전환하는 섹션
+ * 선택된 Day만 화면에 보여주고, 같은 Day 기준으로 ICS 다운로드를 제공한다.
+ */
 export function Schedule() {
   const [activeDayId, setActiveDayId] = useState(schedule[0]?.dayId ?? '')
   const activeDay = schedule.find((day) => day.dayId === activeDayId) ?? schedule[0]

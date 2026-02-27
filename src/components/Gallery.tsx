@@ -3,8 +3,10 @@ import { gallery } from '../data/event'
 import { Section } from './Section'
 import { Modal } from './ui/Modal'
 
-// 갤러리 썸네일 그리드 + 라이트박스(모달) 컴포넌트
-// 이미지를 누르면 해당 이미지가 큰 화면으로 열린다.
+/**
+ * 갤러리 썸네일 그리드 + 라이트박스(모달) 컴포넌트
+ * 이미지를 누르면 해당 이미지가 큰 화면으로 열린다.
+ */
 export function Gallery() {
   const [activeImage, setActiveImage] = useState<(typeof gallery)[number] | null>(null)
 

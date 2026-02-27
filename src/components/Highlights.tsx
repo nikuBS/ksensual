@@ -3,7 +3,7 @@ import { highlights } from '../data/event'
 import { Section } from './Section'
 import { Card } from './ui/Card'
 
-// data/event.ts의 문자열 icon 값을 실제 Lucide 아이콘 컴포넌트에 매핑한다.
+/** data/event.ts의 문자열 icon 값을 실제 Lucide 아이콘 컴포넌트에 매핑한다. */
 const iconMap = {
   Sparkles,
   Music2,
@@ -13,7 +13,7 @@ const iconMap = {
   ShieldCheck,
 }
 
-// 행사 핵심 장점을 카드 형태로 보여주는 섹션
+/** 행사 핵심 장점을 카드 형태로 보여주는 섹션 */
 export function Highlights() {
   return (
     <Section title="Highlights" subtitle="A premium yet approachable festival journey, crafted for discovery.">

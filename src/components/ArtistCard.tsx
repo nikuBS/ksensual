@@ -2,14 +2,16 @@ import type { Artist } from '../data/event'
 import { Card } from './ui/Card'
 import { Badge } from './ui/Badge'
 
-// 개별 아티스트 카드 입력값
+/** 개별 아티스트 카드 입력값 */
 type ArtistCardProps = {
   artist: Artist
   onClick: (artist: Artist) => void
 }
 
-// 아티스트 미리보기 카드
-// 클릭하면 상위 컴포넌트에서 모달을 열 수 있도록 artist 객체를 전달한다.
+/**
+ * 아티스트 미리보기 카드
+ * 클릭하면 상위 컴포넌트에서 모달을 열 수 있도록 artist 객체를 전달한다.
+ */
 export function ArtistCard({ artist, onClick }: ArtistCardProps) {
   return (
     <button type="button" className="text-left" onClick={() => onClick(artist)} aria-label={`Open ${artist.name} details`}>

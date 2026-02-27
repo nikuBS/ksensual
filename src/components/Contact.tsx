@@ -6,23 +6,25 @@ import { Button } from './ui/Button'
 import { Input, Textarea } from './ui/Input'
 import { Card } from './ui/Card'
 
-// 문의 폼 섹션
-// 실제 서버 전송은 하지 않고(mock), 기본 유효성 검증 + 성공 메시지 표시까지 구현한다.
+/**
+ * 문의 폼 섹션
+ * 실제 서버 전송은 하지 않고(mock), 기본 유효성 검증 + 성공 메시지 표시까지 구현한다.
+ */
 export function Contact() {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [message, setMessage] = useState('')
   const [submitted, setSubmitted] = useState(false)
 
-  // 아주 기본적인 이메일 형식 검증 정규식
+  /** 아주 기본적인 이메일 형식 검증 정규식 */
   const isEmailValid = useMemo(() => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email), [email])
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault()
-    // 필수 조건을 통과하지 못하면 제출을 중단
+    /** 필수 조건을 통과하지 못하면 제출을 중단 */
     if (!isEmailValid || !name.trim() || !message.trim()) return
 
-    // mock 제출 성공 처리
+    /** mock 제출 성공 처리 */
     setSubmitted(true)
     setName('')
     setEmail('')

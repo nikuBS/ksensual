@@ -97,6 +97,42 @@ shadcn/ui 의존 없이 최소 재사용 컴포넌트만 직접 구현.
 - 색/타이포: `tailwind.config.ts`, `src/styles/globals.css`
 - 지도 임베드: Home의 Venue placeholder를 iframe으로 대체
 
+## 10) 초급자용 컴포넌트 읽는 순서
+
+처음 코드를 읽는 경우, 아래 순서로 보면 구조를 빠르게 이해할 수 있습니다.
+
+1. 앱 뼈대 파악
+- `src/main.tsx`: BrowserRouter 연결과 전역 스타일 로딩
+- `src/App.tsx`: 라우트(`/`, `/artists`, `/tickets`, `/faq`)와 공통 레이아웃
+
+2. 공통 UI 먼저 이해
+- `src/components/ui/Button.tsx`
+- `src/components/ui/Card.tsx`
+- `src/components/ui/Modal.tsx`
+- `src/components/ui/Tabs.tsx`
+- `src/components/ui/Accordion.tsx`
+- `src/components/ui/Input.tsx`
+- `src/components/ui/Badge.tsx`
+
+3. 데이터 구조 확인
+- `src/data/event.ts`: 화면 콘텐츠의 단일 소스
+
+4. 페이지 섹션 흐름 보기
+- `src/components/Hero.tsx`
+- `src/components/Highlights.tsx`
+- `src/components/ArtistGrid.tsx` (+ `ArtistCard.tsx`)
+- `src/components/Schedule.tsx` (+ `IcsDownload.tsx`)
+- `src/components/TicketsSection.tsx`
+- `src/components/Gallery.tsx`
+- `src/components/FAQSection.tsx`
+- `src/components/Contact.tsx`
+
+5. 페이지별 조합 확인
+- `src/routes/Home.tsx`
+- `src/routes/Artists.tsx`
+- `src/routes/Tickets.tsx`
+- `src/routes/Faq.tsx`
+
 ## ICS 다운로드 검증 포인트
 
 - Day 탭 전환 시 선택 Day 세션만 `.ics` 생성

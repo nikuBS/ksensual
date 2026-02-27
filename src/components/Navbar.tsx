@@ -2,7 +2,7 @@ import { Link, NavLink } from 'react-router-dom'
 import { eventMeta, navigation } from '../data/event'
 import { cn } from '../lib/utils'
 
-// 텍스트 로고 + 심볼 SVG를 묶은 워드마크 컴포넌트
+/** 텍스트 로고 + 심볼 SVG를 묶은 워드마크 컴포넌트 */
 function Wordmark() {
   return (
     <div className="flex items-center gap-2">
@@ -15,9 +15,11 @@ function Wordmark() {
   )
 }
 
-// 상단 고정 내비게이션
-// - 데이터 파일의 navigation 배열을 그대로 렌더링
-// - 현재 경로와 일치하는 메뉴는 활성 스타일로 표시
+/**
+ * 상단 고정 내비게이션
+ * - 데이터 파일의 navigation 배열을 그대로 렌더링
+ * - 현재 경로와 일치하는 메뉴는 활성 스타일로 표시
+ */
 export function Navbar() {
   return (
     <header className="sticky top-0 z-40 border-b border-white/10 bg-base/80 backdrop-blur">

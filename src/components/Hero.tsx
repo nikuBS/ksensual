@@ -3,8 +3,10 @@ import { eventMeta } from '../data/event'
 import { Button } from './ui/Button'
 import { Countdown } from './Countdown'
 
-// 랜딩 최상단 Hero 섹션
-// 핵심 브랜딩(K-SENSUAL), 카피, CTA, 행사 요약, 카운트다운을 한 번에 제공한다.
+/**
+ * 랜딩 최상단 Hero 섹션
+ * 핵심 브랜딩(K-SENSUAL), 카피, CTA, 행사 요약, 카운트다운을 한 번에 제공한다.
+ */
 export function Hero() {
   return (
     <section className="relative overflow-hidden border-b border-white/10">

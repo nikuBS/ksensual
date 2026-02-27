@@ -2,16 +2,18 @@ import { ChevronDown } from 'lucide-react'
 import { useState } from 'react'
 import { cn } from '../../lib/utils'
 
-// 아코디언 아이템 1개의 데이터 타입
+/** 아코디언 아이템 1개의 데이터 타입 */
 type Item = { id: string; title: string; content: string }
 
 type AccordionProps = {
   items: Item[]
 }
 
-// FAQ에 사용하는 단일 오픈 방식 아코디언
-// - openId로 현재 열린 항목을 기억
-// - 같은 항목을 다시 누르면 닫힘
+/**
+ * FAQ에 사용하는 단일 오픈 방식 아코디언
+ * - openId로 현재 열린 항목을 기억
+ * - 같은 항목을 다시 누르면 닫힘
+ */
 export function Accordion({ items }: AccordionProps) {
   const [openId, setOpenId] = useState<string | null>(items[0]?.id ?? null)
 
