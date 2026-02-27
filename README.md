@@ -138,3 +138,22 @@ shadcn/ui 의존 없이 최소 재사용 컴포넌트만 직접 구현.
 - Day 탭 전환 시 선택 Day 세션만 `.ics` 생성
 - 파일명 `k-sensual-{dayId}.ics`
 - 캘린더 앱 import 시 세션 제목/시간/장소 노출 확인
+
+## 11) GitHub Pages (`github.io/ksensual`) 배포
+
+이 저장소는 `https://<GitHubID>.github.io/ksensual/` 기준으로 동작하도록 설정되어 있습니다.
+
+적용된 설정:
+- `vite.config.ts`의 `base: '/ksensual/'`
+- `BrowserRouter basename={import.meta.env.BASE_URL}`
+- GitHub Actions 배포 워크플로우: `.github/workflows/deploy-gh-pages.yml`
+- SPA 새로고침 404 대응: 배포 시 `dist/404.html`을 `dist/index.html`로 복사
+
+최초 1회 설정:
+1. GitHub 저장소 → `Settings` → `Pages`
+2. `Build and deployment`의 Source를 `GitHub Actions`로 선택
+3. `main` 브랜치에 푸시
+4. Actions 완료 후 배포 URL 확인
+
+예상 URL:
+- `https://nikuBS.github.io/ksensual/`
