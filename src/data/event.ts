@@ -55,6 +55,8 @@ export type TicketTier = {
   note?: string
 }
 
+const assetBase = import.meta.env.BASE_URL
+
 export const eventMeta: EventMeta = {
   title: 'K-SENSUAL',
   subtitle: 'Sonic Rituals for the Senses',
@@ -109,7 +111,7 @@ export const artists: Artist[] = artistSeeds.map(([id, name, roles, styles, coun
   roles,
   styles,
   country,
-  image: `/placeholders/artist-${(index % 8) + 1}.svg`,
+  image: `${assetBase}placeholders/artist-${(index % 8) + 1}.svg`,
   bio: `${name} crafts high-emotion sets with rhythm-focused transitions and cinematic crescendos tailored for large-scale stages.`,
   socials: {
     instagram: `https://instagram.com/${id.replace('-', '')}`,
@@ -209,7 +211,7 @@ export const faq = [
 
 export const gallery = Array.from({ length: 12 }, (_, index) => ({
   id: `gallery-${index + 1}`,
-  src: `/placeholders/gallery-${(index % 6) + 1}.svg`,
+  src: `${assetBase}placeholders/gallery-${(index % 6) + 1}.svg`,
   alt: `K-SENSUAL scene ${index + 1}`,
 }))
 
