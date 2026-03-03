@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom'
-import { tickets } from '../data/event'
+import { getLocalizedContent } from '../data/localizedContent'
+import { useLocale } from '../i18n/LocaleContext'
+import { messages } from '../i18n/messages'
 import { Section } from './Section'
 import { Badge } from './ui/Badge'
 import { Button } from './ui/Button'
@@ -15,8 +17,12 @@ type TicketsSectionProps = {
 
 /** 티켓 티어 카드 리스트 컴포넌트 */
 export function TicketsSection({ fullPage = false }: TicketsSectionProps) {
+  const { locale } = useLocale()
+  const { tickets } = getLocalizedContent(locale)
+  const m = messages[locale]
+
   return (
-    <Section title="Tickets" subtitle="Choose your access tier. Taxes and processing fees are shown at checkout.">
+    <Section title={m.sections.ticketsTitle} subtitle={m.sections.ticketsSubtitle}>
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
         {tickets.map((tier) => (
           <Card key={tier.id} className="flex h-full flex-col">
@@ -37,7 +43,7 @@ export function TicketsSection({ fullPage = false }: TicketsSectionProps) {
       {!fullPage ? (
         <div className="mt-6">
           <Link to="/tickets">
-            <Button variant="outline">Tickets page</Button>
+            <Button variant="outline">{m.common.ticketsPage}</Button>
           </Link>
         </div>
       ) : null}

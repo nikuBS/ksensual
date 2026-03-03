@@ -8,11 +8,17 @@ import { Gallery } from '../components/Gallery'
 import { FAQSection } from '../components/FAQSection'
 import { Contact } from '../components/Contact'
 import { Section } from '../components/Section'
-import { venue } from '../data/event'
+import { getLocalizedContent } from '../data/localizedContent'
+import { useLocale } from '../i18n/LocaleContext'
+import { messages } from '../i18n/messages'
 import { Card } from '../components/ui/Card'
 import { Button } from '../components/ui/Button'
 
 export default function Home() {
+  const { locale } = useLocale()
+  const { venue } = getLocalizedContent(locale)
+  const m = messages[locale]
+
   return (
     <>
       <Hero />
@@ -20,19 +26,19 @@ export default function Home() {
       <ArtistGrid previewCount={12} />
       <Schedule />
       <TicketsSection />
-      <Section title="Venue" subtitle="Plan your route and stay near the festival district.">
+      <Section title={m.sections.venueTitle} subtitle={m.sections.venueSubtitle}>
         <div className="grid gap-4 lg:grid-cols-2">
           <Card>
-            <p className="text-sm text-muted">Address</p>
+            <p className="text-sm text-muted">{m.common.address}</p>
             <p className="font-semibold">{venue.address}</p>
-            <p className="mt-4 text-sm text-muted">Transport</p>
+            <p className="mt-4 text-sm text-muted">{m.common.transport}</p>
             <ul className="mt-1 space-y-1 text-sm text-muted">
               {venue.transport.map((item) => (
                 <li key={item}>• {item}</li>
               ))}
             </ul>
             <p className="mt-4 text-sm text-muted">{venue.shuttle}</p>
-            <p className="mt-4 text-sm text-muted">Hotels</p>
+            <p className="mt-4 text-sm text-muted">{m.common.hotels}</p>
             <ul className="mt-1 space-y-1 text-sm text-muted">
               {venue.hotels.map((hotel) => (
                 <li key={hotel}>• {hotel}</li>
@@ -40,19 +46,19 @@ export default function Home() {
             </ul>
           </Card>
           <Card className="flex min-h-72 flex-col items-center justify-center text-center">
-            <p className="mb-2 text-sm text-muted">Map Placeholder</p>
-            <p className="max-w-sm text-sm text-muted">Replace this box with an embedded map iframe if needed. External URL is already prepared.</p>
+            <p className="mb-2 text-sm text-muted">{m.common.mapPlaceholder}</p>
+            <p className="max-w-sm text-sm text-muted">{m.common.mapPlaceholderDesc}</p>
             <a href={venue.mapUrl} target="_blank" rel="noreferrer" className="mt-4">
-              <Button variant="outline">Open Map URL</Button>
+              <Button variant="outline">{m.common.openMapUrl}</Button>
             </a>
           </Card>
         </div>
       </Section>
       <Gallery />
       <FAQSection limit={8} />
-      <Section title="More Questions?">
+      <Section title={m.sections.moreQuestions}>
         <Link to="/faq">
-          <Button variant="outline">View all FAQ</Button>
+          <Button variant="outline">{m.common.viewAllFaq}</Button>
         </Link>
       </Section>
       <Contact />

@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react'
+import { useLocale } from '../i18n/LocaleContext'
+import { messages } from '../i18n/messages'
 
 type CountdownProps = {
   targetISO: string
@@ -30,6 +32,8 @@ function getRemaining(targetISO: string): Remaining {
  * hydration 이슈를 피하기 위해 mounted 이후에만 실제 시간을 표시한다.
  */
 export function Countdown({ targetISO }: CountdownProps) {
+  const { locale } = useLocale()
+  const m = messages[locale]
   const [mounted, setMounted] = useState(false)
   const [time, setTime] = useState<Remaining>({ days: 0, hours: 0, minutes: 0 })
 
@@ -46,12 +50,12 @@ export function Countdown({ targetISO }: CountdownProps) {
   }, [targetISO])
 
   if (!mounted) {
-    return <p className="text-sm text-muted">Loading countdown...</p>
+    return <p className="text-sm text-muted">{m.common.countdownLoading}</p>
   }
 
   return (
     <p className="text-sm text-muted" aria-live="polite">
-      Starts in <span className="font-semibold text-text">{time.days}d {time.hours}h {time.minutes}m</span>
+      {m.common.countdownStartsIn} <span className="font-semibold text-text">{time.days}d {time.hours}h {time.minutes}m</span>
     </p>
   )
 }

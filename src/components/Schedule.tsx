@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import { schedule } from '../data/event'
+import { useLocale } from '../i18n/LocaleContext'
+import { messages } from '../i18n/messages'
 import { Section } from './Section'
 import { IcsDownload } from './IcsDownload'
 import { Card } from './ui/Card'
@@ -10,15 +12,22 @@ import { Tabs } from './ui/Tabs'
  * 선택된 Day만 화면에 보여주고, 같은 Day 기준으로 ICS 다운로드를 제공한다.
  */
 export function Schedule() {
+  const { locale } = useLocale()
+  const m = messages[locale]
   const [activeDayId, setActiveDayId] = useState(schedule[0]?.dayId ?? '')
   const activeDay = schedule.find((day) => day.dayId === activeDayId) ?? schedule[0]
 
   if (!activeDay) return null
 
   return (
-    <Section title="Schedule" subtitle="Select a day and export that day into your calendar.">
+    <Section title={m.sections.scheduleTitle} subtitle={m.sections.scheduleSubtitle}>
       <div className="mb-5 flex flex-col items-start gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
-        <Tabs tabs={schedule.map((day) => ({ id: day.dayId, label: day.label }))} value={activeDayId} onChange={setActiveDayId} />
+        <Tabs
+          tabs={schedule.map((day, index) => ({ id: day.dayId, label: `${m.common.day} ${index + 1}` }))}
+          value={activeDayId}
+          onChange={setActiveDayId}
+          ariaLabel={m.common.selectDayTabLabel}
+        />
         <IcsDownload day={activeDay} />
       </div>
 

@@ -1,4 +1,6 @@
-import { faq } from '../data/event'
+import { getLocalizedContent } from '../data/localizedContent'
+import { useLocale } from '../i18n/LocaleContext'
+import { messages } from '../i18n/messages'
 import { Section } from './Section'
 import { Accordion } from './ui/Accordion'
 
@@ -12,6 +14,10 @@ type FAQSectionProps = {
 
 /** FAQ 데이터를 아코디언이 요구하는 형식으로 변환해 렌더링 */
 export function FAQSection({ limit }: FAQSectionProps) {
+  const { locale } = useLocale()
+  const { faq } = getLocalizedContent(locale)
+  const m = messages[locale]
+
   const items = (limit ? faq.slice(0, limit) : faq).map((item, index) => ({
     id: `faq-${index + 1}`,
     title: item.q,
@@ -19,7 +25,7 @@ export function FAQSection({ limit }: FAQSectionProps) {
   }))
 
   return (
-    <Section title="FAQ" subtitle="Quick answers for planning your K-SENSUAL weekend.">
+    <Section title={m.sections.faqTitle} subtitle={m.sections.faqSubtitle}>
       <Accordion items={items} />
     </Section>
   )

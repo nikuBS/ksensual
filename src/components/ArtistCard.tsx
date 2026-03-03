@@ -1,4 +1,6 @@
 import { getArtistCategory, type Artist } from '../data/event'
+import { useLocale } from '../i18n/LocaleContext'
+import { messages } from '../i18n/messages'
 import { Card } from './ui/Card'
 import { Badge } from './ui/Badge'
 
@@ -13,6 +15,8 @@ type ArtistCardProps = {
  * 클릭하면 상위 컴포넌트에서 모달을 열 수 있도록 artist 객체를 전달한다.
  */
 export function ArtistCard({ artist, onClick }: ArtistCardProps) {
+  const { locale } = useLocale()
+  const m = messages[locale]
   const category = getArtistCategory(artist)
 
   return (
@@ -24,7 +28,7 @@ export function ArtistCard({ artist, onClick }: ArtistCardProps) {
         <div className="mt-4">
           <h3 className="text-lg font-semibold">{artist.name}</h3>
           <div className="mt-3 flex flex-wrap gap-2">
-            <Badge>{category === 'DJ' ? 'Dj' : 'Artist'}</Badge>
+            <Badge>{category === 'DJ' ? m.common.dj : m.common.artist}</Badge>
           </div>
         </div>
       </Card>

@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
-import { eventMeta } from '../data/event'
+import { getLocalizedContent } from '../data/localizedContent'
+import { useLocale } from '../i18n/LocaleContext'
 import { Button } from './ui/Button'
 import { Countdown } from './Countdown'
 
@@ -8,13 +9,16 @@ import { Countdown } from './Countdown'
  * 핵심 브랜딩(K-SENSUAL), 카피, CTA, 행사 요약, 카운트다운을 한 번에 제공한다.
  */
 export function Hero() {
+  const { locale } = useLocale()
+  const { eventMeta } = getLocalizedContent(locale)
+
   return (
     <section className="relative overflow-hidden border-b border-black/10">
       <div className="absolute left-1/2 top-0 -z-10 h-72 w-72 -translate-x-1/2 rounded-full bg-accent/30 blur-[100px]" />
       <div className="mx-auto grid min-h-[72vh] w-full max-w-6xl gap-8 px-3 py-16 sm:px-6 sm:py-24 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
         <div className="flex flex-col justify-center gap-5">
           <p className="text-xs uppercase tracking-[0.2em] text-accentSoft sm:text-sm sm:tracking-[0.25em]">{eventMeta.subtitle}</p>
-          <h1 className="max-w-3xl text-balance font-heading text-4xl leading-tight sm:text-6xl md:text-7xl">{eventMeta.title}</h1>
+          <h1 className="max-w-3xl text-balance font-heading text-4xl leading-tight text-[#063247] sm:text-6xl md:text-7xl">{eventMeta.title}</h1>
           <p className="max-w-2xl text-sm text-muted sm:text-lg">{eventMeta.heroCopy}</p>
           <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:flex-wrap sm:items-center">
             {eventMeta.ctas.map((cta) => (

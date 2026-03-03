@@ -1,5 +1,7 @@
 import { Hotel, Music2, ShieldCheck, Sparkles, Train, UtensilsCrossed } from 'lucide-react'
-import { highlights } from '../data/event'
+import { getLocalizedContent } from '../data/localizedContent'
+import { useLocale } from '../i18n/LocaleContext'
+import { messages } from '../i18n/messages'
 import { Section } from './Section'
 import { Card } from './ui/Card'
 
@@ -15,8 +17,12 @@ const iconMap = {
 
 /** 행사 핵심 장점을 카드 형태로 보여주는 섹션 */
 export function Highlights() {
+  const { locale } = useLocale()
+  const { highlights } = getLocalizedContent(locale)
+  const m = messages[locale]
+
   return (
-    <Section title="Highlights" subtitle="A premium yet approachable festival journey, crafted for discovery.">
+    <Section title={m.sections.highlightsTitle} subtitle={m.sections.highlightsSubtitle}>
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {highlights.map((item) => {
           const Icon = iconMap[item.icon as keyof typeof iconMap] ?? Sparkles

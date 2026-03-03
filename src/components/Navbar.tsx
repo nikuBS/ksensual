@@ -1,9 +1,14 @@
 import { Link, NavLink } from 'react-router-dom'
-import { eventMeta, navigation } from '../data/event'
+import { getLocalizedContent } from '../data/localizedContent'
+import { useLocale } from '../i18n/LocaleContext'
+import { localeOptions } from '../i18n/locales'
+import { messages } from '../i18n/messages'
 import { cn } from '../lib/utils'
 
 /** 텍스트 로고 + 심볼 SVG를 묶은 워드마크 컴포넌트 */
 function Wordmark() {
+  const { locale } = useLocale()
+  const { eventMeta } = getLocalizedContent(locale)
   return (
     <div className="flex items-center gap-2">
       <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
@@ -21,13 +26,37 @@ function Wordmark() {
  * - 현재 경로와 일치하는 메뉴는 활성 스타일로 표시
  */
 export function Navbar() {
+  const { locale, setLocale } = useLocale()
+  const m = messages[locale]
+  const navigation = [
+    { label: m.nav.home, to: '/' },
+    { label: m.nav.artists, to: '/artists' },
+    { label: m.nav.tickets, to: '/tickets' },
+    { label: m.nav.faq, to: '/faq' },
+  ]
+
   return (
     <header className="sticky top-0 z-40 border-b border-black/10 bg-base/80 backdrop-blur">
       <div className="mx-auto flex max-w-6xl flex-col gap-3 px-3 py-3 sm:flex-row sm:items-center sm:justify-between sm:px-6">
         <Link to="/" aria-label="Go to home" className="self-start">
           <Wordmark />
         </Link>
-        <nav aria-label="Main navigation" className="flex w-full flex-nowrap items-center gap-2 overflow-x-auto pb-1 sm:w-auto sm:flex-wrap sm:overflow-visible sm:pb-0">
+        <div className="flex w-full flex-col gap-2 sm:w-auto sm:items-end">
+          <label className="sr-only" htmlFor="locale-select">{m.language}</label>
+          <select
+            id="locale-select"
+            value={locale}
+            onChange={(event) => setLocale(event.target.value as typeof locale)}
+            className="w-full rounded-xl border border-black/15 bg-panel px-3 py-2 text-sm text-text sm:w-auto"
+            aria-label={m.language}
+          >
+            {localeOptions.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </select>
+          <nav aria-label="Main navigation" className="flex w-full flex-nowrap items-center gap-2 overflow-x-auto pb-1 sm:w-auto sm:flex-wrap sm:overflow-visible sm:pb-0">
           {navigation.map((item) => (
             <NavLink
               key={item.to}
@@ -42,7 +71,8 @@ export function Navbar() {
               {item.label}
             </NavLink>
           ))}
-        </nav>
+          </nav>
+        </div>
       </div>
     </header>
   )

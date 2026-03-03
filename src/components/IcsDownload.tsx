@@ -1,5 +1,7 @@
 import { Download } from 'lucide-react'
 import type { ScheduleDay } from '../data/event'
+import { useLocale } from '../i18n/LocaleContext'
+import { messages } from '../i18n/messages'
 import { buildIcs } from '../lib/ics'
 import { Button } from './ui/Button'
 
@@ -14,6 +16,9 @@ function toIso(dateISO: string, time: string): string {
 }
 
 export function IcsDownload({ day }: IcsDownloadProps) {
+  const { locale } = useLocale()
+  const m = messages[locale]
+
   const handleDownload = () => {
     /**
      * 현재 Day의 모든 세션을 iCalendar 이벤트로 변환
@@ -50,8 +55,8 @@ export function IcsDownload({ day }: IcsDownloadProps) {
   }
 
   return (
-    <Button variant="outline" onClick={handleDownload} aria-label={`Download ${day.label} schedule in ICS`}>
-      <Download size={16} className="mr-2" /> Download ICS
+    <Button variant="outline" onClick={handleDownload} aria-label={`${m.common.downloadIcs} ${day.label}`}>
+      <Download size={16} className="mr-2" /> {m.common.downloadIcs}
     </Button>
   )
 }

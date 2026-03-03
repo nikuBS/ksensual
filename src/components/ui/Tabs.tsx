@@ -13,18 +13,19 @@ type TabsProps = {
   tabs: TabItem[]
   value: string
   onChange: (id: string) => void
+  ariaLabel?: string
 }
 
 /**
  * 수평 스크롤 가능한 탭 UI
  * 모바일에서 탭이 많아도 줄바꿈 대신 스크롤되도록 구현했다.
  */
-export function Tabs({ tabs, value, onChange }: TabsProps) {
+export function Tabs({ tabs, value, onChange, ariaLabel = 'Tabs' }: TabsProps) {
   return (
     <div
       className="inline-flex max-w-full flex-nowrap items-center gap-2 overflow-x-auto rounded-2xl border border-black/10 bg-panel/60 p-2"
       role="tablist"
-      aria-label="Day tabs"
+      aria-label={ariaLabel}
     >
       {tabs.map((tab) => {
         const active = tab.id === value

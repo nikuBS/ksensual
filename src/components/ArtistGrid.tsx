@@ -2,6 +2,8 @@ import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Instagram } from 'lucide-react'
 import { artists, type Artist } from '../data/event'
+import { useLocale } from '../i18n/LocaleContext'
+import { messages } from '../i18n/messages'
 import { ArtistCard } from './ArtistCard'
 import { Section } from './Section'
 import { Modal } from './ui/Modal'
@@ -23,6 +25,8 @@ type ArtistGridProps = {
  * 홈(/)과 아티스트 목록(/artists)에서 동일 컴포넌트를 재사용한다.
  */
 export function ArtistGrid({ previewCount, showFilters = false }: ArtistGridProps) {
+  const { locale } = useLocale()
+  const m = messages[locale]
   const [selected, setSelected] = useState<Artist | null>(null)
   const [query, setQuery] = useState('')
   const [categoryFilter, setCategoryFilter] = useState<'ALL' | 'DJ' | 'ARTIST'>('ALL')
@@ -43,19 +47,19 @@ export function ArtistGrid({ previewCount, showFilters = false }: ArtistGridProp
   const displayed = previewCount ? filtered.slice(0, previewCount) : filtered
 
   return (
-    <Section title="Line-up" subtitle="Genre-diverse artists across live showcases and late-night sets.">
+    <Section title={m.sections.lineupTitle} subtitle={m.sections.lineupSubtitle}>
       {showFilters ? (
         <div className="mb-4 flex flex-col gap-3 sm:flex-row">
-          <Input aria-label="Search artists" placeholder="Search artist name" value={query} onChange={(e) => setQuery(e.target.value)} />
+          <Input aria-label={m.common.searchArtistName} placeholder={m.common.searchArtistName} value={query} onChange={(e) => setQuery(e.target.value)} />
           <select
-            aria-label="Filter by category"
+            aria-label={m.common.filterCategory}
             className="w-full rounded-2xl border border-black/15 bg-base/60 px-4 py-3 text-sm sm:w-auto"
             value={categoryFilter}
             onChange={(e) => setCategoryFilter(e.target.value as 'ALL' | 'DJ' | 'ARTIST')}
           >
-            <option value="ALL">All</option>
-            <option value="ARTIST">Artist</option>
-            <option value="DJ">Dj</option>
+            <option value="ALL">{m.common.all}</option>
+            <option value="ARTIST">{m.common.artist}</option>
+            <option value="DJ">{m.common.dj}</option>
           </select>
         </div>
       ) : null}
@@ -69,12 +73,12 @@ export function ArtistGrid({ previewCount, showFilters = false }: ArtistGridProp
       {previewCount ? (
         <div className="mt-6">
           <Link to="/artists">
-            <Button variant="outline">See all artists</Button>
+            <Button variant="outline">{m.common.seeAllArtists}</Button>
           </Link>
         </div>
       ) : null}
 
-      <Modal open={!!selected} onClose={() => setSelected(null)} title={selected?.name ?? 'Artist detail'}>
+      <Modal open={!!selected} onClose={() => setSelected(null)} title={selected?.name ?? m.common.artistDetail}>
         {selected ? (
           <div className="space-y-4">
             <div className="rounded-xl border border-black/10 bg-base/40 p-2">
@@ -89,7 +93,7 @@ export function ArtistGrid({ previewCount, showFilters = false }: ArtistGridProp
                   className="inline-flex items-center gap-2 text-lg font-semibold text-accentSoft transition hover:opacity-80"
                 >
                   <Instagram size={20} aria-hidden="true" />
-                  Instagram
+                  {m.common.instagram}
                 </a>
               ) : null}
             </div>
