@@ -48,12 +48,14 @@ export const messages: Record<
       countdownStartsIn: string
       selectDayTabLabel: string
       day: string
+      prev: string
+      next: string
     }
   }
 > = {
   en: {
     language: 'Language',
-    nav: { home: 'Home', artists: 'Artists', tickets: 'Tickets', faq: 'FAQ' },
+    nav: { home: 'Home', artists: 'Artists', tickets: 'Tickets', faq: 'Venue' },
     sections: {
       highlightsTitle: 'Highlights',
       highlightsSubtitle: 'A premium yet approachable festival journey, crafted for discovery.',
@@ -76,7 +78,7 @@ export const messages: Record<
     common: {
       seeAllArtists: 'See all artists',
       ticketsPage: 'Tickets page',
-      viewAllFaq: 'View all FAQ',
+      viewAllFaq: 'View venue details',
       openMapUrl: 'Open Map URL',
       mapPlaceholder: 'Map Placeholder',
       mapPlaceholderDesc: 'Replace this box with an embedded map iframe if needed. External URL is already prepared.',
@@ -97,11 +99,13 @@ export const messages: Record<
       countdownStartsIn: 'Starts in',
       selectDayTabLabel: 'Day tabs',
       day: 'Day',
+      prev: 'Prev',
+      next: 'Next',
     },
   },
   ko: {
     language: '언어',
-    nav: { home: '홈', artists: '아티스트', tickets: '티켓', faq: 'FAQ' },
+    nav: { home: '홈', artists: '아티스트', tickets: '티켓', faq: '장소' },
     sections: {
       highlightsTitle: '하이라이트',
       highlightsSubtitle: '프리미엄 무드와 접근성을 함께 담은 페스티벌 경험입니다.',
@@ -124,7 +128,7 @@ export const messages: Record<
     common: {
       seeAllArtists: '전체 아티스트 보기',
       ticketsPage: '티켓 페이지',
-      viewAllFaq: 'FAQ 전체 보기',
+      viewAllFaq: '장소 정보 보기',
       openMapUrl: '지도 링크 열기',
       mapPlaceholder: '지도 자리 표시',
       mapPlaceholderDesc: '필요 시 이 영역을 지도 iframe으로 교체하세요. 외부 URL은 준비되어 있습니다.',
@@ -145,11 +149,13 @@ export const messages: Record<
       countdownStartsIn: '시작까지',
       selectDayTabLabel: '요일 탭',
       day: 'DAY',
+      prev: '이전',
+      next: '다음',
     },
   },
   es: {
     language: 'Idioma',
-    nav: { home: 'Inicio', artists: 'Artistas', tickets: 'Entradas', faq: 'FAQ' },
+    nav: { home: 'Inicio', artists: 'Artistas', tickets: 'Entradas', faq: 'Lugar' },
     sections: {
       highlightsTitle: 'Destacados',
       highlightsSubtitle: 'Una experiencia de festival premium y accesible para descubrir.',
@@ -172,7 +178,7 @@ export const messages: Record<
     common: {
       seeAllArtists: 'Ver todos los artistas',
       ticketsPage: 'Página de entradas',
-      viewAllFaq: 'Ver FAQ completa',
+      viewAllFaq: 'Ver detalles del lugar',
       openMapUrl: 'Abrir mapa',
       mapPlaceholder: 'Espacio del mapa',
       mapPlaceholderDesc: 'Puedes reemplazar este bloque por un iframe de mapa. La URL externa ya está lista.',
@@ -193,6 +199,8 @@ export const messages: Record<
       countdownStartsIn: 'Comienza en',
       selectDayTabLabel: 'Pestañas de día',
       day: 'Día',
+      prev: 'Prev',
+      next: 'Next',
     },
   },
 }

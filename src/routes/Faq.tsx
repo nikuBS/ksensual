@@ -1,11 +1,5 @@
-import { FAQSection } from '../components/FAQSection'
-import { Contact } from '../components/Contact'
+import { VenueSection } from '../components/VenueSection'
 
 export default function Faq() {
-  return (
-    <>
-      <FAQSection />
-      <Contact />
-    </>
-  )
+  return <VenueSection />
 }
