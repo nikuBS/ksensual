@@ -67,8 +67,9 @@ const byLocale: Record<Locale, LocalizedContent> = {
       cityCountry: 'Jeju Island, Korea',
       heroCopy: 'K-SENSUAL 10th Anniversary in the Korean Maldives: ocean breeze stages, summer dance nights, and global artists in Jeju.',
       ctas: [
-        { label: 'Tickets', to: '/tickets' },
         { label: 'Line-up', to: '/artists' },
+        { label: 'Tickets', to: '/tickets' },
+        { label: 'Venue', to: '/venue' },
       ],
     },
     highlights: [
@@ -126,8 +127,9 @@ const byLocale: Record<Locale, LocalizedContent> = {
       cityCountry: '제주, 대한민국',
       heroCopy: '한국의 몰디브 제주에서 열리는 K-SENSUAL 10주년. 바다 바람이 흐르는 무대와 여름 밤의 퍼포먼스를 만나보세요.',
       ctas: [
-        { label: '티켓', to: '/tickets' },
         { label: '라인업', to: '/artists' },
+        { label: '티켓', to: '/tickets' },
+        { label: '장소', to: '/venue' },
       ],
     },
     highlights: [
@@ -185,8 +187,9 @@ const byLocale: Record<Locale, LocalizedContent> = {
       cityCountry: 'Isla de Jeju, Corea',
       heroCopy: 'K-SENSUAL 10º Aniversario en el “Maldivas de Corea”: escenarios con brisa marina, noches de verano y artistas globales.',
       ctas: [
-        { label: 'Entradas', to: '/tickets' },
         { label: 'Line-up', to: '/artists' },
+        { label: 'Entradas', to: '/tickets' },
+        { label: 'Lugar', to: '/venue' },
       ],
     },
     highlights: [

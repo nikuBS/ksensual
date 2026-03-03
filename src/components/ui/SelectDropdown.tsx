@@ -1,23 +1,32 @@
 import { useEffect, useMemo, useRef, useState, type KeyboardEvent } from 'react'
-import { ChevronDown, Check } from 'lucide-react'
+import { Check, ChevronDown } from 'lucide-react'
 import { cn } from '../../lib/utils'
-import type { Locale } from '../../i18n/locales'
 
-type LocaleOption = { value: Locale; label: string }
+type SelectOption<T extends string> = {
+  value: T
+  label: string
+}
 
-type LocaleDropdownProps = {
-  value: Locale
-  options: LocaleOption[]
-  onChange: (next: Locale) => void
+type SelectDropdownProps<T extends string> = {
+  value: T
+  options: SelectOption<T>[]
+  onChange: (next: T) => void
   ariaLabel: string
+  className?: string
 }
 
 /**
- * 네이티브 select 대신 사용하는 커스텀 언어 드롭다운.
- * - 모바일에서도 글자 크기/터치 영역을 일관되게 유지
- * - 키보드 조작(↑/↓/Enter/Escape) 지원
+ * 범용 커스텀 드롭다운
+ * - 네이티브 select 대신 사용할 수 있는 경량 컴포넌트
+ * - 키보드(↑/↓/Enter/Escape)와 외부 클릭 닫기 지원
  */
-export function LocaleDropdown({ value, options, onChange, ariaLabel }: LocaleDropdownProps) {
+export function SelectDropdown<T extends string>({
+  value,
+  options,
+  onChange,
+  ariaLabel,
+  className,
+}: SelectDropdownProps<T>) {
   const [open, setOpen] = useState(false)
   const [focusIndex, setFocusIndex] = useState(0)
   const [menuPosition, setMenuPosition] = useState({ top: 0, left: 0, width: 120 })
@@ -56,7 +65,7 @@ export function LocaleDropdown({ value, options, onChange, ariaLabel }: LocaleDr
     const updateMenuPosition = () => {
       const rect = buttonRef.current?.getBoundingClientRect()
       if (!rect) return
-      const width = Math.max(rect.width, 148)
+      const width = Math.max(rect.width, 156)
       const maxLeft = Math.max(8, window.innerWidth - width - 8)
       const left = Math.min(Math.max(8, rect.right - width), maxLeft)
       setMenuPosition({
@@ -117,14 +126,14 @@ export function LocaleDropdown({ value, options, onChange, ariaLabel }: LocaleDr
   }
 
   return (
-    <div ref={rootRef} className="relative shrink-0">
+    <div ref={rootRef} className={cn('relative shrink-0', className)}>
       <button
         ref={buttonRef}
         type="button"
         aria-label={ariaLabel}
         aria-haspopup="listbox"
         aria-expanded={open}
-        className="inline-flex min-w-[120px] items-center justify-between gap-2 rounded-xl border border-black/15 bg-panel px-3 py-2 text-base font-medium text-text transition hover:bg-black/5"
+        className="inline-flex w-full min-w-[120px] items-center justify-between gap-2 rounded-2xl border border-black/15 bg-panel px-4 py-3 text-sm font-medium text-text transition hover:bg-black/5"
         onClick={() => setOpen((prev) => !prev)}
         onKeyDown={onButtonKeyDown}
       >

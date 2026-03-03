@@ -10,6 +10,7 @@ import { Section } from './Section'
 import { Modal } from './ui/Modal'
 import { Input } from './ui/Input'
 import { Button } from './ui/Button'
+import { SelectDropdown } from './ui/SelectDropdown'
 
 /**
  * ArtistGrid 동작 옵션
@@ -22,6 +23,8 @@ type ArtistGridProps = {
   hideSubtitle?: boolean
 }
 
+type ArtistCategoryFilter = 'ALL' | 'DJ' | 'ARTIST'
+
 /**
  * 라인업 목록 + 상세 모달 컴포넌트
  * 홈(/)과 아티스트 목록(/artists)에서 동일 컴포넌트를 재사용한다.
@@ -31,7 +34,7 @@ export function ArtistGrid({ previewCount, showFilters = false, hideSubtitle = f
   const m = messages[locale]
   const [selected, setSelected] = useState<Artist | null>(null)
   const [query, setQuery] = useState('')
-  const [categoryFilter, setCategoryFilter] = useState<'ALL' | 'DJ' | 'ARTIST'>('ALL')
+  const [categoryFilter, setCategoryFilter] = useState<ArtistCategoryFilter>('ALL')
   const [page, setPage] = useState(1)
   const [mobileIndex, setMobileIndex] = useState(0)
   const viewportRef = useRef<HTMLDivElement | null>(null)
@@ -48,6 +51,15 @@ export function ArtistGrid({ previewCount, showFilters = false, hideSubtitle = f
       return queryMatch && categoryMatch
     })
   }, [query, categoryFilter])
+
+  const categoryOptions = useMemo<Array<{ value: ArtistCategoryFilter; label: string }>>(
+    () => [
+      { value: 'ALL', label: m.common.all },
+      { value: 'ARTIST', label: m.common.artist },
+      { value: 'DJ', label: m.common.dj },
+    ],
+    [m.common.all, m.common.artist, m.common.dj],
+  )
 
   const totalPages = previewCount ? Math.max(1, Math.ceil(filtered.length / previewCount)) : 1
   const safePage = Math.min(page, totalPages)
@@ -82,16 +94,13 @@ export function ArtistGrid({ previewCount, showFilters = false, hideSubtitle = f
       {showFilters ? (
         <div className="mb-4 flex flex-col gap-3 sm:flex-row">
           <Input aria-label={m.common.searchArtistName} placeholder={m.common.searchArtistName} value={query} onChange={(e) => setQuery(e.target.value)} />
-          <select
-            aria-label={m.common.filterCategory}
-            className="w-full rounded-2xl border border-black/15 bg-base/60 px-4 py-3 text-sm sm:w-auto"
+          <SelectDropdown
             value={categoryFilter}
-            onChange={(e) => setCategoryFilter(e.target.value as 'ALL' | 'DJ' | 'ARTIST')}
-          >
-            <option value="ALL">{m.common.all}</option>
-            <option value="ARTIST">{m.common.artist}</option>
-            <option value="DJ">{m.common.dj}</option>
-          </select>
+            options={categoryOptions}
+            onChange={setCategoryFilter}
+            ariaLabel={m.common.filterCategory}
+            className="w-full sm:w-auto"
+          />
         </div>
       ) : null}
 

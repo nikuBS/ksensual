@@ -3,7 +3,7 @@ import { useLocale } from '../i18n/LocaleContext'
 import { localeOptions } from '../i18n/locales'
 import { messages } from '../i18n/messages'
 import { cn } from '../lib/utils'
-import { LocaleDropdown } from './ui/LocaleDropdown'
+import { SelectDropdown } from './ui/SelectDropdown'
 
 /** 헤더 로고 이미지 워드마크 컴포넌트 */
 function Wordmark() {
@@ -55,11 +55,11 @@ export function Navbar() {
               </NavLink>
             ))}
           </nav>
-          <LocaleDropdown
+          <SelectDropdown
             value={locale}
             options={localeOptions}
             onChange={setLocale}
-            aria-label={m.language}
+            ariaLabel={m.language}
           />
         </div>
       </div>
