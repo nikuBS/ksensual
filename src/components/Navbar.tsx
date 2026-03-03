@@ -1,22 +1,18 @@
 import { Link, NavLink } from 'react-router-dom'
-import { getLocalizedContent } from '../data/localizedContent'
 import { useLocale } from '../i18n/LocaleContext'
 import { localeOptions } from '../i18n/locales'
 import { messages } from '../i18n/messages'
 import { cn } from '../lib/utils'
 
-/** 텍스트 로고 + 심볼 SVG를 묶은 워드마크 컴포넌트 */
+/** 헤더 로고 이미지 워드마크 컴포넌트 */
 function Wordmark() {
-  const { locale } = useLocale()
-  const { eventMeta } = getLocalizedContent(locale)
   return (
-    <div className="flex items-center gap-2">
-      <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
-        <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" strokeWidth="1.5" />
-        <path d="M8 14c2 2 6 2 8-1" fill="none" stroke="#36E2D5" strokeWidth="1.5" strokeLinecap="round" />
-      </svg>
-      <span className="font-heading text-base tracking-[0.12em] sm:text-lg sm:tracking-[0.2em]">{eventMeta.title}</span>
-    </div>
+    <img
+      src={`${import.meta.env.BASE_URL}placeholders/k-sensual.png`}
+      alt="K-SENSUAL"
+      className="h-9 w-auto sm:h-10"
+      loading="eager"
+    />
   )
 }
 
