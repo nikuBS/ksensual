@@ -1,16 +1,9 @@
-import { Link } from 'react-router-dom'
-import { getLocalizedContent } from '../data/localizedContent'
 import { useLocale } from '../i18n/LocaleContext'
 import { messages } from '../i18n/messages'
 import { Section } from './Section'
-import { Badge } from './ui/Badge'
 import { Button } from './ui/Button'
-import { Card } from './ui/Card'
 
-/**
- * 티켓 섹션 옵션
- * fullPage=true면 /tickets 페이지처럼 "Tickets page" 이동 버튼을 숨긴다.
- */
+/** 티켓 섹션 옵션 */
 type TicketsSectionProps = {
   fullPage?: boolean
 }
@@ -18,35 +11,52 @@ type TicketsSectionProps = {
 /** 티켓 티어 카드 리스트 컴포넌트 */
 export function TicketsSection({ fullPage = false }: TicketsSectionProps) {
   const { locale } = useLocale()
-  const { tickets } = getLocalizedContent(locale)
   const m = messages[locale]
+  const base = import.meta.env.BASE_URL
+  const subtitle = fullPage ? '' : m.sections.ticketsSubtitle
+  const ticketFormUrl =
+    locale === 'ko'
+      ? 'https://docs.google.com/forms/d/e/1FAIpQLSdjuuZk558TiqyTt6gpZ-tajkgqxs01qHOqS5ofFl4inR2zIg/viewform'
+      : 'https://docs.google.com/forms/d/e/1FAIpQLScGJpA8b-eM4p8g68Kq74voW44NTAPTAMg1y2OzM6qMZ55LLA/viewform'
+  const jackAndJillUrl = 'https://docs.google.com/forms/d/e/1FAIpQLSdEFmxjA2yIsfT0yNFtmzLDKVGQkYUE2lxghxdXx9b8fQAZRg/viewform'
 
   return (
-    <Section title={m.sections.ticketsTitle} subtitle={m.sections.ticketsSubtitle}>
-      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-        {tickets.map((tier) => (
-          <Card key={tier.id} className="flex h-full flex-col">
-            <div className="mb-4 flex items-center justify-between gap-2">
-              <h3 className="text-xl font-semibold">{tier.name}</h3>
-              {tier.badge ? <Badge>{tier.badge}</Badge> : null}
-            </div>
-            <p className="text-3xl font-bold">{tier.priceText}</p>
-            <ul className="mt-4 flex-1 space-y-2 text-sm text-muted">
-              {tier.includes.map((item) => (
-                <li key={item}>• {item}</li>
-              ))}
-            </ul>
-            {tier.note ? <p className="mt-3 text-xs text-muted">{tier.note}</p> : null}
-          </Card>
-        ))}
+    <Section title={m.sections.ticketsTitle} subtitle={subtitle}>
+      <div className="mb-5 flex flex-row items-center justify-center gap-2 whitespace-nowrap sm:gap-3">
+        <Button
+          type="button"
+          variant="outline"
+          size="sm"
+          aria-label={m.common.ticketHotel}
+          className="min-w-0 px-3 text-[12px] sm:px-4 sm:text-sm"
+          onClick={() => window.open(ticketFormUrl, '_blank', 'noopener,noreferrer')}
+        >
+          {m.common.ticketHotel}
+        </Button>
+        <Button
+          type="button"
+          size="sm"
+          aria-label={m.common.jackAndJillApply}
+          className="min-w-0 px-3 text-[12px] sm:px-4 sm:text-sm"
+          onClick={() => window.open(jackAndJillUrl, '_blank', 'noopener,noreferrer')}
+        >
+          {m.common.jackAndJillApply}
+        </Button>
       </div>
-      {!fullPage ? (
-        <div className="mt-6">
-          <Link to="/tickets">
-            <Button variant="outline">{m.common.ticketsPage}</Button>
-          </Link>
-        </div>
-      ) : null}
+      <div className="mx-auto max-w-5xl overflow-hidden rounded-3xl border border-black/10 bg-panel/70 p-2 shadow-[0_18px_50px_rgba(0,0,0,0.18)]">
+        <img
+          src={`${base}placeholders/price_chart_ko.png`}
+          alt="K-SENSUAL ticket and hotel price chart (Korean)"
+          className={locale === 'ko' ? 'block w-full rounded-2xl' : 'hidden w-full rounded-2xl'}
+          aria-hidden={locale !== 'ko'}
+        />
+        <img
+          src={`${base}placeholders/price_chart_en.png`}
+          alt="K-SENSUAL ticket and hotel price chart (English)"
+          className={locale === 'ko' ? 'hidden w-full rounded-2xl' : 'block w-full rounded-2xl'}
+          aria-hidden={locale === 'ko'}
+        />
+      </div>
     </Section>
   )
 }

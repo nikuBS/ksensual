@@ -50,6 +50,8 @@ export const messages: Record<
       day: string
       prev: string
       next: string
+      ticketHotel: string
+      jackAndJillApply: string
     }
   }
 > = {
@@ -101,6 +103,8 @@ export const messages: Record<
       day: 'Day',
       prev: 'Prev',
       next: 'Next',
+      ticketHotel: 'Tickets & Hotel',
+      jackAndJillApply: 'Jack & Jill Registration',
     },
   },
   ko: {
@@ -151,6 +155,8 @@ export const messages: Record<
       day: 'DAY',
       prev: '이전',
       next: '다음',
+      ticketHotel: '티켓 & 호텔',
+      jackAndJillApply: 'Jack & Jill 신청',
     },
   },
   es: {
@@ -201,6 +207,8 @@ export const messages: Record<
       day: 'Día',
       prev: 'Prev',
       next: 'Next',
+      ticketHotel: 'Entradas y Hotel',
+      jackAndJillApply: 'Inscripción Jack & Jill',
     },
   },
 }
