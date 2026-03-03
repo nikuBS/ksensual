@@ -52,6 +52,9 @@ export const messages: Record<
       next: string
       ticketHotel: string
       jackAndJillApply: string
+      googleMaps: string
+      naverMap: string
+      kakaoMap: string
     }
   }
 > = {
@@ -105,6 +108,9 @@ export const messages: Record<
       next: 'Next',
       ticketHotel: 'Tickets & Hotel',
       jackAndJillApply: 'Jack & Jill Registration',
+      googleMaps: 'Google Maps',
+      naverMap: 'Naver Map',
+      kakaoMap: 'Kakao Map',
     },
   },
   ko: {
@@ -157,6 +163,9 @@ export const messages: Record<
       next: '다음',
       ticketHotel: '티켓 & 호텔',
       jackAndJillApply: 'Jack & Jill 신청',
+      googleMaps: '구글 지도',
+      naverMap: '네이버 지도',
+      kakaoMap: '카카오맵',
     },
   },
   es: {
@@ -209,6 +218,9 @@ export const messages: Record<
       next: 'Next',
       ticketHotel: 'Entradas y Hotel',
       jackAndJillApply: 'Inscripción Jack & Jill',
+      googleMaps: 'Google Maps',
+      naverMap: 'Mapa de Naver',
+      kakaoMap: 'Mapa de Kakao',
     },
   },
 }

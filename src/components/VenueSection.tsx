@@ -1,6 +1,8 @@
+import { useMemo, useState } from 'react'
 import { Section } from './Section'
 import { Card } from './ui/Card'
 import { Button } from './ui/Button'
+import { Tabs } from './ui/Tabs'
 import { getLocalizedContent } from '../data/localizedContent'
 import { useLocale } from '../i18n/LocaleContext'
 import { messages } from '../i18n/messages'
@@ -9,6 +11,34 @@ export function VenueSection() {
   const { locale } = useLocale()
   const { venue } = getLocalizedContent(locale)
   const m = messages[locale]
+  const [selectedMap, setSelectedMap] = useState<'google' | 'naver' | 'kakao'>('google')
+
+  const mapTabs = useMemo(
+    () => [
+      { id: 'google', label: m.common.googleMaps },
+      { id: 'naver', label: m.common.naverMap },
+      { id: 'kakao', label: m.common.kakaoMap },
+    ],
+    [m.common.googleMaps, m.common.naverMap, m.common.kakaoMap],
+  )
+
+  const selectedMapUrl =
+    selectedMap === 'google' ? venue.mapLinks.google : selectedMap === 'naver' ? venue.mapLinks.naver : venue.mapLinks.kakao
+
+  const selectedMapLabel =
+    selectedMap === 'google' ? m.common.googleMaps : selectedMap === 'naver' ? m.common.naverMap : m.common.kakaoMap
+
+  const handleMapTabChange = (id: string) => {
+    if (id === 'google') {
+      setSelectedMap('google')
+      return
+    }
+
+    const externalUrl = id === 'naver' ? venue.mapLinks.naver : venue.mapLinks.kakao
+    if (externalUrl) {
+      window.open(externalUrl, '_blank', 'noopener,noreferrer')
+    }
+  }
 
   return (
     <Section title={m.sections.venueTitle} subtitle={m.sections.venueSubtitle}>
@@ -30,12 +60,33 @@ export function VenueSection() {
             ))}
           </ul>
         </Card>
-        <Card className="flex min-h-72 flex-col items-center justify-center text-center">
-          <p className="mb-2 text-sm text-muted">{m.common.mapPlaceholder}</p>
-          <p className="max-w-sm text-sm text-muted">{m.common.mapPlaceholderDesc}</p>
-          <a href={venue.mapUrl} target="_blank" rel="noreferrer" className="mt-4">
-            <Button variant="outline">{m.common.openMapUrl}</Button>
-          </a>
+        <Card className="flex min-h-72 flex-col text-center">
+          <div className="mx-auto">
+            <Tabs tabs={mapTabs} value={selectedMap} onChange={handleMapTabChange} ariaLabel="Map provider tabs" />
+          </div>
+          <div className="mt-5 flex flex-1 flex-col rounded-2xl border border-black/10 bg-base/40 p-3">
+            <div className="mb-3 text-center text-sm text-muted">{selectedMapLabel}</div>
+            <div className="overflow-hidden rounded-xl border border-black/10">
+              <iframe
+                title="Google Map Preview"
+                src={venue.googleEmbedUrl}
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                className="h-72 w-full"
+              />
+            </div>
+            <Button
+              variant="outline"
+              className="mx-auto mt-4"
+              onClick={() => {
+                if (!selectedMapUrl) return
+                window.open(selectedMapUrl, '_blank', 'noopener,noreferrer')
+              }}
+              disabled={!selectedMapUrl}
+            >
+              {m.common.openMapUrl}
+            </Button>
+          </div>
         </Card>
       </div>
     </Section>

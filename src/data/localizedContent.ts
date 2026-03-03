@@ -21,6 +21,12 @@ type VenueContent = {
   shuttle: string
   hotels: string[]
   mapUrl: string
+  googleEmbedUrl: string
+  mapLinks: {
+    google: string
+    naver: string
+    kakao: string
+  }
 }
 
 type LocalizedContent = {
@@ -43,7 +49,13 @@ const baseHero = {
 }
 
 const commonVenue = {
-  mapUrl: 'https://maps.google.com/?q=33,+Hyeonsa-gil,+Jeju-si,+Jeju-do',
+  mapUrl: 'https://maps.app.goo.gl/ywYrB6eChyCGjQyK6',
+  googleEmbedUrl: 'https://www.google.com/maps?q=33%20Hyeonsa-gil%2C%20Jeju-si%2C%20Jeju-do%2C%20Republic%20of%20Korea&output=embed',
+  mapLinks: {
+    google: 'https://maps.app.goo.gl/ywYrB6eChyCGjQyK6',
+    naver: 'https://naver.me/xprAofrl',
+    kakao: 'https://place.map.kakao.com/1025402180',
+  },
 }
 
 const byLocale: Record<Locale, LocalizedContent> = {
