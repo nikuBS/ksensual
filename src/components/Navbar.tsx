@@ -37,22 +37,7 @@ export function Navbar() {
         <Link to="/" aria-label="Go to home" className="self-start">
           <Wordmark />
         </Link>
-        <div className="flex w-full flex-col gap-2 sm:w-auto sm:items-end">
-          <label className="sr-only" htmlFor="locale-select">{m.language}</label>
-          <select
-            id="locale-select"
-            value={locale}
-            onChange={(event) => setLocale(event.target.value as typeof locale)}
-            className="w-full rounded-xl border border-black/15 bg-panel px-3 py-2 text-sm text-text sm:w-auto"
-            aria-label={m.language}
-          >
-            {localeOptions.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
-            ))}
-          </select>
-          <nav aria-label="Main navigation" className="flex w-full flex-nowrap items-center gap-2 overflow-x-auto pb-1 sm:w-auto sm:flex-wrap sm:overflow-visible sm:pb-0">
+        <nav aria-label="Main navigation" className="flex w-full flex-nowrap items-center gap-2 overflow-x-auto pb-1 sm:w-auto sm:flex-wrap sm:overflow-visible sm:pb-0">
           {navigation.map((item) => (
             <NavLink
               key={item.to}
@@ -67,8 +52,21 @@ export function Navbar() {
               {item.label}
             </NavLink>
           ))}
-          </nav>
-        </div>
+          <label className="sr-only" htmlFor="locale-select">{m.language}</label>
+          <select
+            id="locale-select"
+            value={locale}
+            onChange={(event) => setLocale(event.target.value as typeof locale)}
+            className="shrink-0 rounded-xl border border-black/15 bg-panel px-3 py-2 text-sm text-text"
+            aria-label={m.language}
+          >
+            {localeOptions.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </select>
+        </nav>
       </div>
     </header>
   )
