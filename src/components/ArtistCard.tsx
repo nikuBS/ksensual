@@ -20,10 +20,10 @@ export function ArtistCard({ artist, onClick }: ArtistCardProps) {
   const category = getArtistCategory(artist)
 
   return (
-    <button type="button" className="text-left" onClick={() => onClick(artist)} aria-label={`Open ${artist.name} details`}>
+    <button type="button" className="block w-full text-left" onClick={() => onClick(artist)} aria-label={`Open ${artist.name} details`}>
       <Card className="h-full">
         <div className="rounded-xl border border-black/10 bg-base/40 p-2">
-          <img src={artist.image} alt={artist.name} className="h-60 w-full rounded-lg object-contain sm:h-64" loading="lazy" />
+          <img src={artist.image} alt={artist.name} className="h-60 w-full rounded-lg object-contain object-center sm:h-64" loading="lazy" />
         </div>
         <div className="mt-4">
           <h3 className="text-lg font-semibold">{artist.name}</h3>

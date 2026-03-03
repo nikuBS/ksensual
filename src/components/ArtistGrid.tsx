@@ -1,9 +1,10 @@
-import { useMemo, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useEffect, useMemo, useRef, useState } from 'react'
+import { motion } from 'framer-motion'
 import { Instagram } from 'lucide-react'
 import { artists, type Artist } from '../data/event'
 import { useLocale } from '../i18n/LocaleContext'
 import { messages } from '../i18n/messages'
+import { cn } from '../lib/utils'
 import { ArtistCard } from './ArtistCard'
 import { Section } from './Section'
 import { Modal } from './ui/Modal'
@@ -30,6 +31,10 @@ export function ArtistGrid({ previewCount, showFilters = false }: ArtistGridProp
   const [selected, setSelected] = useState<Artist | null>(null)
   const [query, setQuery] = useState('')
   const [categoryFilter, setCategoryFilter] = useState<'ALL' | 'DJ' | 'ARTIST'>('ALL')
+  const [page, setPage] = useState(1)
+  const [mobileIndex, setMobileIndex] = useState(0)
+  const viewportRef = useRef<HTMLDivElement | null>(null)
+  const [slideWidth, setSlideWidth] = useState(0)
 
   /** 검색어 + 스타일 필터를 동시에 적용한 결과 */
   const filtered = useMemo(() => {
@@ -43,8 +48,33 @@ export function ArtistGrid({ previewCount, showFilters = false }: ArtistGridProp
     })
   }, [query, categoryFilter])
 
-  /** previewCount가 있으면 해당 개수만 잘라서 홈 미리보기로 사용 */
-  const displayed = previewCount ? filtered.slice(0, previewCount) : filtered
+  const totalPages = previewCount ? Math.max(1, Math.ceil(filtered.length / previewCount)) : 1
+  const safePage = Math.min(page, totalPages)
+  const start = previewCount ? (safePage - 1) * previewCount : 0
+  const end = previewCount ? safePage * previewCount : filtered.length
+  const displayed = filtered.slice(start, end)
+  const isHomePreview = Boolean(previewCount) && !showFilters
+  const mobileGap = 12
+
+  useEffect(() => {
+    if (!isHomePreview) return
+
+    const updateSlideWidth = () => {
+      const width = viewportRef.current?.clientWidth ?? 0
+      setSlideWidth(width)
+    }
+
+    updateSlideWidth()
+    window.addEventListener('resize', updateSlideWidth)
+    return () => window.removeEventListener('resize', updateSlideWidth)
+  }, [isHomePreview])
+
+  useEffect(() => {
+    const maxMobileIndex = Math.max(0, filtered.length - 1)
+    if (mobileIndex > maxMobileIndex) {
+      setMobileIndex(maxMobileIndex)
+    }
+  }, [filtered.length, mobileIndex])
 
   return (
     <Section title={m.sections.lineupTitle} subtitle={m.sections.lineupSubtitle}>
@@ -64,17 +94,84 @@ export function ArtistGrid({ previewCount, showFilters = false }: ArtistGridProp
         </div>
       ) : null}
 
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {displayed.map((artist) => (
-          <ArtistCard key={artist.id} artist={artist} onClick={setSelected} />
-        ))}
-      </div>
+      {isHomePreview ? (
+        <>
+          <div className="sm:hidden">
+            <div ref={viewportRef} className="overflow-hidden">
+              <motion.div
+                className="flex gap-3"
+                drag="x"
+                dragConstraints={{
+                  left: -Math.max(0, (filtered.length - 1) * (slideWidth + mobileGap)),
+                  right: 0
+                }}
+                animate={{ x: -(mobileIndex * (slideWidth + mobileGap)) }}
+                transition={{ type: 'spring', stiffness: 280, damping: 30 }}
+                onDragEnd={(_, info) => {
+                  const threshold = Math.max(50, slideWidth * 0.18)
+                  if (info.offset.x < -threshold) {
+                    setMobileIndex((prev) => Math.min(filtered.length - 1, prev + 1))
+                    return
+                  }
+                  if (info.offset.x > threshold) {
+                    setMobileIndex((prev) => Math.max(0, prev - 1))
+                  }
+                }}
+              >
+                {filtered.map((artist) => (
+                  <div key={artist.id} className="flex w-full shrink-0 justify-center">
+                    <div className="w-full max-w-[420px]">
+                      <ArtistCard artist={artist} onClick={setSelected} />
+                    </div>
+                  </div>
+                ))}
+              </motion.div>
+            </div>
+            {filtered.length > 1 ? (
+              <div className="mt-3 flex items-center justify-center gap-1.5">
+                {filtered.map((artist, index) => (
+                  <button
+                    key={`dot-${artist.id}`}
+                    type="button"
+                    aria-label={`${m.common.artist} ${index + 1}`}
+                    onClick={() => setMobileIndex(index)}
+                    className={cn(
+                      'h-1.5 rounded-full transition-all',
+                      index === mobileIndex ? 'w-4 bg-accentSoft' : 'w-1.5 bg-black/20'
+                    )}
+                  />
+                ))}
+              </div>
+            ) : null}
+          </div>
+          <div className="hidden gap-4 sm:grid sm:grid-cols-2 lg:grid-cols-3">
+            {displayed.map((artist) => (
+              <ArtistCard key={artist.id} artist={artist} onClick={setSelected} />
+            ))}
+          </div>
+        </>
+      ) : (
+        <div className={cn('grid gap-4 sm:grid-cols-2', previewCount ? 'lg:grid-cols-3' : 'lg:grid-cols-4')}>
+          {displayed.map((artist) => (
+            <ArtistCard key={artist.id} artist={artist} onClick={setSelected} />
+          ))}
+        </div>
+      )}
 
-      {previewCount ? (
-        <div className="mt-6">
-          <Link to="/artists">
-            <Button variant="outline">{m.common.seeAllArtists}</Button>
-          </Link>
+      {previewCount && totalPages > 1 ? (
+        <div className={cn('mt-6 items-center justify-center gap-2', isHomePreview ? 'hidden sm:flex' : 'flex')}>
+          <Button variant="outline" size="sm" onClick={() => setPage((prev) => Math.max(1, prev - 1))} disabled={safePage === 1}>
+            {m.common.prev}
+          </Button>
+          <span className="min-w-14 text-center text-sm text-muted">{safePage} / {totalPages}</span>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setPage((prev) => Math.min(totalPages, prev + 1))}
+            disabled={safePage === totalPages}
+          >
+            {m.common.next}
+          </Button>
         </div>
       ) : null}
 
