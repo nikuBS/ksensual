@@ -7,7 +7,11 @@ import { getLocalizedContent } from '../data/localizedContent'
 import { useLocale } from '../i18n/LocaleContext'
 import { messages } from '../i18n/messages'
 
-export function VenueSection() {
+type VenueSectionProps = {
+  hideSubtitle?: boolean
+}
+
+export function VenueSection({ hideSubtitle = false }: VenueSectionProps) {
   const { locale } = useLocale()
   const { venue } = getLocalizedContent(locale)
   const m = messages[locale]
@@ -41,7 +45,7 @@ export function VenueSection() {
   }
 
   return (
-    <Section title={m.sections.venueTitle} subtitle={m.sections.venueSubtitle}>
+    <Section title={m.sections.venueTitle} subtitle={hideSubtitle ? undefined : m.sections.venueSubtitle}>
       <div className="grid gap-4 lg:grid-cols-2">
         <Card>
           <p className="text-sm text-muted">{m.common.address}</p>

@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes } from 'react-router-dom'
 import { Footer } from './components/Footer'
 import { Navbar } from './components/Navbar'
 import Home from './routes/Home'
@@ -15,7 +15,8 @@ export default function App() {
           <Route path="/" element={<Home />} />
           <Route path="/artists" element={<Artists />} />
           <Route path="/tickets" element={<Tickets />} />
-          <Route path="/faq" element={<Faq />} />
+          <Route path="/venue" element={<Faq />} />
+          <Route path="/faq" element={<Navigate to="/venue" replace />} />
         </Routes>
       </main>
       <Footer />

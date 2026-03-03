@@ -3,6 +3,7 @@ import { useLocale } from '../i18n/LocaleContext'
 import { localeOptions } from '../i18n/locales'
 import { messages } from '../i18n/messages'
 import { cn } from '../lib/utils'
+import { LocaleDropdown } from './ui/LocaleDropdown'
 
 /** 헤더 로고 이미지 워드마크 컴포넌트 */
 function Wordmark() {
@@ -28,7 +29,7 @@ export function Navbar() {
     { label: m.nav.home, to: '/' },
     { label: m.nav.artists, to: '/artists' },
     { label: m.nav.tickets, to: '/tickets' },
-    { label: m.nav.faq, to: '/faq' },
+    { label: m.nav.faq, to: '/venue' },
   ]
 
   return (
@@ -37,36 +38,30 @@ export function Navbar() {
         <Link to="/" aria-label="Go to home" className="self-start">
           <Wordmark />
         </Link>
-        <nav aria-label="Main navigation" className="flex w-full flex-nowrap items-center gap-2 overflow-x-auto pb-1 sm:w-auto sm:flex-wrap sm:overflow-visible sm:pb-0">
-          {navigation.map((item) => (
-            <NavLink
-              key={item.to}
-              to={item.to}
-              className={({ isActive }) =>
-                cn(
-                  'shrink-0 whitespace-nowrap rounded-xl px-3 py-2 text-sm text-muted transition hover:bg-black/5 hover:text-text',
-                  isActive && 'bg-black/5 text-text',
-                )
-              }
-            >
-              {item.label}
-            </NavLink>
-          ))}
-          <label className="sr-only" htmlFor="locale-select">{m.language}</label>
-          <select
-            id="locale-select"
-            value={locale}
-            onChange={(event) => setLocale(event.target.value as typeof locale)}
-            className="shrink-0 rounded-xl border border-black/15 bg-panel px-3 py-2 text-sm text-text"
-            aria-label={m.language}
-          >
-            {localeOptions.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
+        <div className="flex w-full items-center gap-2 sm:w-auto">
+          <nav aria-label="Main navigation" className="flex min-w-0 flex-1 flex-nowrap items-center gap-2 overflow-x-auto pb-1 sm:flex-none sm:overflow-visible sm:pb-0">
+            {navigation.map((item) => (
+              <NavLink
+                key={item.to}
+                to={item.to}
+                className={({ isActive }) =>
+                  cn(
+                    'shrink-0 whitespace-nowrap rounded-xl px-3 py-2 text-sm text-muted transition hover:bg-black/5 hover:text-text',
+                    isActive && 'bg-black/5 text-text',
+                  )
+                }
+              >
+                {item.label}
+              </NavLink>
             ))}
-          </select>
-        </nav>
+          </nav>
+          <LocaleDropdown
+            value={locale}
+            options={localeOptions}
+            onChange={setLocale}
+            aria-label={m.language}
+          />
+        </div>
       </div>
     </header>
   )

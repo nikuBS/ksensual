@@ -257,5 +257,5 @@ export const navigation = [
   { label: 'Home', to: '/' },
   { label: 'Artists', to: '/artists' },
   { label: 'Tickets', to: '/tickets' },
-  { label: 'FAQ', to: '/faq' },
+  { label: 'Venue', to: '/venue' },
 ]

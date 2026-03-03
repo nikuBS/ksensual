@@ -19,13 +19,14 @@ import { Button } from './ui/Button'
 type ArtistGridProps = {
   previewCount?: number
   showFilters?: boolean
+  hideSubtitle?: boolean
 }
 
 /**
  * 라인업 목록 + 상세 모달 컴포넌트
  * 홈(/)과 아티스트 목록(/artists)에서 동일 컴포넌트를 재사용한다.
  */
-export function ArtistGrid({ previewCount, showFilters = false }: ArtistGridProps) {
+export function ArtistGrid({ previewCount, showFilters = false, hideSubtitle = false }: ArtistGridProps) {
   const { locale } = useLocale()
   const m = messages[locale]
   const [selected, setSelected] = useState<Artist | null>(null)
@@ -77,7 +78,7 @@ export function ArtistGrid({ previewCount, showFilters = false }: ArtistGridProp
   }, [filtered.length, mobileIndex])
 
   return (
-    <Section title={m.sections.lineupTitle} subtitle={m.sections.lineupSubtitle}>
+    <Section title={m.sections.lineupTitle} subtitle={hideSubtitle ? undefined : m.sections.lineupSubtitle}>
       {showFilters ? (
         <div className="mb-4 flex flex-col gap-3 sm:flex-row">
           <Input aria-label={m.common.searchArtistName} placeholder={m.common.searchArtistName} value={query} onChange={(e) => setQuery(e.target.value)} />
