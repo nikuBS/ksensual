@@ -34,7 +34,7 @@ export type Artist = {
   socials: Socials
 }
 
-export type ArtistCategory = 'DJ' | 'ARTIST' | 'GUEST'
+export type ArtistCategory = 'DJ' | 'ARTIST' | 'GUEST' | 'SPECIAL_GUEST' | 'GUEST_ARTIST' | 'AMBASSADOR' | 'MEDIA'
 
 export type ScheduleDay = {
   dayId: string
@@ -103,6 +103,10 @@ const artistSeeds: Array<[string, string, ArtistCategory]> = [
   ['dj-alejandro', 'DJ ALEJANDRO', 'DJ'],
   ['dj-toxica', 'DJ TOXICA', 'DJ'],
   ['dj-ashish', 'DJ ASHISH', 'DJ'],
+  ['luna-reyes', 'LUNA REYES', 'SPECIAL_GUEST'],
+  ['marco-vista', 'MARCO VISTA', 'GUEST_ARTIST'],
+  ['seo-jin', 'SEO JIN', 'AMBASSADOR'],
+  ['hana-park', 'HANA PARK', 'MEDIA'],
 ]
 
 let dancerImageOrder = 0

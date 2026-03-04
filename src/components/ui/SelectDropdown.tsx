@@ -34,7 +34,13 @@ export function SelectDropdown<T extends string>({
   const buttonRef = useRef<HTMLButtonElement | null>(null)
   const listRef = useRef<HTMLUListElement | null>(null)
 
-  const selected = useMemo(() => options.find((option) => option.value === value) ?? options[0], [options, value])
+  const selected = useMemo(() => {
+    const matched = options.find((option) => option.value === value)
+    if (matched) return matched
+    const first = options[0]
+    if (first) return first
+    return { value, label: String(value) }
+  }, [options, value])
 
   useEffect(() => {
     const selectedIndex = options.findIndex((option) => option.value === value)
@@ -85,6 +91,7 @@ export function SelectDropdown<T extends string>({
   }, [open])
 
   const onButtonKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
+    if (options.length === 0) return
     if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
       event.preventDefault()
       setOpen(true)
@@ -92,6 +99,11 @@ export function SelectDropdown<T extends string>({
   }
 
   const onListKeyDown = (event: KeyboardEvent<HTMLUListElement>) => {
+    if (options.length === 0) {
+      setOpen(false)
+      return
+    }
+
     if (event.key === 'Tab') {
       setOpen(false)
       return
@@ -119,6 +131,7 @@ export function SelectDropdown<T extends string>({
     if (event.key === 'Enter' || event.key === ' ') {
       event.preventDefault()
       const target = options[focusIndex]
+      if (!target) return
       onChange(target.value)
       setOpen(false)
       buttonRef.current?.focus()

@@ -23,7 +23,7 @@ type ArtistGridProps = {
   hideSubtitle?: boolean
 }
 
-type ArtistCategoryFilter = 'ALL' | 'DJ' | 'ARTIST'
+type ArtistCategoryFilter = 'ALL' | 'DJ' | 'ARTIST' | 'SPECIAL_GUEST' | 'GUEST_ARTIST' | 'AMBASSADOR' | 'MEDIA'
 
 /**
  * 라인업 목록 + 상세 모달 컴포넌트
@@ -46,8 +46,7 @@ export function ArtistGrid({ previewCount, showFilters = false, hideSubtitle = f
     return artists.filter((artist) => {
       const queryMatch = !lower || artist.name.toLowerCase().includes(lower)
       const categoryMatch =
-        categoryFilter === 'ALL' ||
-        (categoryFilter === 'DJ' ? artist.category === 'DJ' : artist.category === 'ARTIST')
+        categoryFilter === 'ALL' || artist.category === categoryFilter
       return queryMatch && categoryMatch
     })
   }, [query, categoryFilter])
@@ -57,8 +56,12 @@ export function ArtistGrid({ previewCount, showFilters = false, hideSubtitle = f
       { value: 'ALL', label: m.common.all },
       { value: 'ARTIST', label: m.common.artist },
       { value: 'DJ', label: m.common.dj },
+      { value: 'SPECIAL_GUEST', label: m.common.specialGuest },
+      { value: 'GUEST_ARTIST', label: m.common.guestArtist },
+      { value: 'AMBASSADOR', label: m.common.ambassador },
+      { value: 'MEDIA', label: m.common.media },
     ],
-    [m.common.all, m.common.artist, m.common.dj],
+    [m.common.all, m.common.artist, m.common.dj, m.common.specialGuest, m.common.guestArtist, m.common.ambassador, m.common.media],
   )
 
   const totalPages = previewCount ? Math.max(1, Math.ceil(filtered.length / previewCount)) : 1

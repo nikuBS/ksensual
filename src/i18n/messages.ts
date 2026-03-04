@@ -43,6 +43,10 @@ export const messages: Record<
       all: string
       artist: string
       dj: string
+      specialGuest: string
+      guestArtist: string
+      ambassador: string
+      media: string
       instagram: string
       countdownLoading: string
       countdownStartsIn: string
@@ -99,6 +103,10 @@ export const messages: Record<
       all: 'All',
       artist: 'Artist',
       dj: 'Dj',
+      specialGuest: 'Special Guest',
+      guestArtist: 'Guest Artist',
+      ambassador: 'Ambassador',
+      media: 'Media',
       instagram: 'Instagram',
       countdownLoading: 'Loading countdown...',
       countdownStartsIn: 'Starts in',
@@ -154,6 +162,10 @@ export const messages: Record<
       all: '전체',
       artist: '아티스트',
       dj: '디제이',
+      specialGuest: '스페셜 게스트',
+      guestArtist: '게스트 아티스트',
+      ambassador: '앰배서더',
+      media: '미디어',
       instagram: '인스타그램',
       countdownLoading: '카운트다운 로딩 중...',
       countdownStartsIn: '시작까지',
@@ -209,6 +221,10 @@ export const messages: Record<
       all: 'Todo',
       artist: 'Artista',
       dj: 'Dj',
+      specialGuest: 'Invitado Especial',
+      guestArtist: 'Artista Invitado',
+      ambassador: 'Embajador',
+      media: 'Media',
       instagram: 'Instagram',
       countdownLoading: 'Cargando cuenta regresiva...',
       countdownStartsIn: 'Comienza en',
