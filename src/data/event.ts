@@ -260,7 +260,7 @@ export const venue = {
 
 export const navigation = [
   { label: 'Home', to: '/' },
-  { label: 'Artists', to: '/artists' },
+  { label: 'Line-up', to: '/artists' },
   { label: 'Tickets', to: '/tickets' },
   { label: 'Venue', to: '/venue' },
 ]

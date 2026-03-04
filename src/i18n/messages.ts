@@ -64,7 +64,7 @@ export const messages: Record<
 > = {
   en: {
     language: 'Language',
-    nav: { home: 'Home', artists: 'Artists', tickets: 'Tickets', faq: 'Venue' },
+    nav: { home: 'Home', artists: 'Line-up', tickets: 'Tickets', faq: 'Venue' },
     sections: {
       highlightsTitle: 'Highlights',
       highlightsSubtitle: 'A premium yet approachable festival journey, crafted for discovery.',
@@ -123,7 +123,7 @@ export const messages: Record<
   },
   ko: {
     language: '언어',
-    nav: { home: '홈', artists: '아티스트', tickets: '티켓', faq: '장소' },
+    nav: { home: '홈', artists: '라인업', tickets: '티켓', faq: '장소' },
     sections: {
       highlightsTitle: '하이라이트',
       highlightsSubtitle: '프리미엄 무드와 접근성을 함께 담은 페스티벌 경험입니다.',
@@ -182,7 +182,7 @@ export const messages: Record<
   },
   es: {
     language: 'Idioma',
-    nav: { home: 'Inicio', artists: 'Artistas', tickets: 'Entradas', faq: 'Lugar' },
+    nav: { home: 'Inicio', artists: 'Line-up', tickets: 'Entradas', faq: 'Lugar' },
     sections: {
       highlightsTitle: 'Destacados',
       highlightsSubtitle: 'Una experiencia de festival premium y accesible para descubrir.',
