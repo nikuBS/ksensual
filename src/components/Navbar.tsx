@@ -27,7 +27,7 @@ export function Navbar() {
   const m = messages[locale]
   const navigation = [
     { label: m.nav.home, to: '/' },
-    { label: m.nav.artists, to: '/artists' },
+    { label: m.nav.artists, to: '/lineup' },
     { label: m.nav.tickets, to: '/tickets' },
     { label: m.nav.faq, to: '/venue' },
   ]

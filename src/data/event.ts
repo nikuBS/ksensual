@@ -74,7 +74,7 @@ export const eventMeta: EventMeta = {
   heroPosterMobile: `${assetBase}placeholders/jeju-main-poster-mobile.jpg`,
   heroPosterAlt: 'K-SENSUAL 10th Anniversary poster, July 10-12 2026, Jeju Island Korea',
   ctas: [
-    { label: 'Line-up', to: '/artists' },
+    { label: 'Line-up', to: '/lineup' },
     { label: 'Tickets', to: '/tickets' },
     { label: 'Venue', to: '/venue' },
   ],
@@ -260,7 +260,7 @@ export const venue = {
 
 export const navigation = [
   { label: 'Home', to: '/' },
-  { label: 'Line-up', to: '/artists' },
+  { label: 'Line-up', to: '/lineup' },
   { label: 'Tickets', to: '/tickets' },
   { label: 'Venue', to: '/venue' },
 ]
