@@ -1,5 +1,6 @@
 import { useLocale } from '../i18n/LocaleContext'
 import { messages } from '../i18n/messages'
+import { assetPath } from '../lib/assets'
 import { Section } from './Section'
 import { Button } from './ui/Button'
 
@@ -12,7 +13,6 @@ type TicketsSectionProps = {
 export function TicketsSection({ fullPage = false }: TicketsSectionProps) {
   const { locale } = useLocale()
   const m = messages[locale]
-  const base = import.meta.env.BASE_URL
   const subtitle = fullPage ? '' : m.sections.ticketsSubtitle
   const ticketFormUrl =
     locale === 'ko'
@@ -45,13 +45,13 @@ export function TicketsSection({ fullPage = false }: TicketsSectionProps) {
       </div>
       <div className="mx-auto max-w-5xl overflow-hidden rounded-3xl border border-black/10 bg-panel/70 p-2 shadow-[0_18px_50px_rgba(0,0,0,0.18)]">
         <img
-          src={`${base}placeholders/price_chart_ko.png`}
+          src={assetPath('placeholders/price_chart_ko.png')}
           alt="K-SENSUAL ticket and hotel price chart (Korean)"
           className={locale === 'ko' ? 'block w-full rounded-2xl' : 'hidden w-full rounded-2xl'}
           aria-hidden={locale !== 'ko'}
         />
         <img
-          src={`${base}placeholders/price_chart_en.png`}
+          src={assetPath('placeholders/price_chart_en.png')}
           alt="K-SENSUAL ticket and hotel price chart (English)"
           className={locale === 'ko' ? 'hidden w-full rounded-2xl' : 'block w-full rounded-2xl'}
           aria-hidden={locale === 'ko'}

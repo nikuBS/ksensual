@@ -1,5 +1,6 @@
 import { getLocalizedContent } from '../data/localizedContent'
 import { useLocale } from '../i18n/LocaleContext'
+import { assetPath } from '../lib/assets'
 
 /**
  * 전역 푸터
@@ -29,7 +30,7 @@ export function Footer() {
           aria-label="Instagram"
           className="inline-flex items-center gap-1.5 font-semibold text-[#062a3a] transition hover:opacity-80"
         >
-          <img src={`${import.meta.env.BASE_URL}placeholders/social-instagram.svg`} alt="" className="h-4 w-4" aria-hidden="true" />
+          <img src={assetPath('placeholders/social-instagram.svg')} alt="" className="h-4 w-4" aria-hidden="true" />
           <span>KSENSUAL_OFFICIAL</span>
         </a>
         <span className="text-[#062a3a]/80">|</span>
@@ -40,7 +41,7 @@ export function Footer() {
           aria-label="WhatsApp"
           className="inline-flex items-center gap-1.5 font-semibold text-[#062a3a] transition hover:opacity-80"
         >
-          <img src={`${import.meta.env.BASE_URL}placeholders/social-whatsapp.svg`} alt="" className="h-4 w-4" aria-hidden="true" />
+          <img src={assetPath('placeholders/social-whatsapp.svg')} alt="" className="h-4 w-4" aria-hidden="true" />
           <span>+82 010 9666 1251</span>
         </a>
       </div>

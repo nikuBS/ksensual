@@ -1,4 +1,5 @@
 import type { Locale } from '../i18n/locales'
+import { assetPath } from '../lib/assets'
 import type { EventMeta, Highlight, TicketTier } from './event'
 
 type ContactContent = {
@@ -43,8 +44,8 @@ const baseHero = {
   startDateISO: '2026-07-10T16:00:00+09:00',
   endDateISO: '2026-07-12T23:00:00+09:00',
   venueName: 'Iho Coastal Festival Grounds',
-  heroPoster: `${import.meta.env.BASE_URL}placeholders/jeju-main-poster.jpg`,
-  heroPosterMobile: `${import.meta.env.BASE_URL}placeholders/jeju-main-poster-mobile.jpg`,
+  heroPoster: assetPath('placeholders/jeju-main-poster.jpg'),
+  heroPosterMobile: assetPath('placeholders/jeju-main-poster-mobile.jpg'),
   heroPosterAlt: 'K-SENSUAL 10th Anniversary poster, July 10-12 2026, Jeju Island Korea',
 }
 

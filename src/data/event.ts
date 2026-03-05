@@ -1,3 +1,5 @@
+import { assetPath } from '../lib/assets'
+
 export type Socials = {
   instagram?: string
   youtube?: string
@@ -61,8 +63,6 @@ export type TicketTier = {
   note?: string
 }
 
-const assetBase = import.meta.env.BASE_URL
-
 export const eventMeta: EventMeta = {
   title: 'K-SENSUAL',
   subtitle: '10th Anniversary',
@@ -73,8 +73,8 @@ export const eventMeta: EventMeta = {
   cityCountry: 'Jeju Island, Korea',
   heroCopy:
     'K-SENSUAL 10th Anniversary in the Korean Maldives: ocean breeze stages, summer dance nights, and global artists in Jeju.',
-  heroPoster: `${assetBase}placeholders/jeju-main-poster.jpg`,
-  heroPosterMobile: `${assetBase}placeholders/jeju-main-poster-mobile.jpg`,
+  heroPoster: assetPath('placeholders/jeju-main-poster.jpg'),
+  heroPosterMobile: assetPath('placeholders/jeju-main-poster-mobile.jpg'),
   heroPosterAlt: 'K-SENSUAL 10th Anniversary poster, July 10-12 2026, Jeju Island Korea',
   ctas: [
     { label: 'Line-up', to: '/lineup' },
@@ -163,20 +163,20 @@ export const artists: Artist[] = artistSeeds.map(([id, name, category, guestRegi
   let image: string
   if (category === 'ARTIST' && dancerImageOrder < 10) {
     dancerImageOrder += 1
-    image = `${assetBase}placeholders/at/at-${dancerImageOrder}.png`
+    image = assetPath(`placeholders/at/at-${dancerImageOrder}.png`)
   } else if (category === 'DJ' && djImageOrder < 3) {
     djImageOrder += 1
-    image = `${assetBase}placeholders/dj/dj-${djImageOrder}.png`
+    image = assetPath(`placeholders/dj/dj-${djImageOrder}.png`)
   } else if (category === 'GUEST_ARTIST') {
     const guestArtistFile = guestArtistImageFiles[guestArtistImageOrder]
     guestArtistImageOrder += 1
-    image = guestArtistFile ? `${assetBase}placeholders/ga/${guestArtistFile}` : `${assetBase}placeholders/artist-1.svg`
+    image = guestArtistFile ? assetPath(`placeholders/ga/${guestArtistFile}`) : assetPath('placeholders/artist-1.svg')
   } else if (category === 'MEDIA') {
     const mediaFile = mediaImageFiles[mediaImageOrder]
     mediaImageOrder += 1
-    image = mediaFile ? `${assetBase}placeholders/md/${mediaFile}` : `${assetBase}placeholders/artist-1.svg`
+    image = mediaFile ? assetPath(`placeholders/md/${mediaFile}`) : assetPath('placeholders/artist-1.svg')
   } else {
-    image = `${assetBase}placeholders/artist-1.svg`
+    image = assetPath('placeholders/artist-1.svg')
   }
 
   return {
@@ -289,7 +289,7 @@ export const faq = [
 
 export const gallery = Array.from({ length: 12 }, (_, index) => ({
   id: `gallery-${index + 1}`,
-  src: `${assetBase}placeholders/gallery-1.svg`,
+  src: assetPath('placeholders/gallery-1.svg'),
   alt: `K-SENSUAL scene ${index + 1}`,
 }))
 

@@ -2,6 +2,7 @@ import { Link, NavLink } from 'react-router-dom'
 import { useLocale } from '../i18n/LocaleContext'
 import { localeOptions } from '../i18n/locales'
 import { messages } from '../i18n/messages'
+import { assetPath } from '../lib/assets'
 import { cn } from '../lib/utils'
 import { SelectDropdown } from './ui/SelectDropdown'
 
@@ -9,7 +10,7 @@ import { SelectDropdown } from './ui/SelectDropdown'
 function Wordmark() {
   return (
     <img
-      src={`${import.meta.env.BASE_URL}placeholders/k-sensual.png`}
+      src={assetPath('placeholders/k-sensual.png')}
       alt="K-SENSUAL"
       className="h-9 w-auto sm:h-10"
       loading="eager"
