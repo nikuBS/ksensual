@@ -141,6 +141,17 @@ const artistSeeds: Array<[string, string, ArtistCategory, GuestRegion?]> = [
   ['ga-tiamo', 'TIAMO', 'GUEST_ARTIST', 'DOMESTIC'],
   ['ga-vani', 'VANI', 'GUEST_ARTIST', 'DOMESTIC'],
   ['ga-scarllet', 'SCARLLET', 'GUEST_ARTIST', 'DOMESTIC'],
+  ['ga-adrian-sheri', 'ADRIAN & SHERI', 'GUEST_ARTIST', 'INTERNATIONAL'],
+  ['ga-andrew', 'ANDREW', 'GUEST_ARTIST', 'INTERNATIONAL'],
+  ['ga-brenda', 'BRENDA', 'GUEST_ARTIST', 'INTERNATIONAL'],
+  ['ga-chuu', 'CHUU', 'GUEST_ARTIST', 'INTERNATIONAL'],
+  ['ga-corrine', 'CORRINE', 'GUEST_ARTIST', 'INTERNATIONAL'],
+  ['ga-flora', 'FLORA', 'GUEST_ARTIST', 'INTERNATIONAL'],
+  ['ga-grace-show', 'GRACE & SHOW', 'GUEST_ARTIST', 'INTERNATIONAL'],
+  ['ga-joel', 'JOEL', 'GUEST_ARTIST', 'INTERNATIONAL'],
+  ['ga-natsuki', 'NATSUKI', 'GUEST_ARTIST', 'INTERNATIONAL'],
+  ['ga-patty', 'PATTY', 'GUEST_ARTIST', 'INTERNATIONAL'],
+  ['ga-pinky', 'PINKY', 'GUEST_ARTIST', 'INTERNATIONAL'],
   ['dk-media', 'DK', 'MEDIA'],
   ['jay-style-media', 'JAY STYLE', 'MEDIA'],
   ['kyrie-tws-media', 'KYRIE TWS', 'MEDIA'],
@@ -149,13 +160,18 @@ const artistSeeds: Array<[string, string, ArtistCategory, GuestRegion?]> = [
 
 let dancerImageOrder = 0
 let djImageOrder = 0
-let guestArtistImageOrder = 0
+let guestDomesticImageOrder = 0
+let guestInternationalImageOrder = 0
 let mediaImageOrder = 0
-const guestArtistImageFiles = [
+const domesticGuestArtistImageFiles = [
   'ga-1.jpg', 'ga-2.jpg', 'ga-3.jpg', 'ga-4.png', 'ga-5.jpg', 'ga-6.png', 'ga-7.jpg', 'ga-8.jpg', 'ga-9.jpg',
   'ga-10.jpg', 'ga-11.jpg', 'ga-12.png', 'ga-13.jpg', 'ga-14.png', 'ga-15.jpg', 'ga-16.jpg', 'ga-17.jpg', 'ga-18.jpg',
   'ga-19.jpg', 'ga-20.png', 'ga-21.jpg', 'ga-22.jpg', 'ga-23.jpg', 'ga-24.jpg', 'ga-25.jpg', 'ga-26.jpg', 'ga-27.png',
   'ga-28.jpg', 'ga-29.jpg', 'ga-30.jpg', 'ga-31.jpg', 'ga-32.jpg', 'ga-33.jpg', 'ga-34.jpg', 'ga-35.png',
+]
+const internationalGuestArtistImageFiles = [
+  'ga-36.jpg', 'ga-37.jpg', 'ga-38.jpg', 'ga-39.jpg', 'ga-40.jpg', 'ga-41.jpg', 'ga-42.png', 'ga-43.jpg', 'ga-44.jpg',
+  'ga-45.png', 'ga-46.jpg',
 ]
 const mediaImageFiles = ['md-1.png', 'md-2.jpg', 'md-3.jpg', 'md-4.jpg']
 
@@ -168,8 +184,10 @@ export const artists: Artist[] = artistSeeds.map(([id, name, category, guestRegi
     djImageOrder += 1
     image = assetPath(`placeholders/dj/dj-${djImageOrder}.png`)
   } else if (category === 'GUEST_ARTIST') {
-    const guestArtistFile = guestArtistImageFiles[guestArtistImageOrder]
-    guestArtistImageOrder += 1
+    const guestArtistFile =
+      guestRegion === 'INTERNATIONAL'
+        ? internationalGuestArtistImageFiles[guestInternationalImageOrder++]
+        : domesticGuestArtistImageFiles[guestDomesticImageOrder++]
     image = guestArtistFile ? assetPath(`placeholders/ga/${guestArtistFile}`) : assetPath('placeholders/artist-1.svg')
   } else if (category === 'MEDIA') {
     const mediaFile = mediaImageFiles[mediaImageOrder]

@@ -49,7 +49,7 @@ export function ArtistGrid({ previewCount, showFilters = false, hideSubtitle = f
   /** 검색어 + 스타일 필터를 동시에 적용한 결과 */
   const filtered = useMemo(() => {
     const lower = query.toLowerCase().trim()
-    return artists.filter((artist) => {
+    const matched = artists.filter((artist) => {
       if (onlyMainArtists && artist.category !== 'ARTIST') return false
       const queryMatch = !lower || artist.name.toLowerCase().includes(lower)
       const tags: ArtistCategoryFilter[] = []
@@ -69,6 +69,14 @@ export function ArtistGrid({ previewCount, showFilters = false, hideSubtitle = f
       const categoryMatch = categoryFilter === 'ALL' || tags.includes(categoryFilter)
       return queryMatch && categoryMatch
     })
+    if (categoryFilter === 'GUEST') {
+      return [...matched].sort((a, b) => {
+        const rank = (artist: Artist) =>
+          artist.guestRegion === 'INTERNATIONAL' ? 0 : artist.guestRegion === 'DOMESTIC' ? 1 : 2
+        return rank(a) - rank(b)
+      })
+    }
+    return matched
   }, [query, categoryFilter, onlyMainArtists])
 
   const categoryOptions = useMemo<Array<{ value: ArtistCategoryFilter; label: string }>>(
@@ -78,8 +86,8 @@ export function ArtistGrid({ previewCount, showFilters = false, hideSubtitle = f
       { value: 'ARTIST', label: m.common.artist },
       { value: 'DJ', label: m.common.dj },
       { value: 'GUEST', label: m.common.guest },
-      { value: 'DOMESTIC', label: m.common.domestic },
       { value: 'INTERNATIONAL', label: m.common.international },
+      { value: 'DOMESTIC', label: m.common.domestic },
       { value: 'MEDIA', label: m.common.media },
     ],
     [m.common.all, m.common.main, m.common.artist, m.common.dj, m.common.guest, m.common.domestic, m.common.international, m.common.media],
