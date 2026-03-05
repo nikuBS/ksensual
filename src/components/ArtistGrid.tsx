@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { motion } from 'framer-motion'
 import { Instagram } from 'lucide-react'
 import { artists, type Artist } from '../data/event'
 import { useLocale } from '../i18n/LocaleContext'
@@ -21,6 +20,7 @@ type ArtistGridProps = {
   previewCount?: number
   showFilters?: boolean
   hideSubtitle?: boolean
+  onlyMainArtists?: boolean
 }
 
 type ArtistCategoryFilter = 'ALL' | 'MAIN' | 'DJ' | 'ARTIST' | 'GUEST' | 'DOMESTIC' | 'INTERNATIONAL' | 'MEDIA'
@@ -29,7 +29,7 @@ type ArtistCategoryFilter = 'ALL' | 'MAIN' | 'DJ' | 'ARTIST' | 'GUEST' | 'DOMEST
  * 라인업 목록 + 상세 모달 컴포넌트
  * 홈(/)과 아티스트 목록(/artists)에서 동일 컴포넌트를 재사용한다.
  */
-export function ArtistGrid({ previewCount, showFilters = false, hideSubtitle = false }: ArtistGridProps) {
+export function ArtistGrid({ previewCount, showFilters = false, hideSubtitle = false, onlyMainArtists = false }: ArtistGridProps) {
   const { locale } = useLocale()
   const m = messages[locale]
   const [selected, setSelected] = useState<Artist | null>(null)
@@ -37,13 +37,20 @@ export function ArtistGrid({ previewCount, showFilters = false, hideSubtitle = f
   const [categoryFilter, setCategoryFilter] = useState<ArtistCategoryFilter>('ALL')
   const [page, setPage] = useState(1)
   const [mobileIndex, setMobileIndex] = useState(0)
-  const viewportRef = useRef<HTMLDivElement | null>(null)
-  const [slideWidth, setSlideWidth] = useState(0)
+  const [autoPlayEnabled, setAutoPlayEnabled] = useState(true)
+  const [isMobileViewport, setIsMobileViewport] = useState(false)
+  const touchStateRef = useRef<{
+    startX: number
+    startY: number
+    lock: 'pending' | 'horizontal' | 'vertical'
+  } | null>(null)
+  const autoResumeTimerRef = useRef<number | null>(null)
 
   /** 검색어 + 스타일 필터를 동시에 적용한 결과 */
   const filtered = useMemo(() => {
     const lower = query.toLowerCase().trim()
     return artists.filter((artist) => {
+      if (onlyMainArtists && artist.category !== 'ARTIST') return false
       const queryMatch = !lower || artist.name.toLowerCase().includes(lower)
       const tags: ArtistCategoryFilter[] = []
 
@@ -62,7 +69,7 @@ export function ArtistGrid({ previewCount, showFilters = false, hideSubtitle = f
       const categoryMatch = categoryFilter === 'ALL' || tags.includes(categoryFilter)
       return queryMatch && categoryMatch
     })
-  }, [query, categoryFilter])
+  }, [query, categoryFilter, onlyMainArtists])
 
   const categoryOptions = useMemo<Array<{ value: ArtistCategoryFilter; label: string }>>(
     () => [
@@ -78,33 +85,75 @@ export function ArtistGrid({ previewCount, showFilters = false, hideSubtitle = f
     [m.common.all, m.common.main, m.common.artist, m.common.dj, m.common.guest, m.common.domestic, m.common.international, m.common.media],
   )
 
-  const totalPages = previewCount ? Math.max(1, Math.ceil(filtered.length / previewCount)) : 1
+  const pageSize = previewCount ?? (showFilters ? 12 : filtered.length)
+  const totalPages = pageSize > 0 ? Math.max(1, Math.ceil(filtered.length / pageSize)) : 1
   const safePage = Math.min(page, totalPages)
-  const start = previewCount ? (safePage - 1) * previewCount : 0
-  const end = previewCount ? safePage * previewCount : filtered.length
+  const start = pageSize > 0 ? (safePage - 1) * pageSize : 0
+  const end = pageSize > 0 ? safePage * pageSize : filtered.length
   const displayed = filtered.slice(start, end)
   const isHomePreview = Boolean(previewCount) && !showFilters
-  const mobileGap = 12
 
   useEffect(() => {
-    if (!isHomePreview) return
-
-    const updateSlideWidth = () => {
-      const width = viewportRef.current?.clientWidth ?? 0
-      setSlideWidth(width)
-    }
-
-    updateSlideWidth()
-    window.addEventListener('resize', updateSlideWidth)
-    return () => window.removeEventListener('resize', updateSlideWidth)
-  }, [isHomePreview])
+    setPage(1)
+  }, [query, categoryFilter])
 
   useEffect(() => {
-    const maxMobileIndex = Math.max(0, filtered.length - 1)
-    if (mobileIndex > maxMobileIndex) {
-      setMobileIndex(maxMobileIndex)
+    if (filtered.length === 0) {
+      setMobileIndex(0)
+      return
     }
-  }, [filtered.length, mobileIndex])
+    setMobileIndex((prev) => Math.min(prev, filtered.length - 1))
+  }, [filtered.length])
+
+  const moveMobile = (step: 1 | -1) => {
+    if (filtered.length <= 1) return
+    setMobileIndex((prev) => (prev + step + filtered.length) % filtered.length)
+  }
+
+  const pauseAutoPlayTemporarily = (resumeDelay = 4500) => {
+    setAutoPlayEnabled(false)
+    if (autoResumeTimerRef.current !== null) {
+      window.clearTimeout(autoResumeTimerRef.current)
+    }
+    autoResumeTimerRef.current = window.setTimeout(() => {
+      setAutoPlayEnabled(true)
+      autoResumeTimerRef.current = null
+    }, resumeDelay)
+  }
+
+  const getMobileArtist = (offset: -1 | 0 | 1) => {
+    if (filtered.length === 0) return null
+    const idx = (mobileIndex + offset + filtered.length) % filtered.length
+    return filtered[idx]
+  }
+
+  useEffect(() => {
+    if (!isHomePreview || !isMobileViewport || filtered.length <= 1 || !autoPlayEnabled) return
+    const intervalId = window.setInterval(() => {
+      if (!document.hidden) {
+        setMobileIndex((prev) => (prev + 1) % filtered.length)
+      }
+    }, 4000)
+    return () => window.clearInterval(intervalId)
+  }, [isHomePreview, isMobileViewport, filtered.length, autoPlayEnabled])
+
+  useEffect(() => {
+    return () => {
+      if (autoResumeTimerRef.current !== null) {
+        window.clearTimeout(autoResumeTimerRef.current)
+      }
+    }
+  }, [])
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(max-width: 639px)')
+    const onChange = (event: MediaQueryListEvent) => {
+      setIsMobileViewport(event.matches)
+    }
+    setIsMobileViewport(mediaQuery.matches)
+    mediaQuery.addEventListener('change', onChange)
+    return () => mediaQuery.removeEventListener('change', onChange)
+  }, [])
 
   return (
     <Section title={m.sections.lineupTitle} subtitle={hideSubtitle ? undefined : m.sections.lineupSubtitle}>
@@ -124,68 +173,118 @@ export function ArtistGrid({ previewCount, showFilters = false, hideSubtitle = f
       {isHomePreview ? (
         <>
           <div className="sm:hidden">
-            <div ref={viewportRef} className="overflow-hidden">
-              <motion.div
-                className="flex gap-3"
-                drag="x"
-                dragConstraints={{
-                  left: -Math.max(0, (filtered.length - 1) * (slideWidth + mobileGap)),
-                  right: 0
-                }}
-                animate={{ x: -(mobileIndex * (slideWidth + mobileGap)) }}
-                transition={{ type: 'spring', stiffness: 280, damping: 30 }}
-                onDragEnd={(_, info) => {
-                  const threshold = Math.max(50, slideWidth * 0.18)
-                  if (info.offset.x < -threshold) {
-                    setMobileIndex((prev) => Math.min(filtered.length - 1, prev + 1))
-                    return
-                  }
-                  if (info.offset.x > threshold) {
-                    setMobileIndex((prev) => Math.max(0, prev - 1))
-                  }
-                }}
-              >
-                {filtered.map((artist) => (
-                  <div key={artist.id} className="flex w-full shrink-0 justify-center">
-                    <div className="w-full max-w-[420px]">
-                      <ArtistCard artist={artist} onClick={setSelected} />
-                    </div>
+            {filtered.length > 0 ? (
+              <>
+                <div
+                  className="relative mx-auto h-[420px] w-full max-w-[420px] touch-pan-y overflow-hidden"
+                  onTouchStart={(e) => {
+                    pauseAutoPlayTemporarily()
+                    const point = e.changedTouches[0]
+                    if (!point) return
+                    touchStateRef.current = {
+                      startX: point.clientX,
+                      startY: point.clientY,
+                      lock: 'pending',
+                    }
+                  }}
+                  onTouchMove={(e) => {
+                    const state = touchStateRef.current
+                    const point = e.changedTouches[0]
+                    if (!state || !point) return
+
+                    const dx = point.clientX - state.startX
+                    const dy = point.clientY - state.startY
+                    const absX = Math.abs(dx)
+                    const absY = Math.abs(dy)
+
+                    if (state.lock === 'pending' && (absX > 14 || absY > 14)) {
+                      state.lock = absX > absY * 1.35 ? 'horizontal' : 'vertical'
+                    }
+
+                    if (state.lock === 'horizontal' && e.cancelable) {
+                      e.preventDefault()
+                    }
+                  }}
+                  onTouchEnd={(e) => {
+                    const state = touchStateRef.current
+                    const point = e.changedTouches[0]
+                    if (!state || !point) return
+
+                    const deltaX = point.clientX - state.startX
+                    const deltaY = point.clientY - state.startY
+                    const absX = Math.abs(deltaX)
+                    const absY = Math.abs(deltaY)
+                    const horizontalIntent = state.lock === 'horizontal' && absX >= 56 && absX > absY * 1.35
+
+                    if (horizontalIntent && deltaX <= -56) moveMobile(1)
+                    if (horizontalIntent && deltaX >= 56) moveMobile(-1)
+                    touchStateRef.current = null
+                    pauseAutoPlayTemporarily()
+                  }}
+                >
+                  {([-1, 0, 1] as const).map((offset) => {
+                    const artist = getMobileArtist(offset)
+                    if (!artist) return null
+                    return (
+                      <div
+                        key={`${artist.id}-${offset}`}
+                        className={cn(
+                          'absolute inset-0',
+                          offset === -1 && '-translate-x-[112%]',
+                          offset === 0 && 'translate-x-0',
+                          offset === 1 && 'translate-x-[112%]'
+                        )}
+                      >
+                        <ArtistCard artist={artist} onClick={setSelected} />
+                      </div>
+                    )
+                  })}
+                </div>
+                {filtered.length > 1 ? (
+                  <div className="mt-3 flex items-center justify-center gap-2">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => {
+                        pauseAutoPlayTemporarily()
+                        moveMobile(-1)
+                      }}
+                      aria-label={m.common.prev}
+                    >
+                      {m.common.prev}
+                    </Button>
+                    <span className="min-w-14 text-center text-sm text-muted">{mobileIndex + 1} / {filtered.length}</span>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => {
+                        pauseAutoPlayTemporarily()
+                        moveMobile(1)
+                      }}
+                      aria-label={m.common.next}
+                    >
+                      {m.common.next}
+                    </Button>
                   </div>
-                ))}
-              </motion.div>
-            </div>
-            {filtered.length > 1 ? (
-              <div className="mt-3 flex items-center justify-center gap-1.5">
-                {filtered.map((artist, index) => (
-                  <button
-                    key={`dot-${artist.id}`}
-                    type="button"
-                    aria-label={`${m.common.artist} ${index + 1}`}
-                    onClick={() => setMobileIndex(index)}
-                    className={cn(
-                      'h-1.5 rounded-full transition-all',
-                      index === mobileIndex ? 'w-4 bg-accentSoft' : 'w-1.5 bg-black/20'
-                    )}
-                  />
-                ))}
-              </div>
+                ) : null}
+              </>
             ) : null}
           </div>
-          <div className="hidden gap-4 sm:grid sm:grid-cols-2 lg:grid-cols-3">
+          <div className="hidden gap-4 sm:grid sm:grid-cols-2 lg:grid-cols-3 [&>*]:min-w-0">
             {displayed.map((artist) => (
               <ArtistCard key={artist.id} artist={artist} onClick={setSelected} />
             ))}
           </div>
         </>
       ) : (
-        <div className={cn('grid gap-4 sm:grid-cols-2', previewCount ? 'lg:grid-cols-3' : 'lg:grid-cols-4')}>
+        <div className={cn('grid gap-4 sm:grid-cols-2 [&>*]:min-w-0', previewCount ? 'lg:grid-cols-3' : 'lg:grid-cols-4')}>
           {displayed.map((artist) => (
             <ArtistCard key={artist.id} artist={artist} onClick={setSelected} />
           ))}
         </div>
       )}
 
-      {previewCount && totalPages > 1 ? (
+      {(previewCount || showFilters) && totalPages > 1 ? (
         <div className={cn('mt-6 items-center justify-center gap-2', isHomePreview ? 'hidden sm:flex' : 'flex')}>
           <Button variant="outline" size="sm" onClick={() => setPage((prev) => Math.max(1, prev - 1))} disabled={safePage === 1}>
             {m.common.prev}

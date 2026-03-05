@@ -6,7 +6,7 @@ export default function Home() {
   return (
     <>
       <Hero />
-      <ArtistGrid previewCount={6} />
+      <ArtistGrid previewCount={6} onlyMainArtists />
       <Contact />
     </>
   )

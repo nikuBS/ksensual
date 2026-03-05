@@ -38,16 +38,16 @@ export function ArtistCard({ artist, onClick }: ArtistCardProps) {
             : [m.common.artist]
 
   return (
-    <button type="button" className="block w-full text-left" onClick={() => onClick(artist)} aria-label={`Open ${artist.name} details`}>
-      <Card className="h-full">
+    <button type="button" className="block w-full min-w-0 text-left" onClick={() => onClick(artist)} aria-label={`Open ${artist.name} details`}>
+      <Card className="h-full overflow-hidden">
         <div className="rounded-xl border border-black/10 bg-base/40 p-2">
           <img src={artist.image} alt={artist.name} className="h-60 w-full rounded-lg object-contain object-center sm:h-64" loading="lazy" />
         </div>
         <div className="mt-4">
           <h3 className="text-lg font-semibold">{artist.name}</h3>
-          <div className="mt-3 flex flex-wrap gap-2">
+          <div className="mt-3 flex w-full max-w-full min-h-[32px] flex-nowrap gap-2 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             {categoryLabels.map((label) => (
-              <Badge key={`${artist.id}-${label}`}>{label}</Badge>
+              <Badge key={`${artist.id}-${label}`} className="shrink-0">{label}</Badge>
             ))}
           </div>
         </div>
