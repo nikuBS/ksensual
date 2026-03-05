@@ -9,12 +9,14 @@ import { SelectDropdown } from './ui/SelectDropdown'
 /** 헤더 로고 이미지 워드마크 컴포넌트 */
 function Wordmark() {
   return (
-    <img
-      src={assetPath('placeholders/k-sensual.png')}
-      alt="K-SENSUAL"
-      className="h-9 w-auto sm:h-10"
-      loading="eager"
-    />
+    <div className="h-14 w-full max-w-[320px] overflow-hidden sm:h-16 sm:max-w-[420px]">
+      <img
+        src={assetPath('placeholders/k-sensual.png')}
+        alt="K-SENSUAL"
+        className="-ml-16 h-full w-full object-cover object-center sm:-ml-8"
+        loading="eager"
+      />
+    </div>
   )
 }
 
@@ -36,7 +38,7 @@ export function Navbar() {
   return (
     <header className="sticky top-0 z-40 border-b border-black/10 bg-base/80 backdrop-blur">
       <div className="mx-auto flex max-w-6xl flex-col gap-3 px-3 py-3 sm:flex-row sm:items-center sm:justify-between sm:px-6">
-        <Link to="/" aria-label="Go to home" className="self-start">
+        <Link to="/" aria-label="Go to home" className="w-full sm:w-auto">
           <Wordmark />
         </Link>
         <div className="flex w-full items-center gap-2 sm:w-auto">
