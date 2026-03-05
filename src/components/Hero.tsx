@@ -19,7 +19,7 @@ export function Hero() {
         <div className="flex flex-col justify-center gap-5">
           <p className="text-xs uppercase tracking-[0.2em] text-accentSoft sm:text-sm sm:tracking-[0.25em]">{eventMeta.subtitle}</p>
           <h1 className="max-w-3xl text-balance font-heading text-4xl leading-tight text-[#063247] sm:text-6xl md:text-7xl">{eventMeta.title}</h1>
-          <p className="max-w-2xl text-sm text-muted sm:text-lg">{eventMeta.heroCopy}</p>
+          <p className="max-w-2xl break-words text-sm text-muted sm:text-lg">{eventMeta.heroCopy}</p>
           <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:flex-wrap sm:items-center">
             {eventMeta.ctas.map((cta) => (
               <Link key={cta.to} to={cta.to} className="w-full sm:w-auto">
@@ -28,8 +28,8 @@ export function Hero() {
             ))}
           </div>
           <div className="flex flex-col gap-1 text-xs text-muted sm:text-sm">
-            <p>{eventMeta.dateRangeText} · {eventMeta.venueName}</p>
-            <p>{eventMeta.cityCountry}</p>
+            <p className="break-words">{eventMeta.dateRangeText} · {eventMeta.venueName}</p>
+            <p className="break-words">{eventMeta.cityCountry}</p>
             <Countdown targetISO={eventMeta.startDateISO} />
           </div>
         </div>

@@ -14,16 +14,22 @@ type TabsProps = {
   value: string
   onChange: (id: string) => void
   ariaLabel?: string
+  layout?: 'scroll' | 'wrap' | 'equal'
 }
 
 /**
  * 수평 스크롤 가능한 탭 UI
  * 모바일에서 탭이 많아도 줄바꿈 대신 스크롤되도록 구현했다.
  */
-export function Tabs({ tabs, value, onChange, ariaLabel = 'Tabs' }: TabsProps) {
+export function Tabs({ tabs, value, onChange, ariaLabel = 'Tabs', layout = 'scroll' }: TabsProps) {
   return (
     <div
-      className="inline-flex max-w-full flex-nowrap items-center gap-2 overflow-x-auto rounded-2xl border border-black/10 bg-panel/60 p-2"
+      className={cn(
+        'max-w-full items-center gap-2 rounded-2xl border border-black/10 bg-panel/60 p-2',
+        layout === 'scroll' && 'inline-flex flex-nowrap overflow-x-auto',
+        layout === 'wrap' && 'inline-flex flex-wrap overflow-hidden',
+        layout === 'equal' && 'grid w-full grid-cols-3 overflow-hidden',
+      )}
       role="tablist"
       aria-label={ariaLabel}
     >
@@ -37,7 +43,11 @@ export function Tabs({ tabs, value, onChange, ariaLabel = 'Tabs' }: TabsProps) {
             aria-selected={active}
             onClick={() => onChange(tab.id)}
             className={cn(
-              'shrink-0 whitespace-nowrap rounded-xl px-3 py-2 text-sm font-semibold transition sm:px-4',
+              layout === 'equal'
+                ? 'min-w-0 w-full truncate rounded-xl px-2 py-2 text-xs font-semibold transition sm:text-sm'
+                : layout === 'wrap'
+                  ? 'rounded-xl px-3 py-2 text-sm font-semibold transition sm:px-4'
+                  : 'shrink-0 whitespace-nowrap rounded-xl px-3 py-2 text-sm font-semibold transition sm:px-4',
               active ? 'bg-accent text-base' : 'bg-transparent text-muted hover:bg-black/5 hover:text-text',
             )}
           >

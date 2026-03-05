@@ -27,10 +27,10 @@ export function Highlights() {
         {highlights.map((item) => {
           const Icon = iconMap[item.icon as keyof typeof iconMap] ?? Sparkles
           return (
-            <Card key={item.title}>
+            <Card key={item.title} className="h-full">
               <Icon size={20} className="mb-3 text-accentSoft" aria-hidden="true" />
-              <h3 className="text-lg font-semibold">{item.title}</h3>
-              <p className="mt-2 text-sm text-muted">{item.desc}</p>
+              <h3 className="min-h-[56px] text-lg font-semibold">{item.title}</h3>
+              <p className="mt-2 min-h-[72px] text-sm text-muted">{item.desc}</p>
             </Card>
           )
         })}

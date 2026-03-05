@@ -46,30 +46,30 @@ export function VenueSection({ hideSubtitle = false }: VenueSectionProps) {
 
   return (
     <Section title={m.sections.venueTitle} subtitle={hideSubtitle ? undefined : m.sections.venueSubtitle}>
-      <div className="grid gap-4 lg:grid-cols-2">
-        <Card>
+      <div className="grid gap-4 lg:grid-cols-2 [&>*]:min-w-0">
+        <Card className="h-full min-w-0 overflow-hidden">
           <p className="text-sm text-muted">{m.common.address}</p>
-          <p className="font-semibold">{venue.address}</p>
+          <p className="min-h-[52px] break-words font-semibold">{venue.address}</p>
           <p className="mt-4 text-sm text-muted">{m.common.transport}</p>
-          <ul className="mt-1 space-y-1 text-sm text-muted">
+          <ul className="mt-1 min-h-[56px] space-y-1 text-sm text-muted">
             {venue.transport.map((item) => (
-              <li key={item}>• {item}</li>
+              <li key={item} className="break-words">• {item}</li>
             ))}
           </ul>
-          <p className="mt-4 text-sm text-muted">{venue.shuttle}</p>
+          <p className="mt-4 min-h-[40px] break-words text-sm text-muted">{venue.shuttle}</p>
           <p className="mt-4 text-sm text-muted">{m.common.hotels}</p>
-          <ul className="mt-1 space-y-1 text-sm text-muted">
+          <ul className="mt-1 min-h-[76px] space-y-1 text-sm text-muted">
             {venue.hotels.map((hotel) => (
-              <li key={hotel}>• {hotel}</li>
+              <li key={hotel} className="break-words">• {hotel}</li>
             ))}
           </ul>
         </Card>
-        <Card className="flex min-h-72 flex-col text-center">
-          <div className="mx-auto">
-            <Tabs tabs={mapTabs} value={selectedMap} onChange={handleMapTabChange} ariaLabel="Map provider tabs" />
+        <Card className="flex min-h-72 min-w-0 flex-col overflow-hidden text-center">
+          <div className="mx-auto w-full max-w-full overflow-hidden">
+            <Tabs tabs={mapTabs} value={selectedMap} onChange={handleMapTabChange} ariaLabel="Map provider tabs" layout="equal" />
           </div>
           <div className="mt-5 flex flex-1 flex-col rounded-2xl border border-black/10 bg-base/40 p-3">
-            <div className="mb-3 text-center text-sm text-muted">{selectedMapLabel}</div>
+            <div className="mb-3 break-words text-center text-sm text-muted">{selectedMapLabel}</div>
             <div className="overflow-hidden rounded-xl border border-black/10">
               <iframe
                 title="Google Map Preview"
