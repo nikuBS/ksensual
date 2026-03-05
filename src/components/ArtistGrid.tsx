@@ -23,7 +23,7 @@ type ArtistGridProps = {
   hideSubtitle?: boolean
 }
 
-type ArtistCategoryFilter = 'ALL' | 'DJ' | 'ARTIST' | 'SPECIAL_GUEST' | 'GUEST_ARTIST' | 'AMBASSADOR' | 'MEDIA'
+type ArtistCategoryFilter = 'ALL' | 'MAIN' | 'DJ' | 'ARTIST' | 'GUEST' | 'DOMESTIC' | 'INTERNATIONAL' | 'MEDIA'
 
 /**
  * 라인업 목록 + 상세 모달 컴포넌트
@@ -45,8 +45,21 @@ export function ArtistGrid({ previewCount, showFilters = false, hideSubtitle = f
     const lower = query.toLowerCase().trim()
     return artists.filter((artist) => {
       const queryMatch = !lower || artist.name.toLowerCase().includes(lower)
-      const categoryMatch =
-        categoryFilter === 'ALL' || artist.category === categoryFilter
+      const tags: ArtistCategoryFilter[] = []
+
+      if (artist.category === 'ARTIST') {
+        tags.push('ARTIST', 'MAIN')
+      } else if (artist.category === 'GUEST_ARTIST') {
+        tags.push('ARTIST', 'GUEST')
+        if (artist.guestRegion === 'DOMESTIC') tags.push('DOMESTIC')
+        if (artist.guestRegion === 'INTERNATIONAL') tags.push('INTERNATIONAL')
+      } else if (artist.category === 'DJ') {
+        tags.push('DJ')
+      } else if (artist.category === 'MEDIA') {
+        tags.push('MEDIA')
+      }
+
+      const categoryMatch = categoryFilter === 'ALL' || tags.includes(categoryFilter)
       return queryMatch && categoryMatch
     })
   }, [query, categoryFilter])
@@ -54,14 +67,15 @@ export function ArtistGrid({ previewCount, showFilters = false, hideSubtitle = f
   const categoryOptions = useMemo<Array<{ value: ArtistCategoryFilter; label: string }>>(
     () => [
       { value: 'ALL', label: m.common.all },
+      { value: 'MAIN', label: m.common.main },
       { value: 'ARTIST', label: m.common.artist },
       { value: 'DJ', label: m.common.dj },
-      { value: 'SPECIAL_GUEST', label: m.common.specialGuest },
-      { value: 'GUEST_ARTIST', label: m.common.guestArtist },
-      { value: 'AMBASSADOR', label: m.common.ambassador },
+      { value: 'GUEST', label: m.common.guest },
+      { value: 'DOMESTIC', label: m.common.domestic },
+      { value: 'INTERNATIONAL', label: m.common.international },
       { value: 'MEDIA', label: m.common.media },
     ],
-    [m.common.all, m.common.artist, m.common.dj, m.common.specialGuest, m.common.guestArtist, m.common.ambassador, m.common.media],
+    [m.common.all, m.common.main, m.common.artist, m.common.dj, m.common.guest, m.common.domestic, m.common.international, m.common.media],
   )
 
   const totalPages = previewCount ? Math.max(1, Math.ceil(filtered.length / previewCount)) : 1

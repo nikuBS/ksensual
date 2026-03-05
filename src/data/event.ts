@@ -4,6 +4,8 @@ export type Socials = {
   website?: string
 }
 
+export type GuestRegion = 'DOMESTIC' | 'INTERNATIONAL'
+
 export type EventMeta = {
   title: string
   subtitle: string
@@ -29,12 +31,13 @@ export type Artist = {
   id: string
   name: string
   category: ArtistCategory
+  guestRegion?: GuestRegion
   image: string
   bio: string
   socials: Socials
 }
 
-export type ArtistCategory = 'DJ' | 'ARTIST' | 'GUEST' | 'SPECIAL_GUEST' | 'GUEST_ARTIST' | 'AMBASSADOR' | 'MEDIA'
+export type ArtistCategory = 'DJ' | 'ARTIST' | 'GUEST' | 'GUEST_ARTIST' | 'MEDIA'
 
 export type ScheduleDay = {
   dayId: string
@@ -89,7 +92,7 @@ export const highlights: Highlight[] = [
   { icon: 'ShieldCheck', title: 'Safe Experience', desc: 'On-site medics, multilingual support, and contact desk.' },
 ]
 
-const artistSeeds: Array<[string, string, ArtistCategory]> = [
+const artistSeeds: Array<[string, string, ArtistCategory, GuestRegion?]> = [
   ['cristian-gabriella', 'CRISTIAN & GABRIELLA', 'ARTIST'],
   ['klau-los', 'KLAU & LOS', 'ARTIST'],
   ['carlos-paz', 'CARLOS & PAZ', 'ARTIST'],
@@ -103,23 +106,75 @@ const artistSeeds: Array<[string, string, ArtistCategory]> = [
   ['dj-alejandro', 'DJ ALEJANDRO', 'DJ'],
   ['dj-toxica', 'DJ TOXICA', 'DJ'],
   ['dj-ashish', 'DJ ASHISH', 'DJ'],
-  ['luna-reyes', 'LUNA REYES', 'SPECIAL_GUEST'],
-  ['marco-vista', 'MARCO VISTA', 'GUEST_ARTIST'],
-  ['seo-jin', 'SEO JIN', 'AMBASSADOR'],
-  ['hana-park', 'HANA PARK', 'MEDIA'],
+  ['ga-ace', 'ACE', 'GUEST_ARTIST', 'DOMESTIC'],
+  ['ga-amanda', 'AMANDA', 'GUEST_ARTIST', 'DOMESTIC'],
+  ['ga-andre', 'ANDRE', 'GUEST_ARTIST', 'DOMESTIC'],
+  ['ga-arie', 'ARIE', 'GUEST_ARTIST', 'DOMESTIC'],
+  ['ga-becky', 'BECKY', 'GUEST_ARTIST', 'DOMESTIC'],
+  ['ga-boram', 'BORAM', 'GUEST_ARTIST', 'DOMESTIC'],
+  ['ga-cola-susie', 'COLA Y SUSIE', 'GUEST_ARTIST', 'DOMESTIC'],
+  ['ga-daewoo-dream', 'DAEWOO Y DREAM', 'GUEST_ARTIST', 'DOMESTIC'],
+  ['ga-dancing-king-queen', 'DANCING KING Y DANCING QUEEN', 'GUEST_ARTIST', 'DOMESTIC'],
+  ['ga-dang-yi', 'DANG YI', 'GUEST_ARTIST', 'DOMESTIC'],
+  ['ga-dorothy', 'DOROTHY', 'GUEST_ARTIST', 'DOMESTIC'],
+  ['ga-fairy', 'FAIRY', 'GUEST_ARTIST', 'DOMESTIC'],
+  ['ga-gold', 'GOLD', 'GUEST_ARTIST', 'DOMESTIC'],
+  ['ga-happynyang-ez', 'HAPPYNYANG Y EZ', 'GUEST_ARTIST', 'DOMESTIC'],
+  ['ga-hug-may', 'HUG Y MAY', 'GUEST_ARTIST', 'DOMESTIC'],
+  ['ga-jessica', 'JESSICA', 'GUEST_ARTIST', 'DOMESTIC'],
+  ['ga-khan', 'KHAN', 'GUEST_ARTIST', 'DOMESTIC'],
+  ['ga-klui-dalla', 'KLUI Y DALLA', 'GUEST_ARTIST', 'DOMESTIC'],
+  ['ga-logan-bk', 'LOGAN Y BK', 'GUEST_ARTIST', 'DOMESTIC'],
+  ['ga-lui', 'LUI', 'GUEST_ARTIST', 'DOMESTIC'],
+  ['ga-mila', 'MILA', 'GUEST_ARTIST', 'DOMESTIC'],
+  ['ga-min-yong', 'MIN YONG', 'GUEST_ARTIST', 'DOMESTIC'],
+  ['ga-mongu-raffle', 'MONGU Y RAFFLE', 'GUEST_ARTIST', 'DOMESTIC'],
+  ['ga-rony', 'RONY', 'GUEST_ARTIST', 'DOMESTIC'],
+  ['ga-ryuji', 'RYUJI', 'GUEST_ARTIST', 'DOMESTIC'],
+  ['ga-salsal-sage', 'SALSAL Y SAGE', 'GUEST_ARTIST', 'DOMESTIC'],
+  ['ga-sarah', 'SARAH', 'GUEST_ARTIST', 'DOMESTIC'],
+  ['ga-shanna', 'SHANNA', 'GUEST_ARTIST', 'DOMESTIC'],
+  ['ga-sparrow-bella', 'SPARROW Y BELLA', 'GUEST_ARTIST', 'DOMESTIC'],
+  ['ga-stella', 'STELLA', 'GUEST_ARTIST', 'DOMESTIC'],
+  ['ga-summerhill', 'SUMMERHILL', 'GUEST_ARTIST', 'DOMESTIC'],
+  ['ga-sunghoney-mj', 'SUNGHONEY & MJ', 'GUEST_ARTIST', 'DOMESTIC'],
+  ['ga-tiamo', 'TIAMO', 'GUEST_ARTIST', 'DOMESTIC'],
+  ['ga-vani', 'VANI', 'GUEST_ARTIST', 'DOMESTIC'],
+  ['ga-scarllet', 'SCARLLET', 'GUEST_ARTIST', 'DOMESTIC'],
+  ['dk-media', 'DK', 'MEDIA'],
+  ['jay-style-media', 'JAY STYLE', 'MEDIA'],
+  ['kyrie-tws-media', 'KYRIE TWS', 'MEDIA'],
+  ['macpan-media', 'MACPAN', 'MEDIA'],
 ]
 
 let dancerImageOrder = 0
 let djImageOrder = 0
+let guestArtistImageOrder = 0
+let mediaImageOrder = 0
+const guestArtistImageFiles = [
+  'ga-1.jpg', 'ga-2.jpg', 'ga-3.jpg', 'ga-4.png', 'ga-5.jpg', 'ga-6.png', 'ga-7.jpg', 'ga-8.jpg', 'ga-9.jpg',
+  'ga-10.jpg', 'ga-11.jpg', 'ga-12.png', 'ga-13.jpg', 'ga-14.png', 'ga-15.jpg', 'ga-16.jpg', 'ga-17.jpg', 'ga-18.jpg',
+  'ga-19.jpg', 'ga-20.png', 'ga-21.jpg', 'ga-22.jpg', 'ga-23.jpg', 'ga-24.jpg', 'ga-25.jpg', 'ga-26.jpg', 'ga-27.png',
+  'ga-28.jpg', 'ga-29.jpg', 'ga-30.jpg', 'ga-31.jpg', 'ga-32.jpg', 'ga-33.jpg', 'ga-34.jpg', 'ga-35.png',
+]
+const mediaImageFiles = ['md-1.png', 'md-2.jpg', 'md-3.jpg', 'md-4.jpg']
 
-export const artists: Artist[] = artistSeeds.map(([id, name, category]) => {
+export const artists: Artist[] = artistSeeds.map(([id, name, category, guestRegion]) => {
   let image: string
   if (category === 'ARTIST' && dancerImageOrder < 10) {
     dancerImageOrder += 1
-    image = `${assetBase}placeholders/at-${dancerImageOrder}.png`
+    image = `${assetBase}placeholders/at/at-${dancerImageOrder}.png`
   } else if (category === 'DJ' && djImageOrder < 3) {
     djImageOrder += 1
-    image = `${assetBase}placeholders/dj-${djImageOrder}.png`
+    image = `${assetBase}placeholders/dj/dj-${djImageOrder}.png`
+  } else if (category === 'GUEST_ARTIST') {
+    const guestArtistFile = guestArtistImageFiles[guestArtistImageOrder]
+    guestArtistImageOrder += 1
+    image = guestArtistFile ? `${assetBase}placeholders/ga/${guestArtistFile}` : `${assetBase}placeholders/artist-1.svg`
+  } else if (category === 'MEDIA') {
+    const mediaFile = mediaImageFiles[mediaImageOrder]
+    mediaImageOrder += 1
+    image = mediaFile ? `${assetBase}placeholders/md/${mediaFile}` : `${assetBase}placeholders/artist-1.svg`
   } else {
     image = `${assetBase}placeholders/artist-1.svg`
   }
@@ -128,6 +183,7 @@ export const artists: Artist[] = artistSeeds.map(([id, name, category]) => {
     id,
     name,
     category,
+    guestRegion,
     image,
     bio: `${name} crafts high-emotion sets with rhythm-focused transitions and cinematic crescendos tailored for large-scale stages.`,
     socials: {

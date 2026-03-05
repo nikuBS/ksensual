@@ -41,11 +41,13 @@ export const messages: Record<
       searchArtistName: string
       filterCategory: string
       all: string
+      main: string
+      guest: string
+      domestic: string
+      international: string
       artist: string
       dj: string
-      specialGuest: string
       guestArtist: string
-      ambassador: string
       media: string
       instagram: string
       countdownLoading: string
@@ -101,11 +103,13 @@ export const messages: Record<
       searchArtistName: 'Search artist name',
       filterCategory: 'Filter by category',
       all: 'All',
+      main: 'Main',
+      guest: 'Guest',
+      domestic: 'Domestic',
+      international: 'International',
       artist: 'Artist',
       dj: 'Dj',
-      specialGuest: 'Special Guest',
       guestArtist: 'Guest Artist',
-      ambassador: 'Ambassador',
       media: 'Media',
       instagram: 'Instagram',
       countdownLoading: 'Loading countdown...',
@@ -160,11 +164,13 @@ export const messages: Record<
       searchArtistName: '아티스트 이름 검색',
       filterCategory: '카테고리 필터',
       all: '전체',
+      main: '메인',
+      guest: '게스트',
+      domestic: '국내',
+      international: '해외',
       artist: '아티스트',
       dj: '디제이',
-      specialGuest: '스페셜 게스트',
       guestArtist: '게스트 아티스트',
-      ambassador: '앰배서더',
       media: '미디어',
       instagram: '인스타그램',
       countdownLoading: '카운트다운 로딩 중...',
@@ -219,11 +225,13 @@ export const messages: Record<
       searchArtistName: 'Buscar nombre de artista',
       filterCategory: 'Filtrar por categoría',
       all: 'Todo',
+      main: 'Principal',
+      guest: 'Invitado',
+      domestic: 'Nacional',
+      international: 'Internacional',
       artist: 'Artista',
       dj: 'Dj',
-      specialGuest: 'Invitado Especial',
       guestArtist: 'Artista Invitado',
-      ambassador: 'Embajador',
       media: 'Media',
       instagram: 'Instagram',
       countdownLoading: 'Cargando cuenta regresiva...',

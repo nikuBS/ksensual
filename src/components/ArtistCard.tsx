@@ -18,18 +18,24 @@ export function ArtistCard({ artist, onClick }: ArtistCardProps) {
   const { locale } = useLocale()
   const m = messages[locale]
   const category = getArtistCategory(artist)
-  const categoryLabel =
-    category === 'DJ'
-      ? m.common.dj
-      : category === 'SPECIAL_GUEST'
-        ? m.common.specialGuest
-        : category === 'GUEST_ARTIST'
-          ? m.common.guestArtist
-          : category === 'AMBASSADOR'
-            ? m.common.ambassador
-            : category === 'MEDIA'
-              ? m.common.media
-            : m.common.artist
+  const categoryLabels =
+    category === 'ARTIST'
+      ? [m.common.artist, m.common.main]
+      : category === 'GUEST_ARTIST'
+        ? [
+          m.common.artist,
+          m.common.guest,
+          artist.guestRegion === 'DOMESTIC'
+            ? m.common.domestic
+            : artist.guestRegion === 'INTERNATIONAL'
+              ? m.common.international
+              : '',
+        ].filter(Boolean)
+        : category === 'DJ'
+          ? [m.common.dj]
+          : category === 'MEDIA'
+            ? [m.common.media]
+            : [m.common.artist]
 
   return (
     <button type="button" className="block w-full text-left" onClick={() => onClick(artist)} aria-label={`Open ${artist.name} details`}>
@@ -40,7 +46,9 @@ export function ArtistCard({ artist, onClick }: ArtistCardProps) {
         <div className="mt-4">
           <h3 className="text-lg font-semibold">{artist.name}</h3>
           <div className="mt-3 flex flex-wrap gap-2">
-            <Badge>{categoryLabel}</Badge>
+            {categoryLabels.map((label) => (
+              <Badge key={`${artist.id}-${label}`}>{label}</Badge>
+            ))}
           </div>
         </div>
       </Card>
