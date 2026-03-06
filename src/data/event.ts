@@ -152,6 +152,7 @@ const artistSeeds: Array<[string, string, ArtistCategory, GuestRegion?]> = [
   ['ga-natsuki', 'NATSUKI', 'GUEST_ARTIST', 'INTERNATIONAL'],
   ['ga-patty', 'PATTY', 'GUEST_ARTIST', 'INTERNATIONAL'],
   ['ga-pinky', 'PINKY', 'GUEST_ARTIST', 'INTERNATIONAL'],
+  ['ga-carlito', 'CARLITO', 'GUEST_ARTIST', 'INTERNATIONAL'],
   ['dk-media', 'DK', 'MEDIA'],
   ['jay-style-media', 'JAY STYLE', 'MEDIA'],
   ['kyrie-tws-media', 'KYRIE TWS', 'MEDIA'],
@@ -171,7 +172,7 @@ const domesticGuestArtistImageFiles = [
 ]
 const internationalGuestArtistImageFiles = [
   'ga-36.jpg', 'ga-37.jpg', 'ga-38.jpg', 'ga-39.jpg', 'ga-40.jpg', 'ga-41.jpg', 'ga-42.png', 'ga-43.jpg', 'ga-44.jpg',
-  'ga-45.png', 'ga-46.jpg',
+  'ga-45.png', 'ga-46.jpg', 'ga-47.jpg',
 ]
 const mediaImageFiles = ['md-1.png', 'md-2.jpg', 'md-3.jpg', 'md-4.jpg']
 
