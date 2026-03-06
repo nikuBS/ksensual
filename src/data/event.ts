@@ -106,6 +106,7 @@ const artistSeeds: Array<[string, string, ArtistCategory, GuestRegion?]> = [
   ['dj-alejandro', 'DJ ALEJANDRO', 'DJ'],
   ['dj-toxica', 'DJ TOXICA', 'DJ'],
   ['dj-ashish', 'DJ ASHISH', 'DJ'],
+  ['dj-romi', 'DJ ROMI', 'DJ'],
   ['ga-ace', 'ACE', 'GUEST_ARTIST', 'DOMESTIC'],
   ['ga-amanda', 'AMANDA', 'GUEST_ARTIST', 'DOMESTIC'],
   ['ga-andre', 'ANDRE', 'GUEST_ARTIST', 'DOMESTIC'],
@@ -164,6 +165,7 @@ let djImageOrder = 0
 let guestDomesticImageOrder = 0
 let guestInternationalImageOrder = 0
 let mediaImageOrder = 0
+const djImageFiles = ['dj-1.png', 'dj-2.png', 'dj-3.png', 'dj-4.png']
 const domesticGuestArtistImageFiles = [
   'ga-1.jpg', 'ga-2.jpg', 'ga-3.jpg', 'ga-4.png', 'ga-5.jpg', 'ga-6.png', 'ga-7.jpg', 'ga-8.jpg', 'ga-9.jpg',
   'ga-10.jpg', 'ga-11.jpg', 'ga-12.png', 'ga-13.jpg', 'ga-14.png', 'ga-15.jpg', 'ga-16.jpg', 'ga-17.jpg', 'ga-18.jpg',
@@ -181,9 +183,9 @@ export const artists: Artist[] = artistSeeds.map(([id, name, category, guestRegi
   if (category === 'ARTIST' && dancerImageOrder < 10) {
     dancerImageOrder += 1
     image = assetPath(`placeholders/at/at-${dancerImageOrder}.png`)
-  } else if (category === 'DJ' && djImageOrder < 3) {
-    djImageOrder += 1
-    image = assetPath(`placeholders/dj/dj-${djImageOrder}.png`)
+  } else if (category === 'DJ') {
+    const djFile = djImageFiles[djImageOrder++]
+    image = djFile ? assetPath(`placeholders/dj/${djFile}`) : assetPath('placeholders/artist-1.svg')
   } else if (category === 'GUEST_ARTIST') {
     const guestArtistFile =
       guestRegion === 'INTERNATIONAL'
