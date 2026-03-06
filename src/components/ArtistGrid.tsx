@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { Instagram } from 'lucide-react'
 import { artists, type Artist } from '../data/event'
 import { useLocale } from '../i18n/LocaleContext'
 import { messages } from '../i18n/messages'
@@ -311,22 +310,9 @@ export function ArtistGrid({ previewCount, showFilters = false, hideSubtitle = f
 
       <Modal open={!!selected} onClose={() => setSelected(null)} title={selected?.name ?? m.common.artistDetail}>
         {selected ? (
-          <div className="space-y-4">
+          <div>
             <div className="rounded-xl border border-black/10 bg-base/40 p-2">
               <img src={selected.image} alt={selected.name} className="max-h-[70vh] w-full rounded-lg object-contain" />
-            </div>
-            <div className="flex flex-wrap gap-3 pl-2 sm:pl-3">
-              {selected.socials.instagram ? (
-                <a
-                  href={selected.socials.instagram}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center gap-2 text-lg font-semibold text-accentSoft transition hover:opacity-80"
-                >
-                  <Instagram size={20} aria-hidden="true" />
-                  {m.common.instagram}
-                </a>
-              ) : null}
             </div>
           </div>
         ) : null}
