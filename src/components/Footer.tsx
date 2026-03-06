@@ -1,14 +1,13 @@
-import { getLocalizedContent } from '../data/localizedContent'
-import { useLocale } from '../i18n/LocaleContext'
 import { assetPath } from '../lib/assets'
+import { useEventContent } from '../content/ContentContext'
 
 /**
  * 전역 푸터
  * 요청된 순서(사이트 | 인스타 | 와츠앱)로 단일 라인 링크를 제공한다.
  */
 export function Footer() {
-  const { locale } = useLocale()
-  const { contact } = getLocalizedContent(locale)
+  const { content } = useEventContent()
+  const { site } = content
 
   return (
     <footer className="border-t border-black/10 bg-base/90 px-4 py-8 sm:px-6">
@@ -24,7 +23,7 @@ export function Footer() {
         </a>
         <span className="text-[#062a3a]/80">|</span>
         <a
-          href={contact.instagramUrl}
+          href={site.instagramUrl || 'https://instagram.com/ksensual_official'}
           target="_blank"
           rel="noreferrer"
           aria-label="Instagram"
@@ -35,7 +34,7 @@ export function Footer() {
         </a>
         <span className="text-[#062a3a]/80">|</span>
         <a
-          href="https://wa.me/821096661251"
+          href={site.whatsappUrl || 'https://wa.me/821096661251'}
           target="_blank"
           rel="noreferrer"
           aria-label="WhatsApp"

@@ -3,7 +3,7 @@ import { Section } from './Section'
 import { Card } from './ui/Card'
 import { Button } from './ui/Button'
 import { Tabs } from './ui/Tabs'
-import { getLocalizedContent } from '../data/localizedContent'
+import { useEventContent } from '../content/ContentContext'
 import { useLocale } from '../i18n/LocaleContext'
 import { messages } from '../i18n/messages'
 
@@ -12,10 +12,24 @@ type VenueSectionProps = {
 }
 
 export function VenueSection({ hideSubtitle = false }: VenueSectionProps) {
+  const { content } = useEventContent()
   const { locale } = useLocale()
-  const { venue } = getLocalizedContent(locale)
+  const { eventInfo } = content
   const m = messages[locale]
   const [selectedMap, setSelectedMap] = useState<'google' | 'naver' | 'kakao'>('google')
+
+  const venue = {
+    address: eventInfo.address || 'Venue address is not available yet.',
+    transport: ['Jeju Int’l Airport → venue taxi approx. 15 min', 'Airport limousine + short walk via Iho coast road'],
+    shuttle: 'Shuttle runs every 25 minutes from Jeju Airport and downtown hubs.',
+    hotels: ['Iho Breeze Hotel (7 min)', 'Aewol Coast Stay (14 min)', 'Jeju Harbor Suites (16 min)'],
+    googleEmbedUrl: 'https://www.google.com/maps?q=33%20Hyeonsa-gil%2C%20Jeju-si%2C%20Jeju-do%2C%20Republic%20of%20Korea&output=embed',
+    mapLinks: {
+      google: eventInfo.googleMapLink || 'https://maps.app.goo.gl/ywYrB6eChyCGjQyK6',
+      naver: 'https://naver.me/xprAofrl',
+      kakao: 'https://place.map.kakao.com/1025402180',
+    },
+  }
 
   const mapTabs = useMemo(
     () => [

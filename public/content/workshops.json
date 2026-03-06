@@ -1,0 +1,28 @@
+[
+  {
+    "id": "workshop-1",
+    "date": "2026-07-10",
+    "startTime": "14:00",
+    "endTime": "15:00",
+    "title": "Sensual Frame & Connection",
+    "instructor": "Cristian & Gabriella",
+    "level": "Intermediate",
+    "description": "Connection fundamentals and lead/follow sensitivity for social dance.",
+    "tags": ["sensual", "connection"],
+    "order": 1,
+    "isPublished": true
+  },
+  {
+    "id": "workshop-2",
+    "date": "2026-07-10",
+    "startTime": "15:30",
+    "endTime": "16:30",
+    "title": "Body Movement for Partnerwork",
+    "instructor": "Klau & Los",
+    "level": "Open",
+    "description": "Technique-driven body movement applied to social combinations.",
+    "tags": ["body movement", "partnerwork"],
+    "order": 2,
+    "isPublished": true
+  }
+]

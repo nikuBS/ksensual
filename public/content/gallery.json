@@ -1,0 +1,20 @@
+[
+  {
+    "id": "gallery-1",
+    "imageUrl": "placeholders/ga/ga-36.jpg",
+    "thumbnailUrl": "placeholders/ga/ga-36.jpg",
+    "caption": "Main stage social floor",
+    "category": "party",
+    "order": 1,
+    "isPublished": true
+  },
+  {
+    "id": "gallery-2",
+    "imageUrl": "placeholders/ga/ga-37.jpg",
+    "thumbnailUrl": "placeholders/ga/ga-37.jpg",
+    "caption": "Workshop classroom moment",
+    "category": "workshop",
+    "order": 2,
+    "isPublished": true
+  }
+]

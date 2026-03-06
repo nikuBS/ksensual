@@ -1,0 +1,49 @@
+[
+  {
+    "id": "schedule-day-1",
+    "dayLabel": "Day 1",
+    "date": "2026-07-10",
+    "isHighlighted": true,
+    "order": 1,
+    "isPublished": true,
+    "cards": [
+      {
+        "id": "card-1",
+        "time": "14:00",
+        "title": "Workshop Block A",
+        "summary": "Technique classes with headliner artists",
+        "isHighlighted": false,
+        "order": 1,
+        "isPublished": true
+      },
+      {
+        "id": "card-2",
+        "time": "20:00",
+        "title": "Opening Night Social",
+        "summary": "Main hall social dance and performances",
+        "isHighlighted": true,
+        "order": 2,
+        "isPublished": true
+      }
+    ]
+  },
+  {
+    "id": "schedule-day-2",
+    "dayLabel": "Day 2",
+    "date": "2026-07-11",
+    "isHighlighted": false,
+    "order": 2,
+    "isPublished": true,
+    "cards": [
+      {
+        "id": "card-3",
+        "time": "17:00",
+        "title": "Beach Sunset Party",
+        "summary": "Outdoor social with DJ set",
+        "isHighlighted": true,
+        "order": 1,
+        "isPublished": true
+      }
+    ]
+  }
+]

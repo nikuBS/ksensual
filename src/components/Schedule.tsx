@@ -1,5 +1,6 @@
-import { useState } from 'react'
-import { schedule } from '../data/event'
+import { useEffect, useState } from 'react'
+import { publishedOnly } from '../admin/utils/contentHelpers'
+import { useEventContent } from '../content/ContentContext'
 import { useLocale } from '../i18n/LocaleContext'
 import { messages } from '../i18n/messages'
 import { Section } from './Section'
@@ -12,10 +13,18 @@ import { Tabs } from './ui/Tabs'
  * 선택된 Day만 화면에 보여주고, 같은 Day 기준으로 ICS 다운로드를 제공한다.
  */
 export function Schedule() {
+  const { content } = useEventContent()
   const { locale } = useLocale()
   const m = messages[locale]
-  const [activeDayId, setActiveDayId] = useState(schedule[0]?.dayId ?? '')
-  const activeDay = schedule.find((day) => day.dayId === activeDayId) ?? schedule[0]
+  const schedule = publishedOnly(content.schedule)
+  const [activeDayId, setActiveDayId] = useState(schedule[0]?.id ?? '')
+  const activeDay = schedule.find((day) => day.id === activeDayId) ?? schedule[0]
+
+  useEffect(() => {
+    if (!activeDayId && schedule[0]) {
+      setActiveDayId(schedule[0].id)
+    }
+  }, [activeDayId, schedule])
 
   if (!activeDay) return null
 
@@ -23,7 +32,7 @@ export function Schedule() {
     <Section title={m.sections.scheduleTitle} subtitle={m.sections.scheduleSubtitle}>
       <div className="mb-5 flex flex-col items-start gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
         <Tabs
-          tabs={schedule.map((day, index) => ({ id: day.dayId, label: `${m.common.day} ${index + 1}` }))}
+          tabs={schedule.map((day, index) => ({ id: day.id, label: day.dayLabel || `${m.common.day} ${index + 1}` }))}
           value={activeDayId}
           onChange={setActiveDayId}
           ariaLabel={m.common.selectDayTabLabel}
@@ -32,14 +41,14 @@ export function Schedule() {
       </div>
 
       <div className="grid gap-3">
-        {activeDay.sessions.map((session) => (
-          <Card key={`${activeDay.dayId}-${session.time}-${session.title}`} className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+        {publishedOnly(activeDay.cards).map((session) => (
+          <Card key={`${activeDay.id}-${session.time}-${session.title}`} className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
             <div>
               <p className="text-sm text-accentSoft">{session.time}</p>
               <h3 className="font-semibold">{session.title}</h3>
-              <p className="text-sm text-muted">{session.type} · {session.location}</p>
+              <p className="text-sm text-muted">{session.summary}</p>
             </div>
-            <p className="text-sm text-muted">{session.hosts?.join(', ')}</p>
+            <p className="text-sm text-muted">{activeDay.dayLabel}</p>
           </Card>
         ))}
       </div>

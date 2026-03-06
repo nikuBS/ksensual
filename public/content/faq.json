@@ -1,0 +1,16 @@
+[
+  {
+    "id": "faq-1",
+    "question": "Is K-SENSUAL 19+?",
+    "answer": "Yes. Government-issued ID is required at check-in.",
+    "order": 1,
+    "isPublished": true
+  },
+  {
+    "id": "faq-2",
+    "question": "Can I transfer my pass?",
+    "answer": "Transfer is available up to 48 hours before event start.",
+    "order": 2,
+    "isPublished": true
+  }
+]

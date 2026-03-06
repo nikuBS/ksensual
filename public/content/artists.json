@@ -1,0 +1,59 @@
+[
+  {
+    "id": "artist-cristian-gabriella",
+    "name": "Cristian & Gabriella",
+    "role": "ARTIST",
+    "profileImage": "placeholders/at/at-1.png",
+    "region": "International",
+    "shortBio": "Signature sensual bachata couple with musicality-first classes.",
+    "fullBio": "Cristian & Gabriella teach partner connection, frame quality, and social-floor adaptation for intermediate and advanced dancers.",
+    "socialLinks": {
+      "instagram": "https://instagram.com/cristiangabriella",
+      "youtube": "https://youtube.com/@cristiangabriella"
+    },
+    "order": 1,
+    "isPublished": true
+  },
+  {
+    "id": "artist-klau-los",
+    "name": "Klau & Los",
+    "role": "ARTIST",
+    "profileImage": "placeholders/at/at-2.png",
+    "region": "International",
+    "shortBio": "Performance-focused duo known for clean transitions.",
+    "fullBio": "Klau & Los blend show choreography and social dance practicals in their workshop curriculum.",
+    "socialLinks": {
+      "instagram": "https://instagram.com/klaulos"
+    },
+    "order": 2,
+    "isPublished": true
+  },
+  {
+    "id": "artist-dj-alejandro",
+    "name": "DJ Alejandro",
+    "role": "DJ",
+    "profileImage": "placeholders/dj/dj-1.png",
+    "region": "Korea",
+    "shortBio": "Late-night latin & bachata social floor curator.",
+    "fullBio": "DJ Alejandro builds progressive party sets optimized for social dancers and showcases.",
+    "socialLinks": {
+      "instagram": "https://instagram.com/djalejandro"
+    },
+    "order": 10,
+    "isPublished": true
+  },
+  {
+    "id": "artist-media-dk",
+    "name": "DK Media",
+    "role": "MEDIA",
+    "profileImage": "placeholders/md/md-1.png",
+    "region": "Korea",
+    "shortBio": "Official event media partner.",
+    "fullBio": "Captures social floor, performances, and venue stories across all event days.",
+    "socialLinks": {
+      "instagram": "https://instagram.com/dkmedia"
+    },
+    "order": 30,
+    "isPublished": true
+  }
+]

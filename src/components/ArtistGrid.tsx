@@ -1,7 +1,10 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { artists, type Artist } from '../data/event'
+import type { ArtistContent } from '../admin/types/contentSchema'
+import { publishedOnly } from '../admin/utils/contentHelpers'
+import { useEventContent } from '../content/ContentContext'
 import { useLocale } from '../i18n/LocaleContext'
 import { messages } from '../i18n/messages'
+import { assetPath } from '../lib/assets'
 import { cn } from '../lib/utils'
 import { ArtistCard } from './ArtistCard'
 import { Section } from './Section'
@@ -22,7 +25,7 @@ type ArtistGridProps = {
   onlyMainArtists?: boolean
 }
 
-type ArtistCategoryFilter = 'ALL' | 'MAIN' | 'DJ' | 'ARTIST' | 'GUEST' | 'DOMESTIC' | 'INTERNATIONAL' | 'MEDIA'
+type ArtistCategoryFilter = 'ALL' | 'MAIN' | 'DJ' | 'ARTIST' | 'DOMESTIC' | 'INTERNATIONAL' | 'MEDIA'
 
 /**
  * 라인업 목록 + 상세 모달 컴포넌트
@@ -30,8 +33,9 @@ type ArtistCategoryFilter = 'ALL' | 'MAIN' | 'DJ' | 'ARTIST' | 'GUEST' | 'DOMEST
  */
 export function ArtistGrid({ previewCount, showFilters = false, hideSubtitle = false, onlyMainArtists = false }: ArtistGridProps) {
   const { locale } = useLocale()
+  const { content } = useEventContent()
   const m = messages[locale]
-  const [selected, setSelected] = useState<Artist | null>(null)
+  const [selected, setSelected] = useState<ArtistContent | null>(null)
   const [query, setQuery] = useState('')
   const [categoryFilter, setCategoryFilter] = useState<ArtistCategoryFilter>('ALL')
   const [page, setPage] = useState(1)
@@ -47,36 +51,29 @@ export function ArtistGrid({ previewCount, showFilters = false, hideSubtitle = f
 
   /** 검색어 + 스타일 필터를 동시에 적용한 결과 */
   const filtered = useMemo(() => {
+    const artists = publishedOnly(content.artists)
     const lower = query.toLowerCase().trim()
-    const matched = artists.filter((artist) => {
-      if (onlyMainArtists && artist.category !== 'ARTIST') return false
+    return artists.filter((artist) => {
+      if (onlyMainArtists && artist.role !== 'ARTIST') return false
       const queryMatch = !lower || artist.name.toLowerCase().includes(lower)
       const tags: ArtistCategoryFilter[] = []
 
-      if (artist.category === 'ARTIST') {
+      if (artist.role === 'ARTIST') {
         tags.push('ARTIST', 'MAIN')
-      } else if (artist.category === 'GUEST_ARTIST') {
-        tags.push('ARTIST', 'GUEST')
-        if (artist.guestRegion === 'DOMESTIC') tags.push('DOMESTIC')
-        if (artist.guestRegion === 'INTERNATIONAL') tags.push('INTERNATIONAL')
-      } else if (artist.category === 'DJ') {
+      } else if (artist.role === 'DJ') {
         tags.push('DJ')
-      } else if (artist.category === 'MEDIA') {
+      } else if (artist.role === 'MEDIA') {
         tags.push('MEDIA')
+      } else {
+        tags.push('ARTIST')
       }
+      if (artist.region.toLowerCase().includes('korea') || artist.region.toLowerCase().includes('domestic')) tags.push('DOMESTIC')
+      if (artist.region.toLowerCase().includes('international') || artist.region.toLowerCase().includes('global')) tags.push('INTERNATIONAL')
 
       const categoryMatch = categoryFilter === 'ALL' || tags.includes(categoryFilter)
       return queryMatch && categoryMatch
     })
-    if (categoryFilter === 'GUEST') {
-      return [...matched].sort((a, b) => {
-        const rank = (artist: Artist) =>
-          artist.guestRegion === 'INTERNATIONAL' ? 0 : artist.guestRegion === 'DOMESTIC' ? 1 : 2
-        return rank(a) - rank(b)
-      })
-    }
-    return matched
-  }, [query, categoryFilter, onlyMainArtists])
+  }, [query, categoryFilter, onlyMainArtists, content.artists])
 
   const categoryOptions = useMemo<Array<{ value: ArtistCategoryFilter; label: string }>>(
     () => [
@@ -84,12 +81,11 @@ export function ArtistGrid({ previewCount, showFilters = false, hideSubtitle = f
       { value: 'MAIN', label: m.common.main },
       { value: 'ARTIST', label: m.common.artist },
       { value: 'DJ', label: m.common.dj },
-      { value: 'GUEST', label: m.common.guest },
       { value: 'INTERNATIONAL', label: m.common.international },
       { value: 'DOMESTIC', label: m.common.domestic },
       { value: 'MEDIA', label: m.common.media },
     ],
-    [m.common.all, m.common.main, m.common.artist, m.common.dj, m.common.guest, m.common.domestic, m.common.international, m.common.media],
+    [m.common.all, m.common.main, m.common.artist, m.common.dj, m.common.domestic, m.common.international, m.common.media],
   )
 
   const pageSize = previewCount ?? (showFilters ? 12 : filtered.length)
@@ -312,7 +308,7 @@ export function ArtistGrid({ previewCount, showFilters = false, hideSubtitle = f
         {selected ? (
           <div>
             <div className="rounded-xl border border-black/10 bg-base/40 p-2">
-              <img src={selected.image} alt={selected.name} className="max-h-[70vh] w-full rounded-lg object-contain" />
+              <img src={assetPath(selected.profileImage)} alt={selected.name} className="max-h-[70vh] w-full rounded-lg object-contain" />
             </div>
           </div>
         ) : null}

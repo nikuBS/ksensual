@@ -1,4 +1,5 @@
-import { getLocalizedContent } from '../data/localizedContent'
+import { publishedOnly } from '../admin/utils/contentHelpers'
+import { useEventContent } from '../content/ContentContext'
 import { useLocale } from '../i18n/LocaleContext'
 import { messages } from '../i18n/messages'
 import { Section } from './Section'
@@ -14,14 +15,15 @@ type FAQSectionProps = {
 
 /** FAQ 데이터를 아코디언이 요구하는 형식으로 변환해 렌더링 */
 export function FAQSection({ limit }: FAQSectionProps) {
+  const { content } = useEventContent()
   const { locale } = useLocale()
-  const { faq } = getLocalizedContent(locale)
   const m = messages[locale]
+  const faq = publishedOnly(content.faq)
 
-  const items = (limit ? faq.slice(0, limit) : faq).map((item, index) => ({
-    id: `faq-${index + 1}`,
-    title: item.q,
-    content: item.a,
+  const items = (limit ? faq.slice(0, limit) : faq).map((item) => ({
+    id: item.id,
+    title: item.question,
+    content: item.answer,
   }))
 
   return (

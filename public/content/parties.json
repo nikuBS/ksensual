@@ -1,0 +1,30 @@
+[
+  {
+    "id": "party-1",
+    "name": "Opening Night Social",
+    "date": "2026-07-10",
+    "startTime": "20:00",
+    "endTime": "01:00",
+    "venue": "Iho Main Hall",
+    "dj": "DJ Alejandro",
+    "description": "Opening social with artist showcases and bachata room takeover.",
+    "dressCode": "Summer Elegant",
+    "posterImage": "placeholders/ga/ga-1.jpg",
+    "order": 1,
+    "isPublished": true
+  },
+  {
+    "id": "party-2",
+    "name": "Beach Sunset Party",
+    "date": "2026-07-11",
+    "startTime": "17:00",
+    "endTime": "21:00",
+    "venue": "Iho Beach Deck",
+    "dj": "DJ Romi",
+    "description": "Outdoor bachata social with sunset showcase slot.",
+    "dressCode": "White & Beige",
+    "posterImage": "placeholders/ga/ga-2.jpg",
+    "order": 2,
+    "isPublished": true
+  }
+]
