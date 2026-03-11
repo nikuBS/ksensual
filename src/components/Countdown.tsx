@@ -55,7 +55,15 @@ export function Countdown({ targetISO }: CountdownProps) {
 
   return (
     <p className="text-sm text-muted" aria-live="polite">
-      {m.common.countdownStartsIn} <span className="font-semibold text-text">{time.days}d {time.hours}h {time.minutes}m</span>
+      {m.common.countdownStartsIn}{' '}
+      <span className="font-semibold text-text">
+        {time.days}
+        {m.common.countdownDays}{' '}
+        {time.hours}
+        {m.common.countdownHours}{' '}
+        {time.minutes}
+        {m.common.countdownMinutes}
+      </span>
     </p>
   )
 }

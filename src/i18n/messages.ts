@@ -52,6 +52,9 @@ export const messages: Record<
       instagram: string
       countdownLoading: string
       countdownStartsIn: string
+      countdownDays: string
+      countdownHours: string
+      countdownMinutes: string
       selectDayTabLabel: string
       day: string
       prev: string
@@ -114,6 +117,9 @@ export const messages: Record<
       instagram: 'Instagram',
       countdownLoading: 'Loading countdown...',
       countdownStartsIn: 'Starts in',
+      countdownDays: 'd',
+      countdownHours: 'h',
+      countdownMinutes: 'm',
       selectDayTabLabel: 'Day tabs',
       day: 'Day',
       prev: 'Prev',
@@ -175,6 +181,9 @@ export const messages: Record<
       instagram: '인스타그램',
       countdownLoading: '카운트다운 로딩 중...',
       countdownStartsIn: '시작까지',
+      countdownDays: '일',
+      countdownHours: '시',
+      countdownMinutes: '분',
       selectDayTabLabel: '요일 탭',
       day: 'DAY',
       prev: '이전',
@@ -236,10 +245,13 @@ export const messages: Record<
       instagram: 'Instagram',
       countdownLoading: 'Cargando cuenta regresiva...',
       countdownStartsIn: 'Comienza en',
+      countdownDays: 'd',
+      countdownHours: 'h',
+      countdownMinutes: 'min',
       selectDayTabLabel: 'Pestañas de día',
       day: 'Día',
-      prev: 'Prev',
-      next: 'Next',
+      prev: 'Anterior',
+      next: 'Siguiente',
       ticketHotel: 'Entradas y Hotel',
       jackAndJillApply: 'Inscripción Jack & Jill',
       googleMaps: 'Google Maps',
