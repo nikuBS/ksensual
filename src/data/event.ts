@@ -98,7 +98,7 @@ const artistSeeds: Array<[string, string, ArtistCategory, GuestRegion?]> = [
   ['carlos-paz', 'CARLOS & PAZ', 'ARTIST'],
   ['evelyn-la-negra', 'EVELYN LA NEGRA', 'ARTIST'],
   ['dario-sara', 'DARIO & SARA', 'ARTIST'],
-  ['sorish-elise', 'SORISH & ELISE', 'ARTIST'],
+  ['sorush-elise', 'SORUSH & ELISE', 'ARTIST'],
   ['masa-polina', 'MASA & POLINA', 'ARTIST'],
   ['xi-alina', 'XI & ALINA', 'ARTIST'],
   ['valentino-umi', 'VALENTINO & UMI', 'ARTIST'],
