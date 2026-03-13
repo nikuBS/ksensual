@@ -20,6 +20,7 @@ type ArtistGridProps = {
   showFilters?: boolean
   hideSubtitle?: boolean
   onlyMainArtists?: boolean
+  hideMainTag?: boolean
 }
 
 type ArtistCategoryFilter = 'ALL' | 'MAIN' | 'DJ' | 'ARTIST' | 'GUEST' | 'DOMESTIC' | 'INTERNATIONAL' | 'MEDIA'
@@ -28,7 +29,7 @@ type ArtistCategoryFilter = 'ALL' | 'MAIN' | 'DJ' | 'ARTIST' | 'GUEST' | 'DOMEST
  * 라인업 목록 + 상세 모달 컴포넌트
  * 홈(/)과 아티스트 목록(/artists)에서 동일 컴포넌트를 재사용한다.
  */
-export function ArtistGrid({ previewCount, showFilters = false, hideSubtitle = false, onlyMainArtists = false }: ArtistGridProps) {
+export function ArtistGrid({ previewCount, showFilters = false, hideSubtitle = false, onlyMainArtists = false, hideMainTag = false }: ArtistGridProps) {
   const { locale } = useLocale()
   const m = messages[locale]
   const [selected, setSelected] = useState<Artist | null>(null)
@@ -242,7 +243,7 @@ export function ArtistGrid({ previewCount, showFilters = false, hideSubtitle = f
                           offset === 1 && 'translate-x-[112%]'
                         )}
                       >
-                        <ArtistCard artist={artist} onClick={setSelected} />
+                        <ArtistCard artist={artist} onClick={setSelected} hideMainTag={hideMainTag} />
                       </div>
                     )
                   })}
@@ -279,14 +280,14 @@ export function ArtistGrid({ previewCount, showFilters = false, hideSubtitle = f
           </div>
           <div className="hidden gap-4 sm:grid sm:grid-cols-2 lg:grid-cols-3 [&>*]:min-w-0">
             {displayed.map((artist) => (
-              <ArtistCard key={artist.id} artist={artist} onClick={setSelected} />
+              <ArtistCard key={artist.id} artist={artist} onClick={setSelected} hideMainTag={hideMainTag} />
             ))}
           </div>
         </>
       ) : (
         <div className={cn('grid gap-4 sm:grid-cols-2 [&>*]:min-w-0', previewCount ? 'lg:grid-cols-3' : 'lg:grid-cols-4')}>
           {displayed.map((artist) => (
-            <ArtistCard key={artist.id} artist={artist} onClick={setSelected} />
+            <ArtistCard key={artist.id} artist={artist} onClick={setSelected} hideMainTag={hideMainTag} />
           ))}
         </div>
       )}

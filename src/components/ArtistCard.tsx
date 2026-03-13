@@ -8,19 +8,20 @@ import { Badge } from './ui/Badge'
 type ArtistCardProps = {
   artist: Artist
   onClick: (artist: Artist) => void
+  hideMainTag?: boolean
 }
 
 /**
  * 아티스트 미리보기 카드
  * 클릭하면 상위 컴포넌트에서 모달을 열 수 있도록 artist 객체를 전달한다.
  */
-export function ArtistCard({ artist, onClick }: ArtistCardProps) {
+export function ArtistCard({ artist, onClick, hideMainTag = false }: ArtistCardProps) {
   const { locale } = useLocale()
   const m = messages[locale]
   const category = getArtistCategory(artist)
   const categoryLabels =
     category === 'ARTIST'
-      ? [m.common.artist, m.common.main]
+      ? [m.common.artist, hideMainTag ? '' : m.common.main].filter(Boolean)
       : category === 'GUEST_ARTIST'
         ? [
           m.common.artist,
