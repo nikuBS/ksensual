@@ -1,5 +1,5 @@
 import { Link, NavLink } from 'react-router-dom'
-import { useLocale } from '../i18n/LocaleContext'
+import { useLocale } from '../i18n/useLocale'
 import { localeOptions } from '../i18n/locales'
 import { messages } from '../i18n/messages'
 import { assetPath } from '../lib/assets'

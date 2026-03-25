@@ -41,11 +41,8 @@ export function SelectDropdown<T extends string>({
     if (first) return first
     return { value, label: String(value) }
   }, [options, value])
-
-  useEffect(() => {
-    const selectedIndex = options.findIndex((option) => option.value === value)
-    setFocusIndex(selectedIndex >= 0 ? selectedIndex : 0)
-  }, [options, value])
+  const selectedIndex = options.findIndex((option) => option.value === value)
+  const activeFocusIndex = open ? focusIndex : selectedIndex >= 0 ? selectedIndex : 0
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -90,11 +87,16 @@ export function SelectDropdown<T extends string>({
     }
   }, [open])
 
+  const openMenu = () => {
+    setFocusIndex(selectedIndex >= 0 ? selectedIndex : 0)
+    setOpen(true)
+  }
+
   const onButtonKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
     if (options.length === 0) return
     if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
       event.preventDefault()
-      setOpen(true)
+      openMenu()
     }
   }
 
@@ -130,7 +132,7 @@ export function SelectDropdown<T extends string>({
 
     if (event.key === 'Enter' || event.key === ' ') {
       event.preventDefault()
-      const target = options[focusIndex]
+      const target = options[activeFocusIndex]
       if (!target) return
       onChange(target.value)
       setOpen(false)
@@ -147,7 +149,13 @@ export function SelectDropdown<T extends string>({
         aria-haspopup="listbox"
         aria-expanded={open}
         className="inline-flex w-full min-w-[120px] items-center justify-between gap-2 rounded-2xl border border-black/15 bg-panel px-4 py-3 text-sm font-medium text-text transition hover:bg-black/5"
-        onClick={() => setOpen((prev) => !prev)}
+        onClick={() => {
+          if (open) {
+            setOpen(false)
+            return
+          }
+          openMenu()
+        }}
         onKeyDown={onButtonKeyDown}
       >
         <span>{selected.label}</span>
@@ -166,7 +174,7 @@ export function SelectDropdown<T extends string>({
         >
           {options.map((option, index) => {
             const isSelected = option.value === value
-            const isFocused = index === focusIndex
+            const isFocused = index === activeFocusIndex
             return (
               <li key={option.value} role="option" aria-selected={isSelected}>
                 <button

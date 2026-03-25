@@ -4,7 +4,7 @@ import { Card } from './ui/Card'
 import { Button } from './ui/Button'
 import { Tabs } from './ui/Tabs'
 import { getLocalizedContent } from '../data/localizedContent'
-import { useLocale } from '../i18n/LocaleContext'
+import { useLocale } from '../i18n/useLocale'
 import { messages } from '../i18n/messages'
 
 type VenueSectionProps = {

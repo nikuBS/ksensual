@@ -1,5 +1,5 @@
 import { getArtistCategory, type Artist } from '../data/event'
-import { useLocale } from '../i18n/LocaleContext'
+import { useLocale } from '../i18n/useLocale'
 import { messages } from '../i18n/messages'
 import { Card } from './ui/Card'
 import { Badge } from './ui/Badge'

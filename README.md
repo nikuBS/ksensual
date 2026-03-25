@@ -2,6 +2,112 @@
 
 정적 호스팅 배포 가능한 SPA 이벤트 랜딩 사이트입니다.
 
+## CMS 핵심 요약
+
+GitHub Pages 정적 사이트에서 JSONbin.io 데이터를 읽어 메인 페이지를 렌더링하고, `/admin` 에서 서비스 상태와 raw JSON을 직접 수정할 수 있도록 구성되어 있습니다.
+
+## CMS 폴더 구조
+
+```text
+src/
+  api/
+    jsonbin.ts
+  components/
+    cms/
+      MaintenanceScreen.tsx
+      SitePreview.tsx
+  pages/
+    AdminPage.tsx
+    HomePage.tsx
+  utils/
+    cms.ts
+```
+
+## CMS JSON 예시
+
+```json
+{
+  "status": "OPEN",
+  "main": {
+    "title": "K-SENSUAL",
+    "subtitle": "Editable GitHub Pages CMS powered by JSONbin.io",
+    "heroImage": "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=1200&q=80"
+  },
+  "sections": [
+    {
+      "id": "lineup",
+      "title": "Lineup Highlights",
+      "body": "Update this section from the admin page without redeploying the static site.",
+      "image": "https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&w=900&q=80",
+      "ctaLabel": "View Lineup",
+      "ctaUrl": "/lineup"
+    }
+  ]
+}
+```
+
+## CMS 환경 변수
+
+`.env.local`
+
+로컬에서 `localStorage` 테스트:
+
+```bash
+VITE_CMS_STORAGE=local
+VITE_ADMIN_PASSWORD=CHANGE_ME
+```
+
+로컬에서 실제 JSONbin 테스트:
+
+```bash
+VITE_CMS_STORAGE=jsonbin
+VITE_JSONBIN_BIN_ID=YOUR_BIN_ID
+VITE_JSONBIN_API_KEY=YOUR_JSONBIN_MASTER_KEY
+VITE_ADMIN_PASSWORD=CHANGE_ME
+```
+
+## CMS 실행 방법
+
+```bash
+npm install
+npm run dev
+```
+
+공개 페이지:
+
+- `http://localhost:5173/ksensual/`
+
+관리자 페이지:
+
+- `http://localhost:5173/ksensual/admin`
+
+## CMS 동작 방식
+
+- 메인 페이지는 `src/api/jsonbin.ts` 의 `fetchCmsContent()` 로 JSONbin 최신 데이터를 조회합니다.
+- 로컬 개발 환경(`localhost`)에서는 기본적으로 `localStorage` 를 CMS 저장소처럼 사용합니다.
+- 필요하면 `VITE_CMS_STORAGE=local` 또는 `VITE_CMS_STORAGE=jsonbin` 으로 저장소를 강제할 수 있습니다.
+- `status === "MAINTENANCE"` 이면 전체 사이트를 점검 화면으로 전환합니다.
+- `/admin` 에서는 상태 토글, raw JSON 편집, JSON validation, 저장 전 미리보기를 제공합니다.
+- 저장은 JSONbin `PUT /b/<BIN_ID>` 로 처리합니다.
+
+## GitHub Actions Secrets
+
+GitHub 배포 시 아래 값을 저장소에 추가하면 workflow가 자동으로 주입합니다.
+
+- `Settings > Secrets and variables > Actions > Repository secrets`
+- `JSONBIN_BIN_ID`
+- `JSONBIN_API_KEY`
+- `ADMIN_PASSWORD`
+
+## CMS 보안 참고
+
+- 정적 사이트에서는 `VITE_` 환경 변수 값이 브라우저 번들에 포함되므로 API Key가 노출됩니다.
+- 최소한의 대응책:
+  - `/admin` 같은 별도 경로 사용
+  - `VITE_ADMIN_PASSWORD` 로 간단한 1차 인증
+  - 공개용/관리용 JSONbin 분리
+- 실제 운영에서 쓰기 보안을 강화하려면 서버리스 함수로 저장 요청을 우회하고, Master Key는 서버에만 두는 것이 안전합니다.
+
 ## 1) 프로젝트 생성 명령 + 패키지 설치
 
 ```bash

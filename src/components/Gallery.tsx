@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { gallery } from '../data/event'
-import { useLocale } from '../i18n/LocaleContext'
+import { useLocale } from '../i18n/useLocale'
 import { messages } from '../i18n/messages'
 import { Section } from './Section'
 import { Modal } from './ui/Modal'

@@ -1,6 +1,6 @@
 import { Download } from 'lucide-react'
 import type { ScheduleDay } from '../data/event'
-import { useLocale } from '../i18n/LocaleContext'
+import { useLocale } from '../i18n/useLocale'
 import { messages } from '../i18n/messages'
 import { buildIcs } from '../lib/ics'
 import { Button } from './ui/Button'

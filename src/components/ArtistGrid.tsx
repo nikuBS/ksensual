@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { artists, type Artist } from '../data/event'
-import { useLocale } from '../i18n/LocaleContext'
+import { useLocale } from '../i18n/useLocale'
 import { messages } from '../i18n/messages'
 import { cn } from '../lib/utils'
 import { ArtistCard } from './ArtistCard'
@@ -38,7 +38,9 @@ export function ArtistGrid({ previewCount, showFilters = false, hideSubtitle = f
   const [page, setPage] = useState(1)
   const [mobileIndex, setMobileIndex] = useState(0)
   const [autoPlayEnabled, setAutoPlayEnabled] = useState(true)
-  const [isMobileViewport, setIsMobileViewport] = useState(false)
+  const [isMobileViewport, setIsMobileViewport] = useState(() =>
+    typeof window !== 'undefined' ? window.matchMedia('(max-width: 639px)').matches : false,
+  )
   const touchStateRef = useRef<{
     startX: number
     startY: number
@@ -96,26 +98,15 @@ export function ArtistGrid({ previewCount, showFilters = false, hideSubtitle = f
   const pageSize = previewCount ?? (showFilters ? 12 : filtered.length)
   const totalPages = pageSize > 0 ? Math.max(1, Math.ceil(filtered.length / pageSize)) : 1
   const safePage = Math.min(page, totalPages)
+  const safeMobileIndex = filtered.length === 0 ? 0 : Math.min(mobileIndex, filtered.length - 1)
   const start = pageSize > 0 ? (safePage - 1) * pageSize : 0
   const end = pageSize > 0 ? safePage * pageSize : filtered.length
   const displayed = filtered.slice(start, end)
   const isHomePreview = Boolean(previewCount) && !showFilters
 
-  useEffect(() => {
-    setPage(1)
-  }, [query, categoryFilter])
-
-  useEffect(() => {
-    if (filtered.length === 0) {
-      setMobileIndex(0)
-      return
-    }
-    setMobileIndex((prev) => Math.min(prev, filtered.length - 1))
-  }, [filtered.length])
-
   const moveMobile = (step: 1 | -1) => {
     if (filtered.length <= 1) return
-    setMobileIndex((prev) => (prev + step + filtered.length) % filtered.length)
+    setMobileIndex((prev) => (Math.min(prev, filtered.length - 1) + step + filtered.length) % filtered.length)
   }
 
   const pauseAutoPlayTemporarily = (resumeDelay = 4500) => {
@@ -131,7 +122,7 @@ export function ArtistGrid({ previewCount, showFilters = false, hideSubtitle = f
 
   const getMobileArtist = (offset: -1 | 0 | 1) => {
     if (filtered.length === 0) return null
-    const idx = (mobileIndex + offset + filtered.length) % filtered.length
+    const idx = (safeMobileIndex + offset + filtered.length) % filtered.length
     return filtered[idx]
   }
 
@@ -158,7 +149,6 @@ export function ArtistGrid({ previewCount, showFilters = false, hideSubtitle = f
     const onChange = (event: MediaQueryListEvent) => {
       setIsMobileViewport(event.matches)
     }
-    setIsMobileViewport(mediaQuery.matches)
     mediaQuery.addEventListener('change', onChange)
     return () => mediaQuery.removeEventListener('change', onChange)
   }, [])
@@ -167,11 +157,24 @@ export function ArtistGrid({ previewCount, showFilters = false, hideSubtitle = f
     <Section title={m.sections.lineupTitle} subtitle={hideSubtitle ? undefined : m.sections.lineupSubtitle}>
       {showFilters ? (
         <div className="mb-4 flex flex-col gap-3 sm:flex-row">
-          <Input aria-label={m.common.searchArtistName} placeholder={m.common.searchArtistName} value={query} onChange={(e) => setQuery(e.target.value)} />
+          <Input
+            aria-label={m.common.searchArtistName}
+            placeholder={m.common.searchArtistName}
+            value={query}
+            onChange={(e) => {
+              setQuery(e.target.value)
+              setPage(1)
+              setMobileIndex(0)
+            }}
+          />
           <SelectDropdown
             value={categoryFilter}
             options={categoryOptions}
-            onChange={setCategoryFilter}
+            onChange={(nextValue) => {
+              setCategoryFilter(nextValue)
+              setPage(1)
+              setMobileIndex(0)
+            }}
             ariaLabel={m.common.filterCategory}
             className="w-full sm:w-auto"
           />
@@ -261,7 +264,7 @@ export function ArtistGrid({ previewCount, showFilters = false, hideSubtitle = f
                     >
                       {m.common.prev}
                     </Button>
-                    <span className="min-w-14 text-center text-sm text-muted">{mobileIndex + 1} / {filtered.length}</span>
+                    <span className="min-w-14 text-center text-sm text-muted">{safeMobileIndex + 1} / {filtered.length}</span>
                     <Button
                       variant="outline"
                       size="sm"

@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { getLocalizedContent } from '../data/localizedContent'
-import { useLocale } from '../i18n/LocaleContext'
+import { useLocale } from '../i18n/useLocale'
 import { Button } from './ui/Button'
 import { Countdown } from './Countdown'
 

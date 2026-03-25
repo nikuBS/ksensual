@@ -1,30 +1,15 @@
-import { useEffect, useState } from 'react'
-import { useLocale } from '../i18n/LocaleContext'
+import { useEffect, useMemo, useState } from 'react'
+import { useLocale } from '../i18n/useLocale'
 import { messages } from '../i18n/messages'
 
 type CountdownProps = {
   targetISO: string
 }
 
-/** 화면에 표시할 남은 시간 구조 (일/시간/분) */
 type Remaining = {
   days: number
   hours: number
   minutes: number
-}
-
-/**
- * 목표 시각(targetISO)까지 남은 시간을 계산하는 순수 함수
- * 음수로 내려가지 않도록 Math.max(0, diff)로 보정했다.
- */
-function getRemaining(targetISO: string): Remaining {
-  const target = new Date(targetISO).getTime()
-  const now = Date.now()
-  const diff = Math.max(0, target - now)
-  const days = Math.floor(diff / (1000 * 60 * 60 * 24))
-  const hours = Math.floor((diff / (1000 * 60 * 60)) % 24)
-  const minutes = Math.floor((diff / (1000 * 60)) % 60)
-  return { days, hours, minutes }
 }
 
 /**
@@ -34,24 +19,25 @@ function getRemaining(targetISO: string): Remaining {
 export function Countdown({ targetISO }: CountdownProps) {
   const { locale } = useLocale()
   const m = messages[locale]
-  const [mounted, setMounted] = useState(false)
-  const [time, setTime] = useState<Remaining>({ days: 0, hours: 0, minutes: 0 })
+  const [now, setNow] = useState(() => Date.now())
+
+  const time = useMemo<Remaining>(() => {
+    const target = new Date(targetISO).getTime()
+    const diff = Math.max(0, target - now)
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24))
+    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24)
+    const minutes = Math.floor((diff / (1000 * 60)) % 60)
+    return { days, hours, minutes }
+  }, [now, targetISO])
 
   useEffect(() => {
-    setMounted(true)
-    setTime(getRemaining(targetISO))
-
     /** 분 단위로 갱신하면 충분하므로 60초마다 업데이트 */
     const timer = setInterval(() => {
-      setTime(getRemaining(targetISO))
+      setNow(Date.now())
     }, 60000)
 
     return () => clearInterval(timer)
-  }, [targetISO])
-
-  if (!mounted) {
-    return <p className="text-sm text-muted">{m.common.countdownLoading}</p>
-  }
+  }, [])
 
   return (
     <p className="text-sm text-muted" aria-live="polite">

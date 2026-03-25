@@ -1,5 +1,5 @@
 import { getLocalizedContent } from '../data/localizedContent'
-import { useLocale } from '../i18n/LocaleContext'
+import { useLocale } from '../i18n/useLocale'
 import { assetPath } from '../lib/assets'
 
 /**

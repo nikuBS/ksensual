@@ -32,6 +32,10 @@ jobs:
 
       - name: Build
         env:
+          VITE_CMS_STORAGE: jsonbin
+          VITE_JSONBIN_BIN_ID: ${{ secrets.JSONBIN_BIN_ID }}
+          VITE_JSONBIN_API_KEY: ${{ secrets.JSONBIN_API_KEY }}
+          VITE_ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
           VITE_ASSET_VERSION: ${{ github.run_number }}-${{ github.sha }}
         run: npm run build
 
