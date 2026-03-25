@@ -94,7 +94,7 @@ export const highlights: Highlight[] = [
 
 const artistSeeds: Array<[string, string, ArtistCategory, GuestRegion?]> = [
   ['cristian-gabriella', 'CRISTIAN & GABRIELLA', 'ARTIST'],
-  ['klau-los', 'KLAU & LOS', 'ARTIST'],
+  ['klau-ros', 'KLAU & ROS', 'ARTIST'],
   ['carlos-paz', 'CARLOS & PAZ', 'ARTIST'],
   ['evelyn-la-negra', 'EVELYN LA NEGRA', 'ARTIST'],
   ['dario-sara', 'DARIO & SARA', 'ARTIST'],
