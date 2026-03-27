@@ -76,7 +76,7 @@ export function Modal({ open, onClose, title, children }: ModalProps) {
         role="dialog"
         aria-modal="true"
         aria-label={hasTitle ? title : 'Dialog'}
-        className="relative z-10 max-h-[92vh] w-full max-w-2xl overflow-auto rounded-2xl border border-black/15 bg-panel p-3 sm:p-5"
+        className="relative z-10 max-h-[92vh] w-full max-w-2xl overflow-auto rounded-2xl border border-white/15 bg-panel p-3 sm:p-5 shadow-[0_24px_80px_rgba(0,0,0,0.42)]"
       >
         {hasTitle ? (
           <div className="mb-4 flex items-center justify-between gap-3">

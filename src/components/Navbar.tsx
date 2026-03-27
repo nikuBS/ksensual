@@ -9,11 +9,11 @@ import { SelectDropdown } from './ui/SelectDropdown'
 /** 헤더 로고 이미지 워드마크 컴포넌트 */
 function Wordmark() {
   return (
-    <div className="h-14 w-full max-w-[320px] overflow-hidden sm:h-16 sm:max-w-[420px]">
+    <div className="h-12 w-full max-w-[260px] sm:h-14 sm:max-w-[340px]">
       <img
-        src={assetPath('placeholders/k-sensual.png')}
+        src={assetPath('placeholders/k-sensual_1.png')}
         alt="K-SENSUAL"
-        className="-ml-16 h-full w-full object-cover object-center sm:-ml-8"
+        className="h-full w-full object-contain object-left"
         loading="eager"
       />
     </div>
@@ -36,7 +36,7 @@ export function Navbar() {
   ]
 
   return (
-    <header className="sticky top-0 z-40 border-b border-black/10 bg-base/80 backdrop-blur">
+    <header className="sticky top-0 z-40 border-b border-white/10 bg-base/80 backdrop-blur">
       <div className="mx-auto flex max-w-6xl flex-col gap-3 px-3 py-3 sm:flex-row sm:items-center sm:justify-between sm:px-6">
         <Link to="/" aria-label="Go to home" className="w-full sm:w-auto">
           <Wordmark />
@@ -49,8 +49,8 @@ export function Navbar() {
                 to={item.to}
                 className={({ isActive }) =>
                   cn(
-                    'shrink-0 whitespace-nowrap rounded-xl px-3 py-2 text-sm text-muted transition hover:bg-black/5 hover:text-text',
-                    isActive && 'bg-black/5 text-text',
+                    'shrink-0 whitespace-nowrap rounded-xl px-3 py-2 text-sm text-muted transition hover:bg-white/8 hover:text-text',
+                    isActive && 'border border-accent/35 bg-accent/12 text-accentSoft shadow-[0_10px_24px_rgba(201,139,46,0.08)]',
                   )
                 }
               >
